@@ -67,34 +67,34 @@ public class PaymentView {
             
    
 
-            try {
-                Payment cardPayment = paymentService.processPayment("card", cardAmount, cardInfo);
-                System.out.println("결제 성공: " + cardPayment);
-            } catch (Exception e) {
-                System.out.println("결제 실패: " + e.getMessage());
-            }
-            break;
-
-        case 2: // 쌍용머니 결제
-            System.out.print("결제 금액 입력: ");
-            BigDecimal pointsAmount = new BigDecimal(scan.nextLine());
-
-            try {
-                Payment pointsPayment = paymentService.processPayment("points", pointsAmount, null);
-                System.out.println("결제 성공: " + pointsPayment);
-            } catch (Exception e) {
-                System.out.println("결제 실패: " + e.getMessage());
-            }
-            break;
-
-        case 3: // 결제취소
-            System.out.println("결제를 취소합니다. 감사합니다.");
-            loop = false; // 루프 종료
-            break;
-
-        default: // 잘못된 입력 처리
-            System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
-    }
+//            try {
+//                Payment cardPayment = paymentService.processPayment("card", cardAmount, cardInfo);
+//                System.out.println("결제 성공: " + cardPayment);
+//            } catch (Exception e) {
+//                System.out.println("결제 실패: " + e.getMessage());
+//            }
+//            break;
+//
+//        case 2: // 쌍용머니 결제
+//            System.out.print("결제 금액 입력: ");
+//            BigDecimal pointsAmount = new BigDecimal(scan.nextLine());
+//
+//            try {
+//                Payment pointsPayment = paymentService.processPayment("points", pointsAmount, null);
+//                System.out.println("결제 성공: " + pointsPayment);
+//            } catch (Exception e) {
+//                System.out.println("결제 실패: " + e.getMessage());
+//            }
+//            break;
+//
+//        case 3: // 결제취소
+//            System.out.println("결제를 취소합니다. 감사합니다.");
+//            loop = false; // 루프 종료
+//            break;
+//
+//        default: // 잘못된 입력 처리
+//            System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+//    }
 
     System.out.println(); // 빈 줄 추가
 }
@@ -108,6 +108,7 @@ scan.close(); // Scanner 닫기
 
 
 
-	}
+	    }
+    }
 }
 

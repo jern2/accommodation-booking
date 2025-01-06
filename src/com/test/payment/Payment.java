@@ -8,12 +8,7 @@ public class Payment {
 	private String userId;
 	private int amount;
 	private String cardnumber;
-	private String 
-	
-	
-		
-		
-	}
+}
 	
 
-}
+

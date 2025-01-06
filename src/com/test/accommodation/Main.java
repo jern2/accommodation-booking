@@ -1,5 +1,7 @@
 package com.test.accommodation;
 
 public class Main {
-	String test;
+	public static void main(String[] args) {
+
+	}
 }
