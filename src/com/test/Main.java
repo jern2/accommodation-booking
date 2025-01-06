@@ -1,9 +1,12 @@
 package com.test;
 
 import com.test.booking.BookingService;
+import com.test.util.LoginSystem;
+
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         BookingService bookingService = new BookingService();
         //booking Test
         //1. 예약 추가
@@ -14,5 +17,10 @@ public class Main {
         //bookingService.getUserBookings(5);
         //4. 예약 취소
         //bookingService.cancelBooking(4,1);
+
+        //login System test
+        //1. 로그인
+        //LoginSystem.login("40ef167m");
+        LoginSystem.logout();
     }
 }
