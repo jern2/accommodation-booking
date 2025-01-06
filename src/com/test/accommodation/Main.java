@@ -1,5 +1,5 @@
 package com.test.accommodation;
 
-public class test {
+public class Main {
 	String test;
 }
