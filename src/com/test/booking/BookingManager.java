@@ -1,5 +1,10 @@
 package com.test.booking;
 
-public class BookingManager {
+import com.test.user.User;
+
+public class BookingManager  {
+	
+
+
 
 }
