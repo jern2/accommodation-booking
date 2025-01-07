@@ -11,6 +11,7 @@ public class BookingService {
 	
 	//예약 생성 전체 처리
 	public Booking createBooking(String bookingId, User user, String accommodationId, String checkInDate, String checkOutDate, int GuestNum) {
+		
 		return null;
 	}
 	

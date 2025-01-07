@@ -1,13 +1,14 @@
 package com.test.booking;
 
 public class Booking {
-	String bookingId;
-	String userId;
-	String accommodationId;
-	String checkInDate;
-	String checkOutDate;
-	String numGuests;
-	String totalPrice;
+	
+	private String bookingId;
+	private String userId;
+	private String accommodationId;
+	private String checkInDate;
+	private String checkOutDate;
+	private String numGuests;
+	private String totalPrice;
 	
 	public Booking(String bookingId, String userId, String accommodationId, String checkInDate, String checkOutDate,
 			String numGuests, String totalPrice) {
