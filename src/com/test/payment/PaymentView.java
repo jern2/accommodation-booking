@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class PaymentView {
 	public static void main(String[] args) {
-
+		
 		PaymentService paymentService = new PaymentService();
 		
 		Scanner scan = new Scanner(System.in);

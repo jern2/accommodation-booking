@@ -71,18 +71,29 @@ public class Booking {
 		return bookingId + "■" + userId + "■" + accommodationId + "■" + checkInDate + "■" + checkOutDate + "■" + numGuests + "■" + totalPrice;
 	}
 
-	// Load from file format
 	public static Booking fromFile(String line) {
-		String[] parts = line.split("■");
-		return new Booking(
-				Integer.parseInt(parts[0]),
-				Integer.parseInt(parts[1]),
-				Integer.parseInt(parts[2]),
-				parts[3],
-				parts[4],
-				Integer.parseInt(parts[4]),
-				Integer.parseInt(parts[4])
-		);
+	    // 데이터를 "■"로 분리
+	    String[] parts = line.split("■");
+
+	    // 배열 크기 확인 (필드 개수 검증)
+	    if (parts.length < 7) {
+	        throw new IllegalArgumentException("Invalid data format: " + line);
+	    }
+
+	    try {
+	        return new Booking(
+	            Integer.parseInt(parts[0]),  // 예약 ID
+	            Integer.parseInt(parts[1]),  // 사용자 ID
+	            Integer.parseInt(parts[2]),  // 숙소 ID
+	            parts[3],                    // 체크인 날짜
+	            parts[4],                    // 체크아웃 날짜
+	            Integer.parseInt(parts[5]),  // 게스트 수
+	            Integer.parseInt(parts[6])   // 총 가격
+	        );
+	        
+	    } catch (NumberFormatException e) {
+	        throw new IllegalArgumentException("Invalid number format in data: " + line, e);
+	    }
 	}
 	
 	
