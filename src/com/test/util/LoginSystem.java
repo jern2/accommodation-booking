@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginSystem {
+
     private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
     private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
 //    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
 //    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
+
 
     // 로그인
     public static void login(String userId, String password) throws IOException {
@@ -71,4 +73,8 @@ public class LoginSystem {
         login("0zngmjhx", "at7hgbjkwrsw");  // 로그인
         logout();          // 로그아웃
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 60473c84bac2aeb450c85af634983dbe6ef6296c

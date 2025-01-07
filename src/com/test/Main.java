@@ -7,7 +7,9 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
         BookingService bookingService = new BookingService();
+
         //booking Test
         //1. 예약 추가
         //bookingService.addBooking(1,1,"2025-01-06","2025-01-07", 4,  220000);
@@ -19,11 +21,10 @@ public class Main {
         //bookingService.cancelBooking(4,1);
 
         //login System test
-//        1. 로그인
-        LoginSystem.login("40ef167m", null);
-//        LoginSystem.logout();
-        
-        
-        
+
+        //1. 로그인
+        LoginSystem.login("40ef167m", "3cg62srxmrma");
+        LoginSystem.logout();
     }
 }
+>>>>>>> 60473c84bac2aeb450c85af634983dbe6ef6296c

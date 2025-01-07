@@ -1,6 +1,7 @@
 package com.test.user;
 
 public class User {
+
 	private String userId;
     private String userPassword;
     private String userName;
@@ -71,3 +72,4 @@ public class User {
                 ", userEmail=" + userEmail + ", userPhoneNum=" + userPhoneNum + ", userPoints=" + userPoints + "]";
     }
 }
+
