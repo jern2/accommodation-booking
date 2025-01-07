@@ -6,11 +6,15 @@ import java.util.Scanner;
 
 import com.test.accommodation.Accommodation;
 import com.test.accommodation.AccommodationService;
+import com.test.review.Review;
+import com.test.review.ReviewService;
 import com.test.util.LoginSystem;
+import com.test.util.ValidationUtil;
 
 public class BookingView {
     public static void main(String[] args) throws NumberFormatException, IOException {
         BookingService bookingService = new BookingService();
+        ReviewService reviewService = new ReviewService();
         AccommodationService accommodationService = new AccommodationService();
         Scanner scanner = new Scanner(System.in);
         
@@ -68,15 +72,33 @@ public class BookingView {
                 System.out.println("+" + "-".repeat(50) + "+");
                 System.out.println("|" + " ".repeat(19) + "숙소 상세정보" + " ".repeat(19) + "|");
                 System.out.println("+" + "-".repeat(50) + "+");
-                System.out.printf(" 숙소 이름: %-40s \n", selectedAccommodation.getAccommodationName());
-                System.out.printf(" 지역: %-42s \n", selectedAccommodation.getArea());
-                System.out.printf(" 주소: %-42s \n", selectedAccommodation.getAddress());
+                System.out.printf(" 숙소명  : %-40s \n", selectedAccommodation.getAccommodationName());
+                System.out.printf(" 지역   : %-42s \n", selectedAccommodation.getArea());
+                System.out.printf(" 주소   : %-42s \n", selectedAccommodation.getAddress());
                 System.out.printf(" 최대 인원: %-36d \n", selectedAccommodation.getMaxGuest());
-                System.out.printf(" 가격: %-40d \n", selectedAccommodation.getPrice());
+                System.out.printf(" 가격: %-40d \n\n", selectedAccommodation.getPrice());
                 System.out.println(" 공지사항");
-                printFormattedNotice(selectedAccommodation.getNotice(), 30);
+                printFormattedNotice(selectedAccommodation.getNotice(), 40);
+                System.out.println("\n캘린더");
+                System.out.printf("[숙박일] %s\n", selectedBooking.getCheckInDate());
+                System.out.printf("[퇴실일] %s\n", selectedBooking.getCheckOutDate());
                 System.out.println("+" + "-".repeat(50) + "+");
-                
+                // 숙소 리뷰 출력
+                System.out.println("+" + "-".repeat(50) + "+");
+                System.out.println("|                    숙소 리뷰                   |");
+                System.out.println("+" + "-".repeat(50) + "+");
+
+                List<Review> reviews = reviewService.getReviewsByAccommodationId(selectedAccommodation.getId());
+                if (reviews.isEmpty()) {
+                    System.out.println("리뷰가 없습니다.");
+                } else {
+                    for (Review review : reviews) {
+                        System.out.printf("- [작성자: %s] [평점: %d] %s\n", review.getUserName(), review.getRating(), review.getContent());
+                    }
+                }
+                System.out.println("+" + "-".repeat(50) + "+");
+
+
                 while (true) {
                     System.out.println("1. 예약 취소");
                     System.out.println("2. 예약 변경");
@@ -101,12 +123,64 @@ public class BookingView {
 
                         case 2:
                             // 예약 변경
-                            System.out.print("변경할 체크인 날짜(YYYY-MM-DD): ");
-                            String newCheckInDate = scanner.next();
-                            System.out.print("변경할 체크아웃 날짜(YYYY-MM-DD): ");
-                            String newCheckOutDate = scanner.next();
+                            String newCheckInDate;
+                            String newCheckOutDate;
+
+                            // 체크인 날짜 입력 및 검증
+                            while (true) {
+                                System.out.print("변경할 체크인 날짜(YYYY-MM-DD): ");
+                                newCheckInDate = scanner.next();
+                                if (ValidationUtil.isValidDate(newCheckInDate)) {
+                                    if (ValidationUtil.isDateInPast(newCheckInDate)) {
+                                        System.out.println("체크인 날짜는 과거일 수 없습니다. 다시 입력해주세요.");
+                                    } else {
+                                        break;
+                                    }
+                                } else {
+                                    System.out.println("잘못된 날짜 형식입니다. 다시 입력해주세요.");
+                                }
+                            }
+
+                            // 체크아웃 날짜 입력 및 검증
+                            while (true) {
+                                System.out.print("변경할 체크아웃 날짜(YYYY-MM-DD): ");
+                                newCheckOutDate = scanner.next();
+                                if (ValidationUtil.isValidDate(newCheckOutDate)) {
+                                    if (ValidationUtil.isCheckOutDateAfterCheckIn(newCheckInDate, newCheckOutDate)) {
+                                        break;
+                                    } else {
+                                        System.out.println("체크아웃 날짜는 체크인 날짜 이후여야 합니다. 다시 입력해주세요.");
+                                    }
+                                } else {
+                                    System.out.println("잘못된 날짜 형식입니다. 다시 입력해주세요.");
+                                }
+                            }
+
+                            // 숙박 기간 계산
+                            int stayDuration = (int) ValidationUtil.calculateDaysBetween(newCheckInDate, newCheckOutDate);
+                            if (stayDuration <= 0) {
+                                System.out.println("숙박 기간이 유효하지 않습니다.");
+                                break;
+                            }
+
+                            System.out.printf("총 숙박 기간: %d박 %d일\n", stayDuration, stayDuration + 1);
+
+                            // 총 금액 계산
+                            int totalPrice = (int) ValidationUtil.calculateTotalPrice(stayDuration, (int) selectedAccommodation.getPrice());
+                            System.out.printf("1박 요금: %d원, 총 금액: %d원\n", (int) selectedAccommodation.getPrice(), totalPrice);
+
+                            // 총 금액 업데이트
+                            boolean isPriceUpdated = bookingService.updateBookingTotalPrice(selectedBooking.getBookingId(), totalPrice);
+                            if (isPriceUpdated) {
+                                System.out.println("총 금액이 성공적으로 업데이트되었습니다.");
+                            } else {
+                                System.out.println("총 금액 업데이트에 실패하였습니다.");
+                            }
+
+                            // 숙박 인원 입력
                             System.out.print("변경할 숙박 인원: ");
                             int newNumGuests = scanner.nextInt();
+
                             boolean isModified = bookingService.modifyBooking(selectedBooking.getBookingId(), newCheckInDate, newCheckOutDate, newNumGuests);
                             if (isModified) {
                                 System.out.println("예약이 성공적으로 변경되었습니다.");
@@ -115,6 +189,7 @@ public class BookingView {
                             }
                             break;
 
+
                         case 3:
                             // 리뷰 작성
                             System.out.print("리뷰를 입력하세요: ");
@@ -122,13 +197,17 @@ public class BookingView {
                             String reviewContent = scanner.nextLine();
                             System.out.print("평점을 입력하세요(1-5): ");
                             int rating = scanner.nextInt();
-                            boolean isReviewAdded = bookingService.addReview(selectedBooking.getBookingId(), loggedInUserId, reviewContent, rating);
+
+                            // 리뷰 추가
+                            String userName = LoginSystem.getUserIndex(); // 로그인된 사용자의 이름 가져오기
+                            boolean isReviewAdded = reviewService.addReview(loggedInUserId, userName, selectedAccommodation.getId(), reviewContent, rating);
                             if (isReviewAdded) {
                                 System.out.println("리뷰가 성공적으로 등록되었습니다.");
                             } else {
                                 System.out.println("리뷰 작성에 실패하였습니다.");
                             }
                             break;
+
 
                         case 4:
                             // 뒤로 가기
@@ -139,10 +218,7 @@ public class BookingView {
                             System.out.println("잘못된 입력입니다.");
                     }
                 }
-                
-                
-                
-                
+
             } else {
                 System.out.println("선택한 숙소 정보를 찾을 수 없습니다.");
             }

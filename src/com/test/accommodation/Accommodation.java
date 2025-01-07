@@ -86,6 +86,11 @@ public class Accommodation {
 		this.notice = notice;
 	}
 
+    // 파일 저장 형식
+    public String toFileFormat() {
+        return accommodationId + "■" + username + "■" + area + "■" + address + "■" + accommodationName + "■" + maxGuest + "■" + price + "■" + notice;
+    }
+
 	// File parsing
     public static Accommodation fromFile(String line) {
         String[] parts = line.split("■");

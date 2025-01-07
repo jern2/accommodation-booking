@@ -25,7 +25,7 @@ public class Main {
         //login System test
 
         //1. 로그인
-        LoginSystem.login("t5mht0p3", "jahu07xapnpz");
+        LoginSystem.login("g3p7pov8", "4v7tsd00bdne");
 //        LoginSystem.logout();
     }
 }

@@ -12,10 +12,10 @@ import java.util.regex.Pattern;
 
 public class LoginSystem {
 
-    private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
-    private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
-//    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
-//    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
+//    private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
+//    private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
+    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
+    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
 
 
     // 로그인
@@ -46,7 +46,7 @@ public class LoginSystem {
         if (isValid) {
             // 로그인 상태 저장
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOGIN_FILE))) {
-            	writer.write(userIndex + "■" + userId);
+            	writer.write(userIndex + "■" + userId + "■" + password);
             }
             System.out.println("로그인 성공: " + userId);
         } else {
@@ -84,6 +84,20 @@ public class LoginSystem {
         return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
     }
 
+    //login한 userPassword값
+    public static String getUserPassword() throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(LOGIN_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line = line.trim(); // 공백 제거
+                String[] parts = line.split("■"); // ■로 데이터 분리
+                if (parts.length > 0) {
+                    return parts[2]; // 첫 번째 값(userIndex) 반환
+                }
+            }
+        }
+        return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
+    }
 
 
     
