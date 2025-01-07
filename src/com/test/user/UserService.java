@@ -1,97 +1,67 @@
 package com.test.user;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.io.*;
+import java.util.*;
 
 public class UserService {
-    private static final String PATH = "C:\\class\\code\\project\\accomodation-booking\\data\\member.txt";
+    private static final String FILE_PATH = "C:/class/code/project/accomodation-booking/data/members.txt";
 
-    // 사용자 데이터를 파일에서 읽어오기
-    public List<User> readUsersFromFile() {
+    // 사용자 목록 파일에서 읽어오기
+    public List<User> readMemberFile() {
         List<User> userList = new ArrayList<>();
-        File file = new File(PATH);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\class\\code\\project\\accomodation-booking\\data\\members.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split("■");
-                if (data.length == 7) {
-                    String userId = data[1];
-                    String userPassword = data[2];
-                    String userName = data[3];
-                    String userEmail = data[4];
-                    String userPhoneNum = data[5];
-                    int userPoints = Integer.parseInt(data[6]);  // 포인트 값 추가
-                    userList.add(new User(userId, userPassword, userName, userEmail, userPhoneNum, userPoints));
+                String[] userData = line.split("■");
+                if (userData.length == 7) {
+                    int userIndex = Integer.parseInt(userData[0]);
+                    String userId = userData[1];
+                    String userPassword = userData[2];
+                    String userName = userData[3];
+                    String userEmail = userData[4];
+                    String userPhone = userData[5];
+                    int points = Integer.parseInt(userData[6]);
+
+                    User user = new User(userIndex, userId, userPassword, userName, userEmail, userPhone, points);
+                    userList.add(user);
                 }
             }
         } catch (IOException e) {
-            System.out.println("파일 읽기 오류: " + e.getMessage());
+            System.out.println("파일을 읽는 중 오류가 발생했습니다: " + e.getMessage());
         }
 
         return userList;
     }
 
-    // 수정된 사용자 데이터를 파일에 저장하기
-    public void writeUsersToFile(List<User> userList) {
-        File file = new File(PATH);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            int index = 1;
+
+    // 마지막 userIndex 값을 찾아서 1을 더한 값 반환
+    public int getNextUserIndex(List<User> userList) {
+        int maxIndex = 0;  // 기본값 설정
+
+        // userList에서 가장 큰 userIndex를 찾음
+        for (User user : userList) {
+            if (user.getUserIndex() > maxIndex) {
+                maxIndex = user.getUserIndex();  // 가장 큰 인덱스를 갱신
+            }
+        }
+
+        return maxIndex + 1;  // 가장 큰 인덱스에 1을 더하여 새 userIndex 생성
+    }
+
+
+
+    // 사용자 목록을 파일에 쓰기
+    public void writeMemberFile(List<User> userList) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\class\\code\\project\\accomodation-booking\\data\\members.txt"))) {
             for (User user : userList) {
-                String line = String.join("■",
-                        String.valueOf(index++),
-                        user.getUserId(),
-                        user.getUserPassword(),
-                        user.getUserName(),
-                        user.getUserEmail(),
-                        user.getUserPhoneNum(),
-                        String.valueOf(user.getUserPoints()));
-                writer.write(line);
+                writer.write(user.getUserIndex() + "■" + user.getUserId() + "■" + user.getUserPassword() + "■" + user.getUserName() + "■" + user.getUserEmail() + "■" + user.getUserPhone() + "■" + user.getUserPoints());
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("파일 쓰기 오류: " + e.getMessage());
+            System.out.println("파일을 저장하는 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
-    // 사용자 정보 수정
-    public boolean updateUser(User user) {
-        List<User> userList = readUsersFromFile();
-        boolean isUpdated = false;
-
-        for (User u : userList) {
-            if (u.getUserId().equals(user.getUserId())) {
-                u.setUserPoints(user.getUserPoints());  // 포인트 업데이트
-                isUpdated = true;
-                break;
-            }
-        }
-
-        if (isUpdated) {
-            writeUsersToFile(userList);
-            System.out.println("사용자 정보가 성공적으로 수정되었습니다.");
-        } else {
-            System.out.println("해당 ID의 사용자를 찾을 수 없습니다.");
-        }
-
-        return isUpdated;
-    }
-
-    public User findUserById(String userId) {
-        List<User> userList = readUsersFromFile();
-        for (User user : userList) {
-            if (user.getUserId().equals(userId)) {
-                return user;
-            }
-        }
-        return null;
-    }
 }

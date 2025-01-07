@@ -2,74 +2,92 @@ package com.test.user;
 
 public class User {
 
+
+	private int userIndex;
 	private String userId;
     private String userPassword;
     private String userName;
     private String userEmail;
-    private String userPhoneNum;
+    private String userPhone;
     private int userPoints;
+    
+	public User(int userIndex, String userId, String userPassword, String userName, String userEmail, String userPhone,
+			int userPoints) {
+		super();
+		this.userIndex = userIndex;
+		this.userId = userId;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userPoints = userPoints;
+	}
 
-    public User(String userId, String userPassword, String userName, String userEmail, String userPhoneNum, int userPoints) {
-        this.userId = userId;
-        this.userPassword = userPassword;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.userPhoneNum = userPhoneNum;
-        this.userPoints = userPoints;
-    }
+	public int getUserIndex() {
+		return userIndex;
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public void setUserIndex(int userIndex) {
+		this.userIndex = userIndex;
+	}
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public String getUserPassword() {
-        return userPassword;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
+	public String getUserPassword() {
+		return userPassword;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getUserEmail() {
-        return userEmail;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
+	public String getUserEmail() {
+		return userEmail;
+	}
 
-    public String getUserPhoneNum() {
-        return userPhoneNum;
-    }
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
-    public void setUserPhoneNum(String userPhoneNum) {
-        this.userPhoneNum = userPhoneNum;
-    }
+	public String getUserPhone() {
+		return userPhone;
+	}
 
-    public int getUserPoints() {
-        return userPoints;
-    }
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 
-    public void setUserPoints(int userPoints) {
-        this.userPoints = userPoints;
-    }
+	public int getUserPoints() {
+		return userPoints;
+	}
 
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", userPassword=" + userPassword + ", userName=" + userName +
-                ", userEmail=" + userEmail + ", userPhoneNum=" + userPhoneNum + ", userPoints=" + userPoints + "]";
+	public void setUserPoints(int userPoints) {
+		this.userPoints = userPoints;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userIndex=" + userIndex + ", userId=" + userId + ", userPassword=" + userPassword + ", userName="
+				+ userName + ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userPoints=" + userPoints
+				+ "]";
+	}
+
+    public String toFileFormat() {
+        return userIndex + "■" + userId + "■" + userPassword + "■" + userName + "■" + userEmail + "■" + userPhone + "■" + userPoints;
     }
+    
 }
-
