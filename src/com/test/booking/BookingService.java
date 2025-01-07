@@ -7,16 +7,6 @@ import java.util.List;
 
 
 public class BookingService {
-<<<<<<< HEAD
-	
-	ReviewManager reviewManager = new ReviewManager();
-	
-	
-	//예약 생성 전체 처리
-	public Booking createBooking(String bookingId, User user, String accommodationId, String checkInDate, String checkOutDate, int GuestNum) {
-		
-		return null;
-=======
 
 	private List<Booking> bookings = new ArrayList<>();
 //	private static final String FILE_PATH = ".\\data\\bookings.txt"; // 윈도우 환경
@@ -25,7 +15,6 @@ public class BookingService {
 	// Constructor to load bookings from file
 	public BookingService() {
 		loadBookings();
->>>>>>> 070ade78c3f768770151273ad3e2119adbee1bc1
 	}
 
 	// 예약 추가
