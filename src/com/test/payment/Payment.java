@@ -1,5 +1,14 @@
 package com.test.payment;
 
-public class Payment {
+import java.util.Scanner;
 
+public class Payment {
+	
+	private String paymentId;
+	private String userId;
+	private int amount;
+	private String cardnumber;
 }
+	
+
+
