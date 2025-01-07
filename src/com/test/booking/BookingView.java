@@ -198,8 +198,8 @@ public class BookingView {
                             System.out.print("평점을 입력하세요(1-5): ");
                             int rating = scanner.nextInt();
 
-                            // 리뷰 추가
-                            String userName = LoginSystem.getUserIndex(); // 로그인된 사용자의 이름 가져오기
+                            //리뷰 추가
+                            String userName = LoginSystem.getUserName(); // 로그인된 사용자의 이름 가져오기
                             boolean isReviewAdded = reviewService.addReview(loggedInUserId, userName, selectedAccommodation.getId(), reviewContent, rating);
                             if (isReviewAdded) {
                                 System.out.println("리뷰가 성공적으로 등록되었습니다.");
