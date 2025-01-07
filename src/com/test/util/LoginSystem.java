@@ -11,10 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginSystem {
+
     private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
     private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
 //    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
 //    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
+
 
     // 로그인
     public static void login(String userId, String password) throws IOException {
@@ -91,3 +93,5 @@ public class LoginSystem {
         logout();          // 로그아웃
     }
 }
+
+

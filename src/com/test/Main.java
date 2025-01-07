@@ -6,12 +6,12 @@ import com.test.util.LoginSystem;
 import java.io.IOException;
 
 public class Main {
-    
-	public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws IOException {
+
         BookingService bookingService = new BookingService();
-        
-        
-        
+
+
         //booking Test
         //1. 예약 추가
         //bookingService.addBooking(1,1,"2025-01-06","2025-01-07", 4,  220000);
@@ -23,8 +23,10 @@ public class Main {
         //bookingService.cancelBooking(4,1);
 
         //login System test
+
         //1. 로그인
         LoginSystem.login("t5mht0p3", "jahu07xapnpz");
 //        LoginSystem.logout();
     }
 }
+
