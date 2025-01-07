@@ -73,8 +73,6 @@ public class LoginSystem {
         login("0zngmjhx", "at7hgbjkwrsw");  // 로그인
         logout();          // 로그아웃
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 60473c84bac2aeb450c85af634983dbe6ef6296c
+
+
