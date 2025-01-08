@@ -7,11 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import com.test.user.User;
+import com.test.user.UserView;
 
 public class LoginSystem {
-
+	
     private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
     private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
 //    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
@@ -20,6 +21,7 @@ public class LoginSystem {
 
     // 로그인
     public static void login(String userId, String password) throws IOException {
+    	UserView userview = new UserView();
         File file = new File(USER_FILE);
 
         // 유저 파일이 없으면 오류
@@ -45,13 +47,16 @@ public class LoginSystem {
                 }
             }
         }
-
+        
+        
         if (isValid) {
             // 로그인 상태 저장
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOGIN_FILE))) {
             	writer.write(userIndex + "■" + userId + "■" + password + "■" + loginUsername);
             }
             System.out.println("로그인 성공: " + userId);
+            
+            
         } else {
             System.out.println("아이디 또는 비밀번호가 잘못되었습니다.");
         }
