@@ -16,7 +16,7 @@ public class MemberRepository {
                     String name = data[3];
                     String email = data[4];
                     String phone = data[5];
-                    double balance = Double.parseDouble(data[6]);
+                    int balance = Integer.parseInt(data[6]);
 
                     members.add(new Member(id, username, password, name, email, phone, balance));
                 }
