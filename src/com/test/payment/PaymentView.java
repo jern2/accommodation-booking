@@ -3,7 +3,6 @@ package com.test.payment;
 import java.io.IOException;
 import java.util.*;
 
-
 public class PaymentView {
     public static void main(String[] args) throws NumberFormatException, IOException {
         Scanner scan = new Scanner(System.in);
@@ -23,7 +22,7 @@ public class PaymentView {
             System.out.println("결제하실 방법을 선택해주세요.");
             System.out.println("\n");
             System.out.println("[1] 카드결제");
-            System.out.println("[2] 쌍용머니 결제");
+            System.out.println("[2] 포인트 결제");
             System.out.println("[3] 결제취소");
             System.out.println("\n");
             System.out.print("숫자 입력: ");

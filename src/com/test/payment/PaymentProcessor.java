@@ -37,7 +37,7 @@ public class PaymentProcessor {
             return;
         }
 
-        double amount = userBooking.getTotalPrice();
+        int amount = userBooking.getTotalPrice();
         System.out.println("결제하실 금액은 " + decimalFormat.format(amount) + "원 입니다.");
 
         // 잔액 확인 및 충전/취소 옵션 제공
