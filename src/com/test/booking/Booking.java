@@ -21,6 +21,7 @@ public class Booking {
 		this.totalPrice = totalPrice;
 	}
 
+
 	// Getters and Setters
 	public int getBookingId() {
 		return bookingId;
@@ -95,9 +96,24 @@ public class Booking {
 	        throw new IllegalArgumentException("Invalid number format in data: " + line, e);
 	    }
 	}
+
+	public boolean overlapsWith(Booking date) {
+		 return (checkInDate.equals(this.checkInDate) || checkOutDate.equals(this.checkOutDate) ||
+		            (checkInDate.compareTo(this.checkInDate) >= 0 && checkInDate.compareTo(this.checkOutDate) < 0) ||
+		            (checkOutDate.compareTo(this.checkInDate) > 0 && checkOutDate.compareTo(this.checkOutDate) <= 0));
+		}
+
+	public boolean overlapsWith(String checkInDate2, String checkOutDate2) {
+		 return (checkInDate.equals(this.checkInDate) || checkOutDate.equals(this.checkOutDate) ||
+		            (checkInDate.compareTo(this.checkInDate) >= 0 && checkInDate.compareTo(this.checkOutDate) < 0) ||
+		            (checkOutDate.compareTo(this.checkInDate) > 0 && checkOutDate.compareTo(this.checkOutDate) <= 0));
+		}
+		
+
 	
+
 	
-	
+	 
 	
 	
 }
