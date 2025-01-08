@@ -4,13 +4,13 @@ import java.io.*;
 import java.util.*;
 
 public class UserService {
-    private static final String FILE_PATH = "C:/class/code/project/accomodation-booking/data/members.txt";
+    private static final String PATH = "C:\\class\\code\\project\\accomodation-booking\\data\\members.txt";
 
     // 사용자 목록 파일에서 읽어오기
     public List<User> readMemberFile() {
         List<User> userList = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\class\\code\\project\\accomodation-booking\\data\\members.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userData = line.split("■");
@@ -53,15 +53,25 @@ public class UserService {
 
 
     // 사용자 목록을 파일에 쓰기
-    public void writeMemberFile(List<User> userList) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\class\\code\\project\\accomodation-booking\\data\\members.txt"))) {
+    protected void writeMemberFile(List<User> userList) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH))) {
             for (User user : userList) {
-                writer.write(user.getUserIndex() + "■" + user.getUserId() + "■" + user.getUserPassword() + "■" + user.getUserName() + "■" + user.getUserEmail() + "■" + user.getUserPhone() + "■" + user.getUserPoints());
+                String line = String.join("■",
+                    String.valueOf(user.getUserIndex()),
+                    user.getUserId(),
+                    user.getUserPassword(),
+                    user.getUserName(),
+                    user.getUserEmail(),
+                    user.getUserPhone(),
+                    String.valueOf(user.getUserPoints())
+                );
+                writer.write(line);
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("파일을 저장하는 중 오류가 발생했습니다: " + e.getMessage());
+            System.out.println("파일 쓰기에 실패했습니다: " + e.getMessage());
         }
     }
+
 
 }

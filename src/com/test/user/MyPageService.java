@@ -10,35 +10,59 @@ public class MyPageService extends UserService {
         this.userService = userService;
     }
 
-    // 사용자 회원가입
+	// 사용자 회원가입
 	public boolean registerUser(String userId, String userPassword, String userName, String userEmail, String userPhone) {
-	    List<User> userList = readMemberFile();  // 파일에서 사용자 목록 읽어오기
-	    
-	    // 동일한 ID가 이미 존재하는지 확인
+	    List<User> userList = readMemberFile();  // 파일에서 사용자 목록 읽기
+
+	    // 1. ID 중복 검사
 	    for (User user : userList) {
 	        if (user.getUserId().equals(userId)) {
 	            System.out.println("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
-	            return false;  // 동일한 아이디가 존재하면 회원가입 진행하지 않음
+	            return false;
 	        }
 	    }
 
+	    // 2. 이메일 형식 유효성 검사
+	    if (!isValidEmail(userEmail)) {
+	        System.out.println("유효하지 않은 이메일 형식입니다. 이메일은 '문자열@문자열.com' 형식이어야 합니다.");
+	        return false;
+	    }
+
+	    // 3. 전화번호 형식 유효성 검사
+	    if (!isValidPhoneNumber(userPhone)) {
+	        System.out.println("유효하지 않은 전화번호 형식입니다. 전화번호는 '010'으로 시작하며 8자리 숫자로 구성되어야 합니다.");
+	        return false;
+	    }
+	    
+	    
+
 	    // 새 userIndex 할당
-	    int newUserIndex = getNextUserIndex(userList);  // 가장 큰 userIndex에 1을 더하여 새 인덱스 생성
-	    
+	    int newUserIndex = getNextUserIndex(userList);
+
 	    // 새 사용자 객체 생성
-	    User newUser = new User(newUserIndex, userId, userPassword, userName, userEmail, userPhone, 0); // 기본 포인트 0
-	    
+	    User newUser = new User(newUserIndex, userId, userPassword, userName, userEmail, userPhone, 0);
+
 	    // 사용자 목록에 추가
 	    userList.add(newUser);
-	    
+
 	    // 사용자 목록을 파일에 저장
-	    writeMemberFile(userList);  // 사용자 목록을 파일에 덮어쓰기
-	    
+	    writeMemberFile(userList);
+
 	    System.out.println("회원가입이 완료되었습니다.");
-	    return true;  // 회원가입 성공
+	    return true;
 	}
 
-    // 사용자 포인트 조회
+	// 이메일 유효성 검사
+	private boolean isValidEmail(String email) {
+	    return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.com$");
+	}
+
+	// 전화번호 유효성 검사
+	private boolean isValidPhoneNumber(String phoneNumber) {
+	    return phoneNumber.matches("^010\\d{8}$");
+	}
+
+	// 사용자 포인트 조회
     public int getUserPoints(String userId) {
         List<User> userList = readMemberFile();
 
@@ -100,7 +124,7 @@ public class MyPageService extends UserService {
         return isUpdated;
     }
 
-    // 회원 탈퇴
+    // 회원 탈퇴 
     public boolean deleteUser(String userPassword) {
         List<User> userList = readMemberFile();
         boolean isDeleted = userList.removeIf(user -> user.getUserPassword().equals(userPassword)); // 비밀번호 확인
@@ -115,3 +139,4 @@ public class MyPageService extends UserService {
         return isDeleted;
     }
 }
+

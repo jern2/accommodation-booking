@@ -89,5 +89,5 @@ public class User {
     public String toFileFormat() {
         return userIndex + "■" + userId + "■" + userPassword + "■" + userName + "■" + userEmail + "■" + userPhone + "■" + userPoints;
     }
-    
 }
+    

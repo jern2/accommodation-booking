@@ -96,6 +96,17 @@ public class Booking {
 	    }
 	}
 	
+	public boolean overlapsWith(Booking date) {
+		 return (checkInDate.equals(this.checkInDate) || checkOutDate.equals(this.checkOutDate) ||
+		            (checkInDate.compareTo(this.checkInDate) >= 0 && checkInDate.compareTo(this.checkOutDate) < 0) ||
+		            (checkOutDate.compareTo(this.checkInDate) > 0 && checkOutDate.compareTo(this.checkOutDate) <= 0));
+		}
+
+	public boolean overlapsWith(String checkInDate2, String checkOutDate2) {
+		 return (checkInDate.equals(this.checkInDate) || checkOutDate.equals(this.checkOutDate) ||
+		            (checkInDate.compareTo(this.checkInDate) >= 0 && checkInDate.compareTo(this.checkOutDate) < 0) ||
+		            (checkOutDate.compareTo(this.checkInDate) > 0 && checkOutDate.compareTo(this.checkOutDate) <= 0));
+		}
 	
 	
 	

@@ -1,14 +1,16 @@
 package com.test.booking;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.test.accommodation.Accommodation;
 import com.test.accommodation.AccommodationService;
 import com.test.util.FileUtil;
 import com.test.util.LoginSystem;
 import com.test.util.ValidationUtil;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class BookingService {
@@ -146,7 +148,7 @@ public class BookingService {
 		return false;
 	}
 
-
+	//총 금액 업데이트
 	public boolean updateBookingTotalPrice(int bookingId, int totalPrice) {
 		for (Booking booking : bookings) {
 			if (booking.getBookingId() == bookingId) {
@@ -157,4 +159,24 @@ public class BookingService {
 		}
 		return false;
 	}
+	
+	 // 예약된 날짜 가져오기
+    public List<LocalDate> getBookedDatesByAccommodationId(int accommodationId) {
+        List<LocalDate> bookedDates = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (Booking booking : bookings) {
+            if (booking.getAccommodationId() == accommodationId) {
+                LocalDate checkIn = LocalDate.parse(booking.getCheckInDate(), formatter);
+                LocalDate checkOut = LocalDate.parse(booking.getCheckOutDate(), formatter);
+
+                // CheckIn ~ CheckOut-1 사이의 모든 날짜를 추가
+                for (LocalDate date = checkIn; date.isBefore(checkOut); date = date.plusDays(1)) {
+                    bookedDates.add(date);
+                }
+            }
+        }
+
+        return bookedDates;
+    }
 }

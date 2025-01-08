@@ -2,6 +2,7 @@ package com.test.review;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -26,7 +27,7 @@ public class ReviewService {
     }
 
     // 리뷰 데이터 저장
-    private void saveReviews() {
+    private void saveReviews() throws IOException {
         List<String> lines = new ArrayList<>();
         for (Review review : reviews) {
             lines.add(review.toFileFormat());
@@ -54,7 +55,7 @@ public class ReviewService {
     }
 
     // 리뷰 추가
-    public boolean addReview(int userId, String userName, int accommodationId, String content, int rating) {
+    public boolean addReview(int userId, String userName, int accommodationId, String content, int rating) throws IOException {
         // 중복 리뷰 방지
         if (isDuplicateReview(userId, accommodationId)) {
             System.out.println("이미 이 숙소에 리뷰를 작성하셨습니다.");
@@ -84,5 +85,24 @@ public class ReviewService {
             }
         }
         return result;
+    }
+    
+ // 특정 숙소의 평균 평점 계산
+    public double calculateAverageRating(int accommodationId) {
+        int totalRating = 0;
+        int reviewCount = 0;
+
+        for (Review review : reviews) {
+            if (review.getAccommodationId() == accommodationId) {
+                totalRating += review.getRating();
+                reviewCount++;
+            }
+        }
+
+        if (reviewCount == 0) {
+            return 0.0; // 리뷰가 없으면 평균 평점 0.0 반환
+        }
+
+        return (double) totalRating / reviewCount; // 평균 평점 계산
     }
 }

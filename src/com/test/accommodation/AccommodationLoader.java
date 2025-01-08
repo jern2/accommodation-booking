@@ -11,6 +11,8 @@ public class AccommodationLoader {
         List<List<String>> accommodations = FileUtil.readAndSplitFile("./data/accommodation_list.txt", "■");
         for (List<String> accommodation : accommodations) {
             System.out.println(accommodation); 
+            
         }
-    }
+        
+	}
 }

@@ -1,5 +1,9 @@
 package com.test.review;
 
+import java.io.IOException;
+
+import com.test.util.LoginSystem;
+
 public class Review {
     private int reviewId;
     private int userId;
@@ -78,7 +82,7 @@ public class Review {
     }
 
     // 파일 저장 형식
-    public String toFileFormat() {
+    public String toFileFormat() throws IOException {
         return reviewId + "■" + userId + "■" + userName + "■" + accommodationId + "■" + content + "■" + rating;
     }
 
