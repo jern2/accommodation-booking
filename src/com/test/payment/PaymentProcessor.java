@@ -85,7 +85,7 @@ public class PaymentProcessor {
         System.exit(0); // 프로그램 종료
     }
 
-    public void chargeAccount(Scanner scan, List<Member> members, Member member) {
+    private void chargeAccount(Scanner scan, List<Member> members, Member member) {
         System.out.print("충전하실 금액을 입력하세요: ");
         String input = scan.nextLine();
 

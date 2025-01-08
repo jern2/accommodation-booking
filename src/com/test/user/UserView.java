@@ -3,12 +3,14 @@ package com.test.user;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import com.test.accommodation.AccommodationView;
 import com.test.booking.BookingView;
+import com.test.payment.Member;
 import com.test.payment.PaymentProcessor;
 import com.test.util.LoginSystem;
 
@@ -20,7 +22,9 @@ public class UserView {
     private MyPageService myPageService = new MyPageService(userService);
     private AccommodationView accommodationView = new AccommodationView();
     private PaymentProcessor paymentProcessor = new PaymentProcessor();
+    private LoginSystem loginSystem = new LoginSystem();
     
+    List<Member> members = new ArrayList<>();
     
     Scanner scanner = new Scanner(System.in);
 
@@ -343,7 +347,7 @@ public class UserView {
                 	bookingView.showUserBookings(loggedInUserId);
                     break;
                 case 2:
-                	paymentProcessor.chargeAccount(scanner, null, null);
+                	pointManagement(user);
                     break;
                 case 3:
                     updateUserInfo(user);

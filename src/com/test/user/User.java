@@ -13,7 +13,6 @@ public class User {
     
 	public User(int userIndex, String userId, String userPassword, String userName, String userEmail, String userPhone,
 			int userPoints) {
-		super();
 		this.userIndex = userIndex;
 		this.userId = userId;
 		this.userPassword = userPassword;
