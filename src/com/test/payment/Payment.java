@@ -1,19 +1,24 @@
 package com.test.payment;
 
-import java.util.Scanner;
-
 public class Payment {
-	
-	private String paymentId;
-	private String userId;
-	private int amount;
-	private String cardnumber;
-	private String 
-	
-	
-		
-		
-	}
-	
+    private String type;
+    private String details;
+    private double amount;
 
+    public Payment(String type, String details, double amount) {
+        this.type = type;
+        this.details = details;
+        this.amount = amount;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "type='" + type + '\'' +
+                ", details='" + details + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }
+
