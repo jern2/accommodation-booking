@@ -12,12 +12,6 @@ import com.test.user.User;
 import com.test.user.UserView;
 
 public class LoginSystem {
-<<<<<<< HEAD
-
-
-=======
-	
->>>>>>> b12d80da7700561a1ef024e9f20d982997ce0648
     private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
     private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
 //    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
