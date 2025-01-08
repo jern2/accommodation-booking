@@ -294,11 +294,13 @@ public class UserView {
                     accommodationView.reservation();
                     break;
                 case 3:
+                    LoginSystem.logout();
     				System.out.println("┏━━━━━━━━━━━━━┓");
     				System.out.println("┃로그아웃 성공┃");
     				System.out.println("┗━━━━━━━━━━━━━┛");
                     return;
                 case 4:
+                    LoginSystem.logout();
     				System.out.println("┏━━━━━━━━━━━━━┓");
     				System.out.println("┃프로그램 종료┃");
     				System.out.println("┗━━━━━━━━━━━━━┛");

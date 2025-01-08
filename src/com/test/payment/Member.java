@@ -81,5 +81,11 @@ public class Member {
 				+ email + ", phone=" + phone + ", balance=" + balance + "]";
 	}
 
+
+	// toFileFormat 메서드
+	public String toFileFormat() {
+		return id + "■" + username + "■" + password + "■" +
+				name + "■" + email + "■" + phone + "■" + balance;
+	}
     
 }
