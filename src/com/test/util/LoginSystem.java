@@ -52,7 +52,7 @@ public class LoginSystem {
         if (isValid) {
             // 로그인 상태 저장
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOGIN_FILE))) {
-            	writer.write(userIndex + "■" + userId + "■" + password + "■" + loginUsername);
+            	writer.write(userIndex + "■" + userId + "■" + password + "■" + loginUsername + "■" + isValid);
             }
             System.out.println("로그인 성공: " + userId);
             
@@ -121,6 +121,23 @@ public class LoginSystem {
         }
         return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
     }
+    
+  //login한 유저의 경로구분
+    public static String getValid() throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(LOGIN_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line = line.trim(); // 공백 제거
+                String[] parts = line.split("■"); // ■로 데이터 분리
+                if (parts.length > 0) {
+                    return parts[4]; // 3 번째 값(userIndex) 반환
+                }
+            }
+        }
+        return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
+    }
+    
+    
 
 
     

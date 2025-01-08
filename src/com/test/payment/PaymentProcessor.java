@@ -85,13 +85,13 @@ public class PaymentProcessor {
         System.exit(0); // 프로그램 종료
     }
 
-    private void chargeAccount(Scanner scan, List<Member> members, Member member) {
+    public void chargeAccount(Scanner scan, List<Member> members, Member member) {
         System.out.print("충전하실 금액을 입력하세요: ");
         String input = scan.nextLine();
 
-        double chargeAmount;
+        int chargeAmount;
         try {
-            chargeAmount = Double.parseDouble(input);
+            chargeAmount = Integer.parseInt(input);
             if (chargeAmount <= 0) {
                 System.out.println("충전 금액은 0원보다 커야 합니다.");
                 return;

@@ -266,6 +266,10 @@ public class AccommodationService {
 	                System.out.println("가격: " + String.format("%,d원", selectedAccommodation.getPrice()));
 	                System.out.println("공지사항: ");
 	                printFormattedNotice(selectedAccommodation.getNotice(), 30);
+	                
+	                
+	                
+	                
 	                break; // 유효한 입력으로 루프 종료
 	            } else {
 	                System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");

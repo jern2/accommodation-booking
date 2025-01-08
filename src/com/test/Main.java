@@ -20,6 +20,7 @@ public class Main {
          AdminView adminView = new AdminView();
          BookingView bookingView = new BookingView();
          PaymentView paymentView = new PaymentView();
+         LoginSystem loginSystem = new LoginSystem();
 
          while (true) {
              System.out.println("====== 숙소 예약 프로그램 ======");
@@ -51,7 +52,7 @@ public class Main {
     	
     	
     	
-//    	
+    	
 //    	UserView userview = new UserView();
 //    	BookingView bookingView = new BookingView();
 //        int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());

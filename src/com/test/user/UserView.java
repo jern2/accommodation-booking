@@ -7,7 +7,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.test.accommodation.AccommodationView;
 import com.test.booking.BookingView;
+import com.test.payment.PaymentProcessor;
 import com.test.util.LoginSystem;
 
 public class UserView {
@@ -16,6 +18,8 @@ public class UserView {
     private UserAuthService userAuthService = new UserAuthService();
     private UserInfoService userInfoService = new UserInfoService();
     private MyPageService myPageService = new MyPageService(userService);
+    private AccommodationView accommodationView = new AccommodationView();
+    private PaymentProcessor paymentProcessor = new PaymentProcessor();
     
     
     Scanner scanner = new Scanner(System.in);
@@ -240,13 +244,21 @@ public class UserView {
             System.out.println("┗━━━━━━━━━━━━━┛");
 
             // memberMenu로 이동
-            User user = new User(Integer.parseInt(loggedInUserIndex), userId, userPassword, 
-                                 LoginSystem.getUserName(), null, null, 0);
+            User user = new User(
+                Integer.parseInt(loggedInUserIndex),
+                userId,
+                userPassword,
+                LoginSystem.getUserName(),
+                null,
+                null,
+                0
+            );
             memberMenu(user);
         } else {
-            System.err.println("아이디 또는 비밀번호가 올바르지 않습니다.");
+            System.err.println("로그인 실패: 다시 시도해주세요.");
         }
     }
+
 
     private void memberMenu(User user) throws IOException {
     	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
@@ -279,7 +291,7 @@ public class UserView {
                     myPage(user);
                     break;
                 case 2:
-                    System.out.println("숙소 예약 기능은 아직 구현되지 않았습니다.");
+                    accommodationView.reservation();
                     break;
                 case 3:
     				System.out.println("┏━━━━━━━━━━━━━┓");
@@ -331,7 +343,7 @@ public class UserView {
                 	bookingView.showUserBookings(loggedInUserId);
                     break;
                 case 2:
-//                	bookingView.showUserBookings(loggedInUserId);
+                	paymentProcessor.chargeAccount(scanner, null, null);
                     break;
                 case 3:
                     updateUserInfo(user);
