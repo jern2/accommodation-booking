@@ -109,11 +109,4 @@ public class Booking {
 		            (checkOutDate.compareTo(this.checkInDate) > 0 && checkOutDate.compareTo(this.checkOutDate) <= 0));
 		}
 		
-
-	
-
-	
-	 
-	
-	
 }

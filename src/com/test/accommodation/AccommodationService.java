@@ -203,12 +203,7 @@ public class AccommodationService {
 	            break; // 유효한 체크아웃 날짜라면 루프 종료
 	        }
 	    }
-//	    // 날짜 입력받기
-//	    System.out.print("체크인 날짜를 입력하세요 (예: 2025-01-01): ");
-//	    String checkInDate = scanner.nextLine().trim();
-//
-//	    System.out.print("체크아웃 날짜를 입력하세요 (예: 2025-01-03): ");
-//	    String checkOutDate = scanner.nextLine().trim();
+
 
 	    // 조건에 따라 숙소 필터링
 	    List<Accommodation> filteredAccommodations = new ArrayList<>();
@@ -447,6 +442,8 @@ public static void randomList() {
 			System.out.println("데이터가 없습니다.");
 			return;
 		}
-	}
+	} 
 }
+
 }
+

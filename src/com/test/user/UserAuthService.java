@@ -4,7 +4,7 @@ import java.util.List;
 
 public class UserAuthService {
 
-    private static final String FILE_PATH = "C:\\class\\code\\project\\accomodation-booking\\data\\members.txt";
+    private static final String PATH = "C:\\class\\code\\project\\accomodation-booking\\data\\members.txt";
     private UserService userService = new UserService();
 
     // 회원 탈퇴 메서드

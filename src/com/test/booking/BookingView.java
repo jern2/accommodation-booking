@@ -1,6 +1,7 @@
 package com.test.booking;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +17,8 @@ public class BookingView {
         BookingService bookingService = new BookingService();
         ReviewService reviewService = new ReviewService();
         AccommodationService accommodationService = new AccommodationService();
+        //캘린더
+        CalendarService calendarService = new CalendarService();
         Scanner scanner = new Scanner(System.in);
         
         
@@ -32,9 +35,9 @@ public class BookingView {
 
         int index = 1;
 
-        System.out.println("+" + "-".repeat(50) + "+");
-        System.out.println("|" + " ".repeat(18) + "예약한 숙소 리스트" + " ".repeat(18) + "|");
-        System.out.println("+" + "-".repeat(50) + "+");
+        System.out.println("+" + "-".repeat(60) + "+");
+        System.out.println("|" + " ".repeat(22) + "예약한 숙소 리스트" + " ".repeat(22) + "|");
+        System.out.println("+" + "-".repeat(60) + "+");
         System.out.printf("[번호]\t [지역]\t [숙소명]\t [최대 인원]\t [가격]\n");
 
         // 예약된 숙소 리스트 출력
@@ -42,14 +45,14 @@ public class BookingView {
             Accommodation accommodation = accommodationService.getAccommodationById(booking.getAccommodationId());
             if (accommodation != null) {
                 System.out.printf("| %d\t %s\t\t %s\t %d\t %d\n", index, accommodation.getArea(), accommodation.getAccommodationName(), accommodation.getMaxGuest(), accommodation.getPrice());
-                System.out.println("|" + " ".repeat(50));
+                System.out.println("|" + " ".repeat(60));
                 index++;
             } else {
                 System.out.println("|   숙소 정보를 찾을 수 없습니다.                  |");
             }
         }
 
-        System.out.println("+" + "-".repeat(50) + "+");
+        System.out.println("+" + "-".repeat(60) + "+");
         System.out.println("0. 뒤로 가기");
         System.out.print("숙소 번호를 선택하세요: ");
 
@@ -69,24 +72,37 @@ public class BookingView {
 
             if (selectedAccommodation != null) {
                 // 숙소 상세정보 출력
-                System.out.println("+" + "-".repeat(50) + "+");
-                System.out.println("|" + " ".repeat(19) + "숙소 상세정보" + " ".repeat(19) + "|");
-                System.out.println("+" + "-".repeat(50) + "+");
+                System.out.println("+" + "-".repeat(60) + "+");
+                System.out.println("|" + " ".repeat(29) + "숙소 상세정보" + " ".repeat(29) + "|");
+                System.out.println("+" + "-".repeat(60) + "+");
                 System.out.printf(" 숙소명  : %-40s \n", selectedAccommodation.getAccommodationName());
                 System.out.printf(" 지역   : %-42s \n", selectedAccommodation.getArea());
                 System.out.printf(" 주소   : %-42s \n", selectedAccommodation.getAddress());
                 System.out.printf(" 최대 인원: %-36d \n", selectedAccommodation.getMaxGuest());
                 System.out.printf(" 가격: %-40d \n\n", selectedAccommodation.getPrice());
+                
+                // 평균 평점 출력
+                double averageRating = reviewService.calculateAverageRating(selectedAccommodation.getId());
+                System.out.printf(" 평균 평점: %-36.1f \n", averageRating);
+                
                 System.out.println(" 공지사항");
                 printFormattedNotice(selectedAccommodation.getNotice(), 40);
+                
+                // 예약 캘린더 추가
+                System.out.println("\n 예약 현황");
+                LocalDate today = LocalDate.now();
+                calendarService.showCalendar(selectedAccommodation.getId(), today.getYear(), today.getMonthValue(), bookingService);
+                
                 System.out.println("\n캘린더");
                 System.out.printf("[숙박일] %s\n", selectedBooking.getCheckInDate());
                 System.out.printf("[퇴실일] %s\n", selectedBooking.getCheckOutDate());
-                System.out.println("+" + "-".repeat(50) + "+");
+                System.out.println("+" + "-".repeat(60) + "+");
+                
+                
                 // 숙소 리뷰 출력
-                System.out.println("+" + "-".repeat(50) + "+");
-                System.out.println("|                    숙소 리뷰                   |");
-                System.out.println("+" + "-".repeat(50) + "+");
+                System.out.println("+" + "-".repeat(60) + "+");
+                System.out.println("|                         숙소 리뷰                           |");
+                System.out.println("+" + "-".repeat(60) + "+");
 
                 List<Review> reviews = reviewService.getReviewsByAccommodationId(selectedAccommodation.getId());
                 if (reviews.isEmpty()) {
@@ -96,7 +112,7 @@ public class BookingView {
                         System.out.printf("- [작성자: %s] [평점: %d] %s\n", review.getUserName(), review.getRating(), review.getContent());
                     }
                 }
-                System.out.println("+" + "-".repeat(50) + "+");
+                System.out.println("+" + "-".repeat(60) + "+");
 
 
                 while (true) {
@@ -198,8 +214,8 @@ public class BookingView {
                             System.out.print("평점을 입력하세요(1-5): ");
                             int rating = scanner.nextInt();
 
-                            // 리뷰 추가
-                            String userName = LoginSystem.getUserIndex(); // 로그인된 사용자의 이름 가져오기
+                            //리뷰 추가
+                            String userName = LoginSystem.getUserName(); // 로그인된 사용자의 이름 가져오기
                             boolean isReviewAdded = reviewService.addReview(loggedInUserId, userName, selectedAccommodation.getId(), reviewContent, rating);
                             if (isReviewAdded) {
                                 System.out.println("리뷰가 성공적으로 등록되었습니다.");
