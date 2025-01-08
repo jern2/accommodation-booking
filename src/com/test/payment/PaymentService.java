@@ -9,7 +9,7 @@ public class PaymentService {
         }
         
 
-        Payment payment = new Payment("Card", cardComp, 1000.0); // 임시 결제 금액
+        Payment payment = new Payment("Card", cardComp, 1000); // 임시 결제 금액
         return payment;
     }
 

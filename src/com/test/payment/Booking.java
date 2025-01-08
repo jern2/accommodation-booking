@@ -8,10 +8,10 @@ public class Booking {
     private String checkInDate;  
     private String checkOutDate; 
     private int numberOfGuests;
-    private double totalPrice;
+    private int totalPrice;
 
     public Booking(int bookingId, int userId, int accommodationId, String checkInDate, 
-                  String checkOutDate, int numberOfGuests, double totalPrice) {
+                  String checkOutDate, int numberOfGuests, int totalPrice) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.accommodationId = accommodationId;
@@ -71,11 +71,11 @@ public class Booking {
         this.numberOfGuests = numberOfGuests;
     }
 
-    public double getTotalPrice() {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
     

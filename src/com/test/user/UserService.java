@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class UserService {
-    private static final String PATH = "C:\\class\\code\\project\\accomodation-booking\\data\\members.txt";
+    private static final String PATH = ".\\data\\members.txt";
 
     // 사용자 목록 파일에서 읽어오기
     public List<User> readMemberFile() {

@@ -7,16 +7,25 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserView {
+import com.test.accommodation.AccommodationView;
+import com.test.booking.BookingView;
+import com.test.payment.PaymentProcessor;
+import com.test.util.LoginSystem;
 
+public class UserView {
+	BookingView bookingView = new BookingView();
     private UserService userService = new UserService();
     private UserAuthService userAuthService = new UserAuthService();
     private UserInfoService userInfoService = new UserInfoService();
     private MyPageService myPageService = new MyPageService(userService);
+    private AccommodationView accommodationView = new AccommodationView();
+    private PaymentProcessor paymentProcessor = new PaymentProcessor();
+    
     
     Scanner scanner = new Scanner(System.in);
 
-    public void start() {
+    public void start() throws IOException {
+    	
             while (true) {
                 System.out.println("              ┏━━━━━━━━━━━━━━━━━━━━┓");
                 System.out.println("┏━━━━━━━━━━━━━┃ 숙소 예약 프로그램 ┃━━━━━━━━━━━━━━┓");
@@ -64,7 +73,7 @@ public class UserView {
                 }
             }
         }
-
+    	
         private void findAccount() {
             System.out.println("\n=== 계정 찾기 ===");
             System.out.print("이름: ");
@@ -193,7 +202,7 @@ public class UserView {
 
 
     private void saveUsersToFile(List<User> users) {
-        String filePath = "C:\\class\\code\\project\\accomodation-booking\\data\\members.txt";
+        String filePath = ".\\data\\members.txt";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) { // true로 append 모드 활성화
             for (User user : users) {
@@ -216,31 +225,43 @@ public class UserView {
         }
     }
 
-
-	private void login() {
+    //로그인
+    private void login() throws IOException {
         System.out.println("\n=== 로그인 ===");
         System.out.print("아이디: ");
         String userId = scanner.nextLine();
         System.out.print("비밀번호: ");
         String userPassword = scanner.nextLine();
 
-        List<User> userList = userService.readMemberFile();
-        User user = userList.stream()
-                            .filter(u -> u.getUserId().equals(userId) && u.getUserPassword().equals(userPassword))
-                            .findFirst()
-                            .orElse(null);
+        // LoginSystem의 login 메서드 호출
+        LoginSystem.login(userId, userPassword);
 
-        if (user != null) {
-			System.out.println("┏━━━━━━━━━━━━━┓");
-			System.out.println("┃ 로그인 성공 ┃");
-			System.out.println("┗━━━━━━━━━━━━━┛");
+        // 로그인 성공 여부 확인
+        String loggedInUserIndex = LoginSystem.getUserIndex();
+        if (loggedInUserIndex != null) {
+            System.out.println("┏━━━━━━━━━━━━━┓");
+            System.out.println("┃ 로그인 성공 ┃");
+            System.out.println("┗━━━━━━━━━━━━━┛");
+
+            // memberMenu로 이동
+            User user = new User(
+                Integer.parseInt(loggedInUserIndex),
+                userId,
+                userPassword,
+                LoginSystem.getUserName(),
+                null,
+                null,
+                0
+            );
             memberMenu(user);
         } else {
-            System.err.println("아이디 또는 비밀번호가 올바르지 않습니다.");
+            System.err.println("로그인 실패: 다시 시도해주세요.");
         }
     }
 
-    private void memberMenu(User user) {
+
+    private void memberMenu(User user) throws IOException {
+    	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
 
 			System.out.println("                     ┏━━━━━━━━━━┓");
@@ -270,7 +291,7 @@ public class UserView {
                     myPage(user);
                     break;
                 case 2:
-                    System.out.println("숙소 예약 기능은 아직 구현되지 않았습니다.");
+                    accommodationView.reservation();
                     break;
                 case 3:
     				System.out.println("┏━━━━━━━━━━━━━┓");
@@ -288,7 +309,8 @@ public class UserView {
         }
     }
 
-    private void myPage(User user) {
+    private void myPage(User user) throws IOException {
+    	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
 
 			System.out.println("                     ┏━━━━━━━━━━━━━┓");
@@ -318,10 +340,10 @@ public class UserView {
 
             switch (sel) {
                 case 1:
-                    System.out.println("예약한 숙소 확인 기능은 아직 구현되지 않았습니다.");
+                	bookingView.showUserBookings(loggedInUserId);
                     break;
                 case 2:
-                    pointManagement(user);
+                	paymentProcessor.chargeAccount(scanner, null, null);
                     break;
                 case 3:
                     updateUserInfo(user);
@@ -386,7 +408,7 @@ public class UserView {
     }
 
     private void updateUserInfo(User user) {
-     
+    	
         System.out.println("\n=== 회원정보 수정 ===");
         
         System.out.print("현재 비밀번호를 입력하세요: ");
@@ -425,7 +447,7 @@ public class UserView {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         UserView userView = new UserView();
         userView.start();
     }

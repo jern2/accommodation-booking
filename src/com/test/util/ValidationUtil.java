@@ -63,6 +63,8 @@ public class ValidationUtil {
     public static boolean isMinimumStayValid(long stayDuration) {
         return stayDuration >= 1; // 최소 1박 이상
     }
+    
+    //
 }
 
 

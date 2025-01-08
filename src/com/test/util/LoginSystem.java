@@ -7,19 +7,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import com.test.user.User;
+import com.test.user.UserView;
 
 public class LoginSystem {
-
     private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
     private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
 //    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
 //    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
 
 
+
     // 로그인
     public static void login(String userId, String password) throws IOException {
+    	UserView userview = new UserView();
         File file = new File(USER_FILE);
 
         // 유저 파일이 없으면 오류
@@ -45,13 +47,16 @@ public class LoginSystem {
                 }
             }
         }
-
+        
+        
         if (isValid) {
             // 로그인 상태 저장
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOGIN_FILE))) {
-            	writer.write(userIndex + "■" + userId + "■" + password + "■" + loginUsername);
+            	writer.write(userIndex + "■" + userId + "■" + password + "■" + loginUsername + "■" + isValid);
             }
             System.out.println("로그인 성공: " + userId);
+            
+            
         } else {
             System.out.println("아이디 또는 비밀번호가 잘못되었습니다.");
         }
@@ -116,13 +121,31 @@ public class LoginSystem {
         }
         return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
     }
+    
+  //login한 유저의 경로구분
+    public static String getValid() throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(LOGIN_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line = line.trim(); // 공백 제거
+                String[] parts = line.split("■"); // ■로 데이터 분리
+                if (parts.length > 0) {
+                    return parts[4]; // 3 번째 값(userIndex) 반환
+                }
+            }
+        }
+        return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
+    }
+    
+    
 
 
     
     public static void main(String[] args) throws IOException {
         // 테스트
         login("t5mht0p3", "jahu07xapnpz");  // 로그인
-        logout();          // 로그아웃
+        //logout();          // 로그아웃
+
     }
 }
 
