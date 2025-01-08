@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -19,13 +21,13 @@ import java.util.Set;
 import com.test.booking.Booking;
 import com.test.booking.BookingService;
 
-public class AccommodationService {
+public class AccommodationService2 {
     private List<Accommodation> accommodations;
     BookingService bookingService = new BookingService();
     private static final String FILE_PATH = "./data/accommodation_list.txt";
     
 
-    public AccommodationService() {
+    public AccommodationService2() {
         accommodations = new ArrayList<>();
         loadAccommodations();
     }
@@ -115,7 +117,7 @@ public class AccommodationService {
 //
     
     //지원
-    public static void groupRandomlist() {
+    public static void groupRandomlist2() {
 		
 	    String accomfilePath = ".\\data\\accommodation_list.txt";
 
@@ -186,23 +188,26 @@ public class AccommodationService {
 	            System.out.println("검색 가능한 지역이 아닙니다. 다시 입력해주세요.\n");
 	        }
 	    }
-	    String checkInDate;
+	    
+	    String checkInDate, checkOutDate;
+
 	    while (true) {
-	        System.out.print("체크인 날짜를 입력하세요 (예: 2025-01-01): ");
-	        checkInDate = scanner.nextLine().trim();
-	        if (isValidDate(checkInDate)) {
-	            break; // 유효한 날짜라면 루프 종료
+	    	System.out.println("\n체크인 날짜를 선택해주세요:");
+	        checkInDate = selectDateFromCalendar();
+
+	        System.out.println("\n체크아웃 날짜를 선택해주세요:");
+	        checkOutDate = selectDateFromCalendar();
+
+	        // **[추가됨] 유효성 검사**
+	        if (areValidDates(checkInDate, checkOutDate)) {
+	            break;
+	        } else {
+	            System.out.println("체크아웃 날짜는 체크인 날짜 이후여야 합니다. 다시 선택해주세요.");
 	        }
 	    }
 
-	    String checkOutDate;
-	    while (true) {
-	        System.out.print("체크아웃 날짜를 입력하세요 (예: 2025-01-03): ");
-	        checkOutDate = scanner.nextLine().trim();
-	        if (isValidDate(checkOutDate) && areValidDates(checkInDate, checkOutDate)) {
-	            break; // 유효한 체크아웃 날짜라면 루프 종료
-	        }
-	    }
+	        
+	    
 
 
 	    // 조건에 따라 숙소 필터링
@@ -274,40 +279,73 @@ public class AccommodationService {
 	    } else {
 	        System.out.println("예약 가능한 숙소가 없습니다.");
 	    }
-	
-    	int choice;
-		while(true){
-		System.out.println("\n1. 숙소 리스트로 다시 돌아가기");
-		System.out.println("2. 예약하기");
-		System.out.print("\n선택: ");
-		
-		while (!scanner.hasNextInt()) {
-			System.out.println("유효한 숫자를 입력해주세요.");
-			scanner.next();
-			System.out.print("선택: ");
-		}
-
-		choice = scanner.nextInt();if (choice == 1) {
-			System.out.println("\n숙소 리스트로 돌아갑니다.");
-			 for (int i = 0; i < Math.min(20, filteredAccommodations.size()); i++) {
-		            Accommodation accom = filteredAccommodations.get(i);
-		            System.out.printf("%d\t%-5s\t\t%2d명\t%,9d원\t%5s\t%n", (i + 1), accom.getAccommodationName(), accom.getMaxGuest(), accom.getPrice(), accom.getAddress());
-		        }
-		    } else {
-		        System.out.println("해당 날짜에 예약 가능한 숙소가 없습니다.");
-		    }
-//		//continue; // 리스트로 돌아가기
-//		} else if (choice == 2) {
-//			System.out.println("\n예약하기로 이동합니다.");
-//			return; // 메서드 종료
-//		}
-	}
     }
-		
 
+  private static String selectDateFromCalendar() {
+        LocalDate today = LocalDate.now(); // 현재 날짜
+        LocalDate calendarMonth = today.withDayOfMonth(1); // 달력의 첫날 설정
+
+        Scanner scanner = new Scanner(System.in);
+        String selectedDate = "";
+
+        while (true) {
+        	System.out.println("\n");
+        	System.out.println("===========================");
+            System.out.println("      "+calendarMonth.getYear() + "년 " + calendarMonth.getMonthValue() + "월");
+            System.out.println("===========================\n");
+            displayCalendar(calendarMonth);
+            System.out.println("\n===========================\n");
+         
+            System.out.print("[다음 달 : + / 지난 달 : - / " + calendarMonth.getMonthValue() +"월달 날짜 선택 : 숫자] \n\n입력 :");
+            String input = scanner.nextLine().trim();
+
+            if (input.equals("+")) {
+                calendarMonth = calendarMonth.plusMonths(1); // 다음 달로 이동
+            } else if (input.equals("-")) {
+                calendarMonth = calendarMonth.minusMonths(1); // 저번 달로 이동
+            } else if (input.matches("\\d{1,2}")) { // 숫자 입력
+                int day = Integer.parseInt(input);
+                try {
+                    selectedDate = calendarMonth.withDayOfMonth(day).toString();
+                    break; // 유효한 날짜를 선택하면 종료
+                } catch (DateTimeException e) {
+                    System.out.println("유효하지 않은 날짜입니다. 다시 선택해주세요.");
+                }
+            } else {
+                System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+            }
+        }
+        return selectedDate;
+    }
+
+    // **[추가됨] 달력 출력 함수**
+    private static void displayCalendar(LocalDate calendarMonth) {
+        LocalDate firstDay = calendarMonth.withDayOfMonth(1);
+        int firstDayOfWeek = firstDay.getDayOfWeek().getValue()+1 ; // 첫날의 요일 (1=월, 7=일)
+        int daysInMonth = calendarMonth.lengthOfMonth(); // 해당 월의 일 수
+        
+        System.out.println("일 월 화 수 목 금 토");
+
+        // 첫 주 공백 처리
+        for (int i = 1; i < firstDayOfWeek; i++) {
+            System.out.print("   ");
+        }
+
+        // 날짜 출력
+        for (int day = 1; day <= daysInMonth; day++) {
+            System.out.printf("%2d ", day);
+            if ((day + firstDayOfWeek - 1) % 7 == 0) { // 토요일 후 줄 바꿈
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }   
     
     
     
+    
+    
+
 public static void printFormattedNotice(String notice, int maxLength) {
     int start = 0;
     while (start < notice.length()) {
