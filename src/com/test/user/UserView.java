@@ -71,6 +71,7 @@ public class UserView {
                         break;
                     case 5:
                         System.out.println("프로그램을 종료합니다.");
+                        
                         return;
                     default:
                         System.err.println("잘못된 입력입니다. 다시 시도하세요.");
