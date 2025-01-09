@@ -31,7 +31,8 @@ public class Main {
              System.out.print("선택: ");
              int choice = scanner.nextInt();
              scanner.nextLine(); // 버퍼 비우기
-
+             
+             
              switch (choice) {
                  case 1:
                      userView.start(); // UserView 진입

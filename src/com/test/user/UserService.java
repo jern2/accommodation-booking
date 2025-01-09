@@ -7,11 +7,13 @@ import com.test.util.LoginSystem;
 
 public class UserService {
 
-    private List<User> users = new ArrayList<>(); // 사
+    private List<User> users = new ArrayList<>();
 
     //private static final String PATH = ".\\data\\members.txt"; //윈도우
     private static final String PATH = "./data/members.txt"; //맥
-
+    
+    
+    
     // 사용자 목록 파일에서 읽어오기
     public List<User> readMemberFile() {
         List<User> userList = new ArrayList<>();

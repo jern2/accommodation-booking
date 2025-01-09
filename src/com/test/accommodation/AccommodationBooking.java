@@ -21,13 +21,17 @@ public class AccommodationBooking {
 	        //int selectedAccommodationId = randomList(); // 선택된 숙소의 ID (예: 4번 숙소)
 	        int selectedAccommodationId = randomList(); 
 	        Set<LocalDate> reservedDates = new HashSet<>();
-
+	        
+	        
+	        
 	        // 파일에서 예약 정보 읽기
 	        loadBookingData(bookingFilePath, selectedAccommodationId, reservedDates);
 
 	        // 체크인 및 체크아웃 날짜 선택
 	        LocalDate checkInDate = selectCheckInDate(reservedDates);
 	        LocalDate checkOutDate = selectCheckOutDate(checkInDate, reservedDates);
+	        
+	        int guestNum = -1;
 
 	        System.out.println("\n[선택한 예약 정보]");
 	        System.out.println("체크인 날짜: " + checkInDate);
@@ -121,6 +125,28 @@ public class AccommodationBooking {
 	        }
 	        return selectedDate;
 	    }
+	    
+	    
+	    private static int inputGuestNum() {
+	        Scanner scanner = new Scanner(System.in);
+	        int guestNum = -1;
+
+	        while (true) {
+	            System.out.print("숙박할 게스트 수를 입력하세요: ");
+	            if (scanner.hasNextInt()) {
+	                guestNum = scanner.nextInt();
+	                if (guestNum > 0) {
+	                    break; // 유효한 값 입력 시 종료
+	                } else {
+	                    System.out.println("게스트 수는 1명 이상이어야 합니다. 다시 입력해주세요.");
+	                }
+	            } else {
+	                System.out.println("유효한 숫자를 입력해주세요.");
+	                scanner.next(); // 잘못된 입력 제거
+	            }
+	        }
+	        return guestNum;
+	    }
 
 	    private static LocalDate selectDateFromCalendar(Set<LocalDate> reservedDates) {
 	        LocalDate today = LocalDate.now();
@@ -196,6 +222,9 @@ public class AccommodationBooking {
 	        // 체크인 및 체크아웃 날짜 선택
 	        LocalDate checkInDate = selectCheckInDate(reservedDates);
 	        LocalDate checkOutDate = selectCheckOutDate(checkInDate, reservedDates);
+	        
+	        //게스트 수 입력
+	        int guestNum = inputGuestNum();
 
 	        System.out.println("\n[선택한 예약 정보]");
 	        System.out.println("숙소 이름: " + selectedAccommodation.getAccommodationName());
@@ -208,7 +237,7 @@ public class AccommodationBooking {
 	                selectedAccommodation.getId(),
 	                checkInDate.toString(),
 	                checkOutDate.toString(),
-	                1,
+	                guestNum,
 	                selectedAccommodation.getPrice()
 	        );
 	        paymentView.showPaymentOptions();

@@ -40,6 +40,20 @@ public class ValidationUtil {
             return true; // 잘못된 형식은 과거로 간주
         }
     }
+    
+    //미래 날짜인지 확인 
+    public static boolean isDateInFuture(String date) {
+    	try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate inputDate = LocalDate.parse(date, formatter);
+            LocalDate today = LocalDate.now();
+
+            return inputDate.isAfter(today);
+        } catch (DateTimeParseException e) {
+            return true; // 잘못된 형식은 미래로 간주
+        }
+    }
+    
 
     // 두 날짜 사이의 일수 계산
     public static int calculateDaysBetween(String startDate, String endDate) {

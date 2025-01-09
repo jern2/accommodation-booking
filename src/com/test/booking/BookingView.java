@@ -176,7 +176,6 @@ public class BookingView {
         bookingService.modifyBooking(booking.getBookingId(), newCheckInDate, newCheckOutDate, booking.getNumGuests());
     }
 
-    // 리뷰 작성
     private void addReview(Booking booking, Accommodation accommodation, int loggedInUserId) throws IOException {
         System.out.print("리뷰를 입력하세요: ");
         scanner.nextLine(); // 버퍼 비우기
@@ -184,8 +183,10 @@ public class BookingView {
         System.out.print("평점을 입력하세요(1-5): ");
         int rating = scanner.nextInt();
 
-        if (reviewService.addReview(loggedInUserId, LoginSystem.getUserName(), accommodation.getId(), reviewContent,
-                rating)) {
+        // 체크아웃 날짜 전달
+        String checkOutDate = booking.getCheckOutDate();
+
+        if (reviewService.addReview(loggedInUserId, LoginSystem.getUserName(), accommodation.getId(), reviewContent, rating, checkOutDate)) {
             System.out.println("리뷰가 성공적으로 등록되었습니다.");
         } else {
             System.out.println("리뷰 작성에 실패하였습니다.");
