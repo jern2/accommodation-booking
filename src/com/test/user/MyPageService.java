@@ -101,7 +101,7 @@ public class MyPageService extends UserService {
 
     // 사용자 정보 수정
     public boolean updateUserInfo(String userId, String newUserName, String newUserEmail, String newUserPhoneNum) {
-        List<User> userList = readMemberFile();
+        List<User> userList = userService.readMemberFile();
         boolean isUpdated = false;
 
         for (User user : userList) {
@@ -126,7 +126,7 @@ public class MyPageService extends UserService {
 
     // 회원 탈퇴 
     public boolean deleteUser(String userPassword) {
-        List<User> userList = readMemberFile();
+        List<User> userList = userService.readMemberFile();
         boolean isDeleted = userList.removeIf(user -> user.getUserPassword().equals(userPassword)); // 비밀번호 확인
 
         if (isDeleted) {

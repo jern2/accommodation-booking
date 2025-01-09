@@ -149,7 +149,7 @@ public class UserView {
             String userEmail = scanner.nextLine();
             
             if (!isValidEmail(userEmail)) {
-                System.out.println("이메일 형식이 잘못되었습니다. 이메일은 '문자열@문자열.com' 형식이어야 합니다.");
+                System.out.println("이메일 형식이 잘못되었습니다./n 이메일은 영문자와 숫자 조합으로 'ssangyong@paper.com' 형식이어야 합니다.");
                 return; // 유효하지 않으면 메서드 종료
             }
 
@@ -260,7 +260,7 @@ public class UserView {
                 sel = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
             } catch (InputMismatchException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                System.err.println("잘못된 입력입니다. 숫자를 입력해주세요.");
                 scanner.nextLine(); // 버퍼 비우기
                 continue;
             }
@@ -270,7 +270,7 @@ public class UserView {
                     myPage(user);
                     break;
                 case 2:
-                    System.out.println("숙소 예약 기능은 아직 구현되지 않았습니다.");
+                    System.err.println("숙소 예약 기능은 아직 구현되지 않았습니다.");
                     break;
                 case 3:
     				System.out.println("┏━━━━━━━━━━━━━┓");
@@ -311,7 +311,7 @@ public class UserView {
                 sel = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
             } catch (InputMismatchException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                System.err.println("잘못된 입력입니다. 숫자를 입력해주세요.");
                 scanner.nextLine(); // 버퍼 비우기
                 continue;
             }
@@ -419,9 +419,21 @@ public class UserView {
         
 
 
-        if (userInfoService.updateUserInfo(user.getUserId(), user.getUserPassword(), newName, newEmail, newPhoneNum)) {
-
+        if (userInfoService.updateUserInfo(user.getUserId(), newPassword, newName, newEmail, newPhoneNum)) {
             System.out.println("회원정보가 성공적으로 수정되었습니다.");
+            
+            // 수정 후 최신 데이터를 읽어와서 새로운 User 객체로 업데이트
+            List<User> updatedUserList = userService.readMemberFile();
+            User updatedUser = updatedUserList.stream()
+                                              .filter(u -> u.getUserId().equals(user.getUserId()))
+                                              .findFirst()
+                                              .orElse(user); // 갱신된 데이터를 가져오거나 기존 사용자 유지
+
+            // user에 값 갱신
+            user.setUserPassword(updatedUser.getUserPassword());
+            user.setUserName(updatedUser.getUserName());
+            user.setUserEmail(updatedUser.getUserEmail());
+            user.setUserPhone(updatedUser.getUserPhone());
         } else {
             System.err.println("회원정보 수정에 실패했습니다.");
         }
