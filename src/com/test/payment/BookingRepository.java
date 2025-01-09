@@ -1,5 +1,7 @@
 package com.test.payment;
 
+import com.test.booking.Booking;
+
 import java.io.*;
 import java.util.*;
 
@@ -21,7 +23,7 @@ public class BookingRepository {
 				    String checkInDate = parts[3];
 				    String checkOutDate = parts[4];
 				    int numberOfGuests = Integer.parseInt(parts[5]);
-				    double totalPrice = Double.parseDouble(parts[6]);
+				    int totalPrice = Integer.parseInt(parts[6]);
 				    
 				    Booking booking = new Booking(bookingId, userId, accommodationId, checkInDate, 
 				                                checkOutDate, numberOfGuests, totalPrice);

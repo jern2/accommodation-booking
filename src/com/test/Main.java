@@ -23,6 +23,7 @@ public class Main {
          LoginSystem loginSystem = new LoginSystem();
 
          while (true) {
+<<<<<<< HEAD
 //        	 System.out.println("                                                                                                    \r\n"
 //        	 		+ "                        =**-    ++ =*****: .*:    =**-    +- .******  .**-                          \r\n"
 //        	 		+ "                      *######*+###-*######.##*  #######* *## #######.*#####                         \r\n"
@@ -32,6 +33,8 @@ public class Main {
 //        	 		+ "                        -++:   :++.     ++ ++=    -++:   =++  ++++++.++*:++::*.    ");
         	 
         	 
+=======
+>>>>>>> 613d02f1397aa65faad3f44a5c0720a58d2b1cbd
              System.out.println("====== 숙소 예약 프로그램 ======");
              System.out.println("[1] 사용자 메뉴");
              System.out.println("[2] 관리자 메뉴");

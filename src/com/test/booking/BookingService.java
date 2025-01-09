@@ -26,14 +26,23 @@ public class BookingService {
 
 	// 예약 추가
 	public Booking addBooking(int userIndex, int accommodationId, String checkInDate, String checkOutDate, int numGuests, int totalPrice) {
-		//reservationID 자동생성(size() + 1)
-		int newId = generateBookingId();
-		Booking newBooking = new Booking(newId, userIndex, accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
-		bookings.add(newBooking);
+		// reservationID 자동생성 (size() + 1)
+
+		// 디버깅 로그 추가
+		System.out.println("UserId: " + userIndex);
+		System.out.println("AccommodationId: " + accommodationId);
+		System.out.println("CheckInDate: " + checkInDate);
+		System.out.println("CheckOutDate: " + checkOutDate);
+		System.out.println("NumGuests: " + numGuests);
+		System.out.println("TotalPrice: " + totalPrice);
+
+		// Booking 객체 생성
+		Booking booking = new Booking(generateBookingId(), userIndex, accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
+		bookings.add(booking);
 		saveBookings();
-		System.out.println("예약이 완료되었습니다. 예약 ID: " + newId);
-		return newBooking;
+		return booking;
 	}
+
 
 	// 예약 변경
 	public boolean modifyBooking(int bookingId, String newCheckInDate, String newCheckOutDate, int newNumGuests) {

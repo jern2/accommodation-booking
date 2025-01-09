@@ -21,6 +21,7 @@ public class Booking {
 		this.totalPrice = totalPrice;
 	}
 
+
 	// Getters and Setters
 	public int getBookingId() {
 		return bookingId;
@@ -68,8 +69,22 @@ public class Booking {
 
 	// Convert to file format
 	public String toFileFormat() {
-		return bookingId + "■" + userId + "■" + accommodationId + "■" + checkInDate + "■" + checkOutDate + "■" + numGuests + "■" + totalPrice;
+		// 디버깅 로그 추가
+		System.out.println("toFileFormat 호출됨:");
+		System.out.println("BookingId: " + bookingId);
+		System.out.println("UserId: " + userId);
+		System.out.println("AccommodationId: " + accommodationId);
+		System.out.println("CheckInDate: " + checkInDate);
+		System.out.println("CheckOutDate: " + checkOutDate);
+		System.out.println("NumGuests: " + numGuests);
+		System.out.println("TotalPrice: " + totalPrice);
+
+		return bookingId + "■" + userId + "■" + accommodationId + "■" +
+				(checkInDate != null ? checkInDate : "N/A") + "■" +
+				(checkOutDate != null ? checkOutDate : "N/A") + "■" +
+				numGuests + "■" + totalPrice;
 	}
+
 
 	public static Booking fromFile(String line) {
 	    // 데이터를 "■"로 분리
@@ -95,7 +110,7 @@ public class Booking {
 	        throw new IllegalArgumentException("Invalid number format in data: " + line, e);
 	    }
 	}
-	
+
 	public boolean overlapsWith(Booking date) {
 		 return (checkInDate.equals(this.checkInDate) || checkOutDate.equals(this.checkOutDate) ||
 		            (checkInDate.compareTo(this.checkInDate) >= 0 && checkInDate.compareTo(this.checkOutDate) < 0) ||
@@ -107,8 +122,5 @@ public class Booking {
 		            (checkInDate.compareTo(this.checkInDate) >= 0 && checkInDate.compareTo(this.checkOutDate) < 0) ||
 		            (checkOutDate.compareTo(this.checkInDate) > 0 && checkOutDate.compareTo(this.checkOutDate) <= 0));
 		}
-	
-	
-	
-	
+		
 }

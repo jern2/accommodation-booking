@@ -53,8 +53,8 @@ public class ReviewService {
         }
         return false;
     }
-
-    // 리뷰 추가
+    
+    //리뷰 추가 
     public boolean addReview(int userId, String userName, int accommodationId, String content, int rating) throws IOException {
         // 중복 리뷰 방지
         if (isDuplicateReview(userId, accommodationId)) {
@@ -69,7 +69,8 @@ public class ReviewService {
         }
 
         int newReviewId = reviews.size() + 1; // 간단히 리뷰 ID 생성
-        Review newReview = new Review(newReviewId, userId, accommodationId, content, rating);
+        // 작성자의 이름(userName)을 포함하여 Review 생성
+        Review newReview = new Review(newReviewId, userId, userName, accommodationId, content, rating);
         reviews.add(newReview);
         saveReviews();
         System.out.println("리뷰가 성공적으로 등록되었습니다.");

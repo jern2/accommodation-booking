@@ -7,9 +7,9 @@ public class Member {
     private String name;
     private String email;
     private String phone;
-    private double balance;
+    private int balance;
 
-    public Member(int id, String username,String password, String name, String email, String phone, double balance ) {
+    public Member(int id, String username,String password, String name, String email, String phone, int balance ) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -59,11 +59,11 @@ public class Member {
         return id;
     }
 
-    public double getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
     
@@ -81,5 +81,11 @@ public class Member {
 				+ email + ", phone=" + phone + ", balance=" + balance + "]";
 	}
 
+
+	// toFileFormat 메서드
+	public String toFileFormat() {
+		return id + "■" + username + "■" + password + "■" +
+				name + "■" + email + "■" + phone + "■" + balance;
+	}
     
 }

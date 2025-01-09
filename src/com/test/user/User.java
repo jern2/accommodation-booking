@@ -10,6 +10,7 @@ public class User {
     private String userEmail;
     private String userPhone;
     private int userPoints;
+	private boolean valid;
     
 	public User(int userIndex, String userId, String userPassword, String userName, String userEmail, String userPhone,
 			int userPoints) {
@@ -21,6 +22,14 @@ public class User {
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
 		this.userPoints = userPoints;
+	}
+
+	public User(int userIndex, String userId, String userPassword, String userName, boolean valid) {
+		this.userIndex = userIndex;
+		this.userId = userId;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.valid = valid;
 	}
 
 	public int getUserIndex() {

@@ -5,11 +5,12 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
+import com.test.booking.Booking;
 import com.test.util.LoginSystem;
 
 public class PaymentProcessor {
     private final DecimalFormat decimalFormat = new DecimalFormat("#,###");
-    private final String MEMBERS_FILE_PATH = "data/members.txt"; // 파일 경로
+    private final String MEMBERS_FILE_PATH = "./data/members.txt"; // 파일 경로
 
     public void processPointsPayment(Scanner scan, List<Member> members, List<Booking> bookings) throws NumberFormatException, IOException {
         // 로그인한 사용자의 ID 가져오기
@@ -37,7 +38,7 @@ public class PaymentProcessor {
             return;
         }
 
-        double amount = userBooking.getTotalPrice();
+        int amount = userBooking.getTotalPrice();
         System.out.println("결제하실 금액은 " + decimalFormat.format(amount) + "원 입니다.");
 
         // 잔액 확인 및 충전/취소 옵션 제공
@@ -85,13 +86,13 @@ public class PaymentProcessor {
         System.exit(0); // 프로그램 종료
     }
 
-    private void chargeAccount(Scanner scan, List<Member> members, Member member) {
+    public void chargeAccount(Scanner scan, List<Member> members, Member member) {
         System.out.print("충전하실 금액을 입력하세요: ");
         String input = scan.nextLine();
 
-        double chargeAmount;
+        int chargeAmount;
         try {
-            chargeAmount = Double.parseDouble(input);
+            chargeAmount = Integer.parseInt(input);
             if (chargeAmount <= 0) {
                 System.out.println("충전 금액은 0원보다 커야 합니다.");
                 return;

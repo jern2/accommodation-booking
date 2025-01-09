@@ -18,10 +18,12 @@ import java.util.Set;
 
 import com.test.booking.Booking;
 import com.test.booking.BookingService;
+import com.test.payment.PaymentView;
 
 public class AccommodationService {
     private List<Accommodation> accommodations;
     BookingService bookingService = new BookingService();
+	static PaymentView paymentView = new PaymentView();
     private static final String FILE_PATH = "./data/accommodation_list.txt";
     
 
@@ -117,16 +119,17 @@ public class AccommodationService {
     //지원
     public static void groupRandomlist() {
 		
-	    String accomfilePath = ".\\data\\accommodation_list.txt";
+//	    String accomfilePath = ".\\data\\accommodation_list.txt"; //윈도우
+	    String accomfilePath = "./data/accommodation_list.txt"; // 맥
 
-	    // Accommodation 리스트 생성
+	    
 	    ArrayList<Accommodation> accommodations = new ArrayList<>();
 
-	    // Booking 데이터를 Map으로 저장
+	   
 	    Map<Integer, List<Booking>> bookingData = new HashMap<>();
 
 	    // booking_list 읽어서 Map에 저장
-	    try (BufferedReader br = new BufferedReader(new FileReader(".\\data\\booking_list.txt"))) {
+	    try (BufferedReader br = new BufferedReader(new FileReader("./data/booking_list.txt"))) {
 	        String line;
 	        while ((line = br.readLine()) != null) {
 	            String[] parts = line.split("■");
@@ -266,6 +269,10 @@ public class AccommodationService {
 	                System.out.println("가격: " + String.format("%,d원", selectedAccommodation.getPrice()));
 	                System.out.println("공지사항: ");
 	                printFormattedNotice(selectedAccommodation.getNotice(), 30);
+	                
+	                
+	                
+	                
 	                break; // 유효한 입력으로 루프 종료
 	            } else {
 	                System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");
@@ -274,8 +281,40 @@ public class AccommodationService {
 	    } else {
 	        System.out.println("예약 가능한 숙소가 없습니다.");
 	    }
-    }
+	
+    	int choice;
+		while(true){
+		System.out.println("\n1. 숙소 리스트로 다시 돌아가기");
+		System.out.println("2. 예약하기");
+		System.out.print("\n선택: ");
+		
+		while (!scanner.hasNextInt()) {
+			System.out.println("유효한 숫자를 입력해주세요.");
+			scanner.next();
+			System.out.print("선택: ");
+		}
 
+		choice = scanner.nextInt();if (choice == 1) {
+			System.out.println("\n숙소 리스트로 돌아갑니다.");
+			 for (int i = 0; i < Math.min(20, filteredAccommodations.size()); i++) {
+		            Accommodation accom = filteredAccommodations.get(i);
+		            System.out.printf("%d\t%-5s\t\t%2d명\t%,9d원\t%5s\t%n", (i + 1), accom.getAccommodationName(), accom.getMaxGuest(), accom.getPrice(), accom.getAddress());
+		        }
+		    } else {
+		        System.out.println("해당 날짜에 예약 가능한 숙소가 없습니다.");
+		    }
+//		//continue; // 리스트로 돌아가기
+//		} else if (choice == 2) {
+//			System.out.println("\n예약하기로 이동합니다.");
+//			return; // 메서드 종료
+//		}
+	}
+    }
+		
+
+    
+    
+    
 public static void printFormattedNotice(String notice, int maxLength) {
     int start = 0;
     while (start < notice.length()) {
@@ -334,9 +373,10 @@ private static boolean areValidDates(String checkInDate, String checkOutDate) {
 
 
 //<랜덤 추출>
-public static void randomList() {
+public static void randomList() throws IOException {
     
-	String filePath = ".\\data\\accommodation_list.txt";
+//	String filePath = ".\\data\\accommodation_list.txt"; // 윈도우
+	String filePath = "./data/accommodation_list.txt"; // 맥
 
 	// Accommodation 리스트 생성
 	ArrayList<Accommodation> accommodations = new ArrayList<>();
@@ -394,6 +434,7 @@ public static void randomList() {
 				selectedNumber = scanner.nextInt();
 
 				if (selectedNumber >= 1 && selectedNumber <= 20) {
+
 					break; // 유효한 입력 시 루프 탈출
 				} else {
 					System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");
@@ -434,7 +475,7 @@ public static void randomList() {
 				System.out.println("\n숙소 리스트로 돌아갑니다.");
 				continue; // 리스트로 돌아가기
 			} else if (choice == 2) {
-				System.out.println("\n예약하기로 이동합니다.");
+				paymentView.showPaymentOptions();
 
 				return; // 메서드 종료
 			}
@@ -442,6 +483,8 @@ public static void randomList() {
 			System.out.println("데이터가 없습니다.");
 			return;
 		}
-	}
+	} 
 }
+
 }
+

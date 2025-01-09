@@ -3,9 +3,9 @@ package com.test.payment;
 public class Payment {
     private String type;
     private String details;
-    private double amount;
+    private int amount;
 
-    public Payment(String type, String details, double amount) {
+    public Payment(String type, String details, int amount) {
         this.type = type;
         this.details = details;
         this.amount = amount;
