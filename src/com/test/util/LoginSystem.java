@@ -12,10 +12,10 @@ import com.test.user.User;
 import com.test.user.UserView;
 
 public class LoginSystem {
-    private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
-    private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
-//    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
-//    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
+//    private static final String LOGIN_FILE = ".\\data\\loginUser.txt"; //윈도우 환경
+//    private static final String USER_FILE = ".\\data\\members.txt"; // 윈도우 환경
+    private static final String LOGIN_FILE = "./data/loginUser.txt"; //맥 환경
+    private static final String USER_FILE = "./data/members.txt";  // 맥 환경
 
 
 
@@ -56,6 +56,16 @@ public class LoginSystem {
             }
             System.out.println("로그인 성공: " + userId);
             
+            User user = new User(
+                    userIndex,
+                    userId,
+                    password,
+                    LoginSystem.getUserName(),
+                    null,
+                    null,
+                    0);
+            
+            userview.memberMenu(user);
             
         } else {
             System.out.println("아이디 또는 비밀번호가 잘못되었습니다.");

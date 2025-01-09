@@ -1,5 +1,6 @@
 package com.test.accommodation;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,7 +8,7 @@ public class AccommodationView {
 	
 			 Scanner scanner = new Scanner(System.in);
 			 
-			 public void reservation() {
+			 public void reservation() throws IOException {
 				 while(true) {
 					 System.out.println("                     ┏━━━━━━━━━━┓                    ");
 			         System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃ 숙소예약 ┃━━━━━━━━━━━━━━━━━━━┓");
@@ -36,7 +37,7 @@ public class AccommodationView {
 	                    	AccommodationService.randomList();
 	                        break;
 	                    case 2:
-	                    	AccommodationService.groupRandomlist();
+	                    	AccommodationService2.groupRandomlist2();
 	                        break;
 	                    case 3:
 	                        System.out.println("구현안됨");

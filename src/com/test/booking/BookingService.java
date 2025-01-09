@@ -24,16 +24,29 @@ public class BookingService {
 		loadBookings();
 	}
 
-	// 예약 추가
-	public Booking addBooking(int userIndex, int accommodationId, String checkInDate, String checkOutDate, int numGuests, int totalPrice) {
-		//reservationID 자동생성(size() + 1)
-		int newId = generateBookingId();
-		Booking newBooking = new Booking(newId, userIndex, accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
-		bookings.add(newBooking);
-		saveBookings();
-		System.out.println("예약이 완료되었습니다. 예약 ID: " + newId);
-		return newBooking;
+	public Booking addBooking(int userId, int accommodationId, String checkInDate, String checkOutDate, int numGuests, int pricePerNight) {
+	    // 숙박 기간 계산
+	    long stayDuration = ValidationUtil.calculateDaysBetween(checkInDate, checkOutDate);
+
+	    if (stayDuration <= 0) {
+	        System.out.println("체크인 날짜와 체크아웃 날짜가 유효하지 않습니다.");
+	        return null;
+	    }
+
+	    // 총 금액 계산
+	    int totalPrice = (int) (stayDuration * pricePerNight);
+
+	    // 디버깅 로그
+	    System.out.println("숙박 기간: " + stayDuration + "박");
+	    System.out.println("총 금액: " + totalPrice + "원");
+
+	    // Booking 객체 생성
+	    Booking booking = new Booking(generateBookingId(), userId, accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
+	    bookings.add(booking);
+	    saveBookings();
+	    return booking;
 	}
+
 
 	// 예약 변경
 	public boolean modifyBooking(int bookingId, String newCheckInDate, String newCheckOutDate, int newNumGuests) {

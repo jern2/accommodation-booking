@@ -239,32 +239,33 @@ public class UserView {
 
         // LoginSystem의 login 메서드 호출
         LoginSystem.login(userId, userPassword);
+        
 
-        // 로그인 성공 여부 확인
-        String loggedInUserIndex = LoginSystem.getUserIndex();
-        if (loggedInUserIndex != null) {
-            System.out.println("┏━━━━━━━━━━━━━┓");
-            System.out.println("┃ 로그인 성공 ┃");
-            System.out.println("┗━━━━━━━━━━━━━┛");
-
-            // memberMenu로 이동
-            User user = new User(
-                Integer.parseInt(loggedInUserIndex),
-                userId,
-                userPassword,
-                LoginSystem.getUserName(),
-                null,
-                null,
-                0
-            );
-            memberMenu(user);
-        } else {
-            System.err.println("로그인 실패: 다시 시도해주세요.");
-        }
+//        // 로그인 성공 여부 확인
+//        String loggedInUserIndex = LoginSystem.getUserIndex();
+//        if (loggedInUserIndex != null) {
+//            System.out.println("┏━━━━━━━━━━━━━┓");
+//            System.out.println("┃ 로그인 성공 ┃");
+//            System.out.println("┗━━━━━━━━━━━━━┛");
+//
+//            // memberMenu로 이동
+//            User user = new User(
+//                Integer.parseInt(loggedInUserIndex),
+//                userId,
+//                userPassword,
+//                LoginSystem.getUserName(),
+//                null,
+//                null,
+//                0
+//            );
+//            memberMenu(user);
+//        } else {
+//            System.err.println("로그인 실패: 다시 시도해주세요.");
+//        }
     }
 
 
-    private void memberMenu(User user) throws IOException {
+    public void memberMenu(User user) throws IOException {
     	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
 
@@ -298,11 +299,13 @@ public class UserView {
                     accommodationView.reservation();
                     break;
                 case 3:
+                    LoginSystem.logout();
     				System.out.println("┏━━━━━━━━━━━━━┓");
     				System.out.println("┃로그아웃 성공┃");
     				System.out.println("┗━━━━━━━━━━━━━┛");
                     return;
                 case 4:
+                    LoginSystem.logout();
     				System.out.println("┏━━━━━━━━━━━━━┓");
     				System.out.println("┃프로그램 종료┃");
     				System.out.println("┗━━━━━━━━━━━━━┛");

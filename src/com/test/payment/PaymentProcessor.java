@@ -5,11 +5,12 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
+import com.test.booking.Booking;
 import com.test.util.LoginSystem;
 
 public class PaymentProcessor {
     private final DecimalFormat decimalFormat = new DecimalFormat("#,###");
-    private final String MEMBERS_FILE_PATH = "data/members.txt"; // 파일 경로
+    private final String MEMBERS_FILE_PATH = "./data/members.txt"; // 파일 경로
 
     public void processPointsPayment(Scanner scan, List<Member> members, List<Booking> bookings) throws NumberFormatException, IOException {
         // 로그인한 사용자의 ID 가져오기
