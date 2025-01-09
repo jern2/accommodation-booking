@@ -34,7 +34,7 @@ public class AccommodationView {
 		             
 		             switch (sel) {
 	                    case 1:
-	                    	AccommodationService.randomList();
+	                    	AccommodationService2.randomList();
 	                        break;
 	                    case 2:
 	                    	AccommodationService2.groupRandomlist2();

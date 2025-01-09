@@ -7,6 +7,8 @@ import com.test.user.User;
 import com.test.util.LoginSystem;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -45,8 +47,7 @@ public class PaymentView {
         String cardNumber = getValidInput(scan, "카드 정보 입력 (양식: 0000-0000-0000-0000): ",
                 "\\d{4}-\\d{4}-\\d{4}-\\d{4}", "잘못된 입력입니다. 다시 입력해주세요. (양식: 0000-0000-0000-0000)");
 
-        String cardExp = getValidInput(scan, "카드 유효기한 입력 (양식: MM/YYYY): ",
-                "(0[1-9]|1[0-2])/(\\d{4})", "잘못된 입력입니다. 다시 입력해주세요. (양식: MM/YYYY)");
+        String cardExp = getValidCardExpiry(scan);
 
         String cardPw = getValidInput(scan, "카드 비밀번호 앞 2자리: ",
                 "\\d{2}", "잘못된 입력입니다. 입력은 2자리 숫자여야 합니다.");
@@ -54,38 +55,48 @@ public class PaymentView {
         try {
             System.out.println("카드 결제가 완료되었습니다.");
 
-            // 예약 정보 입력받기
-            System.out.println("\n예약 정보를 입력해주세요.");
-            System.out.print("사용자 ID: ");
-            int userId = scan.nextInt();
-
-            System.out.print("숙소 ID: ");
-            int accommodationId = scan.nextInt();
-
-            System.out.print("체크인 날짜 (YYYY-MM-DD): ");
-            String checkInDate = scan.next();
-
-            System.out.print("체크아웃 날짜 (YYYY-MM-DD): ");
-            String checkOutDate = scan.next();
-
-            System.out.print("숙박 인원: ");
-            int numGuests = scan.nextInt();
-
-            System.out.print("총 금액: ");
-            int totalPrice = scan.nextInt();
 
             // 예약 추가
-            Booking newBooking = bookingService.addBooking(Integer.parseInt(LoginSystem.getUserIndex()), accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
+//            Booking newBooking = bookingService.addBooking(Integer.parseInt(LoginSystem.getUserIndex()), accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
 
             System.out.println("예약이 완료되었습니다.");
-            System.out.println("예약 ID: " + newBooking.getBookingId());
+//            System.out.println("예약 ID: " + newBooking.getBookingId());
             System.out.println("즐거운 숙박되세요. 감사합니다.");
-            saveBooking();
+            System.exit(0);
+//            saveBooking();
         } catch (Exception e) {
             System.out.println("결제 실패: " + e.getMessage());
         }
         
         
+    }
+    
+    private String getValidCardExpiry(Scanner scan) {
+        while (true) {
+            String input = getValidInput(scan, "카드 유효기한 입력 (양식: MM/YYYY): ",
+                    "(0[1-9]|1[0-2])/(\\d{4})", "잘못된 입력입니다. 다시 입력해주세요. (양식: MM/YYYY)");
+            
+            try {
+                // 입력된 날짜를 파싱
+                String[] parts = input.split("/");
+                int month = Integer.parseInt(parts[0]);
+                int year = Integer.parseInt(parts[1]);
+                
+                // 현재 날짜 가져오기
+                YearMonth currentYearMonth = YearMonth.now();
+                YearMonth inputYearMonth = YearMonth.of(year, month);
+                
+                // 현재 날짜와 비교
+                if (inputYearMonth.isBefore(currentYearMonth)) {
+                    System.out.println("카드가 만료되었습니다. 다른 카드를 사용해주세요.");
+                    continue;
+                }
+                
+                return input;
+            } catch (DateTimeException e) {
+                System.out.println("유효하지 않은 날짜입니다. 다시 입력해주세요.");
+            }
+        }
     }
     
     private String getValidInput(Scanner scan, String prompt, String regex, String errorMessage) {

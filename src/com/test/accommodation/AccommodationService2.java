@@ -417,137 +417,204 @@ public class AccommodationService2 {
 			return false;
 		}
 	}
-
-	//<랜덤 추출>
+	
 	public static void randomList() throws IOException {
+	    String filePath = "./data/accommodation_list.txt"; // 맥 환경
 
-//		String filePath = ".\\data\\accommodation_list.txt"; // 윈도우
-		String filePath = "./data/accommodation_list.txt"; //맥
+	    ArrayList<Accommodation> accommodations = new ArrayList<>();
+	    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+	        String line;
+	        while ((line = br.readLine()) != null) {
+	            String[] parts = line.split("■");
 
+	            if (parts.length > 6) {
+	                int accommodationId = Integer.parseInt(parts[0].trim());
+	                String username = parts[1].trim();
+	                String area = parts[2].trim();
+	                String address = parts[3].trim();
+	                String accommodationName = parts[4].trim();
+	                int maxGuest = Integer.parseInt(parts[5].trim());
+	                int price = Integer.parseInt(parts[6].trim());
+	                String notice = parts[7].trim();
 
-		// Accommodation 리스트 생성
-		ArrayList<Accommodation> accommodations = new ArrayList<>();
+	                accommodations.add(new Accommodation(accommodationId, username, area, address, accommodationName,
+	                        maxGuest, price, notice));
+	            }
+	        }
+	    } catch (IOException e) {
+	        System.out.println("Error reading the file: " + e.getMessage());
+	    }
 
-		// 텍스트 파일 읽기
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] parts = line.split("■");
+	    if (!accommodations.isEmpty()) {
+	        Collections.shuffle(accommodations);
+	        System.out.println("\n오늘의 추천 숙소 리스트:");
+	        System.out.println("[번호]\t[지역]\t[숙소이름]\t[최대 인원]\t[가격]");
+	        for (int i = 0; i < Math.min(20, accommodations.size()); i++) {
+	            Accommodation accom = accommodations.get(i);
+	            System.out.printf("%d\t%s\t%s\t%d명\t%,d원%n", (i + 1), accom.getArea(), accom.getAccommodationName(),
+	                    accom.getMaxGuest(), accom.getPrice());
+	        }
 
-				if (parts.length > 6) { // 데이터 유효성 검사
-					int accommodationId = Integer.parseInt(parts[0].trim());
-					String username = parts[1].trim();
-					String area = parts[2].trim();
-					String address = parts[3].trim();
-					String accommodationName = parts[4].trim();
-					int maxGuest = Integer.parseInt(parts[5].trim());
-					int price = Integer.parseInt(parts[6].trim());
-					String notice = parts[7].trim();
+	        Scanner scanner = new Scanner(System.in);
+	        System.out.print("\n더 자세히 보고 싶은 숙소의 번호를 입력하세요 (1 ~ 20): ");
+	        int selectedNumber = scanner.nextInt();
+	        if (selectedNumber >= 1 && selectedNumber <= accommodations.size()) {
+	            Accommodation selectedAccommodation = accommodations.get(selectedNumber - 1);
+	            System.out.println("\n[선택한 숙소 정보]");
+	            System.out.println("이름: " + selectedAccommodation.getAccommodationName());
+	            System.out.println("주소: " + selectedAccommodation.getAddress());
+	            System.out.println("최대 인원: " + selectedAccommodation.getMaxGuest() + "명");
+	            System.out.println("가격: " + selectedAccommodation.getPrice() + "원");
+	            System.out.println("공지사항: " + selectedAccommodation.getNotice());
 
-					accommodations.add(new Accommodation(accommodationId, username, area, address, accommodationName,
-							maxGuest, price, notice));
-				} else {
-					System.out.println("Invalid line format: " + line);
-				}
-			}
-		} catch (IOException e) {
-			System.out.println("Error reading the file: " + e.getMessage());
-		}
-
-		Scanner scanner = new Scanner(System.in);
-
-		while (true) {
-			// 랜덤 숙소 리스트 출력
-			if (!accommodations.isEmpty()) {
-				Collections.shuffle(accommodations);
-
-				System.out.println("\n오늘의 추천 숙소 리스트:");
-				System.out.println("[번호]\t[지역]\t[숙소이름]\t\t[인원]\t\t[가격]");
-				for (int i = 0; i < Math.min(20, accommodations.size()); i++) {
-					Accommodation accom = accommodations.get(i);
-					System.out.printf("%d\t%s\t%2s\t\t%5d\t%,10d원%n", (i + 1), accom.getArea(),
-							accom.getAccommodationName(), accom.getMaxGuest(), accom.getPrice());
-				}
-
-				int selectedNumber;
-				while (true) {
-					System.out.print("\r\n더 자세히 보고 싶은 숙소의 번호를 입력하세요 (1 ~ 20): ");
-					while (!scanner.hasNextInt()) {
-						System.out.println("유효한 숫자를 입력해주세요.");
-						scanner.next();
-						System.out.print("\r\n더 자세히 보고 싶은 숙소의 번호를 입력하세요 (1 ~ 20): ");
-					}
-
-					selectedNumber = scanner.nextInt();
-
-					if (selectedNumber >= 1 && selectedNumber <= 20) {
-						break; // 유효한 입력 시 루프 탈출
-					} else {
-						System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");
-					}
-				}
-
-				// 선택한 숙소 정보 출력
-				Accommodation selectedAccommodation = accommodations.get(selectedNumber - 1);
-				System.out.println("\n[선택한 숙소 정보]");
-				System.out.println("이름: " + selectedAccommodation.getAccommodationName());
-				System.out.println("주소: " + selectedAccommodation.getAddress());
-				System.out.println("최대 인원: " + selectedAccommodation.getMaxGuest() + "명");
-				System.out.println("가격: " + String.format("%,d원", selectedAccommodation.getPrice()));
-				System.out.println("공지사항: ");
-				printFormattedNotice(selectedAccommodation.getNotice(), 30);
-
-				// 옵션 제공
-				int choice;
-				while (true) {
-					System.out.println("\n1. 숙소 리스트로 다시 돌아가기");
-					System.out.println("2. 예약하기");
-					System.out.print("\n선택: ");
-					while (!scanner.hasNextInt()) {
-						System.out.println("유효한 숫자를 입력해주세요.");
-						scanner.next();
-						System.out.print("선택: ");
-					}
-
-					choice = scanner.nextInt();
-					if (choice == 1 || choice == 2) {
-						break; // 유효한 입력 시 루프 탈출
-					} else {
-						System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");
-					}
-				}
-
-				if (choice == 1) {
-					System.out.println("\n숙소 리스트로 돌아갑니다.");
-					continue; // 리스트로 돌아가기
-				} else if (choice == 2) {
-					System.out.println("\n예약하기로 이동합니다.");
-					
-					while (true) {
-						String checkInDate;
-						String checkOutDate;
-						
-						System.out.println("\n체크인 날짜를 선택해주세요:");
-						checkInDate = selectDateFromCalendar();
-
-						System.out.println("\n체크아웃 날짜를 선택해주세요:");
-						checkOutDate = selectDateFromCalendar();
-
-						// **[추가됨] 유효성 검사**
-						if (areValidDates(checkInDate, checkOutDate)) {
-							break;
-						} else {
-							System.out.println("체크아웃 날짜는 체크인 날짜 이후여야 합니다. 다시 선택해주세요.");
-						}
-					}
-					paymentView.showPaymentOptions();
-					return; // 메서드 종료
-				}
-			} else {
-				System.out.println("데이터가 없습니다.");
-				return;
-			}
-		}
+	            System.out.print("\n1. 예약하기\n2. 돌아가기\n선택: ");
+	            int choice = scanner.nextInt();
+	            if (choice == 1) {
+	                // 예약하기로 이동
+	                AccommodationBooking.runBooking(selectedAccommodation);
+	            }
+	        } else {
+	            System.out.println("잘못된 입력입니다.");
+	        }
+	    } else {
+	        System.out.println("추천할 숙소가 없습니다.");
+	    }
 	}
 
-}
+	
+	
+	
+	
+	//<랜덤 추출>
+//	public static void randomList() throws IOException {
+//
+////		String filePath = ".\\data\\accommodation_list.txt"; // 윈도우
+//		String filePath = "./data/accommodation_list.txt"; //맥
+//
+//
+//		// Accommodation 리스트 생성
+//		ArrayList<Accommodation> accommodations = new ArrayList<>();
+//
+//		// 텍스트 파일 읽기
+//		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//			String line;
+//			while ((line = br.readLine()) != null) {
+//				String[] parts = line.split("■");
+//
+//				if (parts.length > 6) { // 데이터 유효성 검사
+//					int accommodationId = Integer.parseInt(parts[0].trim());
+//					String username = parts[1].trim();
+//					String area = parts[2].trim();
+//					String address = parts[3].trim();
+//					String accommodationName = parts[4].trim();
+//					int maxGuest = Integer.parseInt(parts[5].trim());
+//					int price = Integer.parseInt(parts[6].trim());
+//					String notice = parts[7].trim();
+//
+//					accommodations.add(new Accommodation(accommodationId, username, area, address, accommodationName,
+//							maxGuest, price, notice));
+//				} else {
+//					System.out.println("Invalid line format: " + line);
+//				}
+//			}
+//		} catch (IOException e) {
+//			System.out.println("Error reading the file: " + e.getMessage());
+//		}
+//
+//		Scanner scanner = new Scanner(System.in);
+//
+//		while (true) {
+//			// 랜덤 숙소 리스트 출력
+//			if (!accommodations.isEmpty()) {
+//				Collections.shuffle(accommodations);
+//
+//				System.out.println("\n오늘의 추천 숙소 리스트:");
+//				System.out.println("[번호]\t[지역]\t[숙소이름]\t\t[인원]\t\t[가격]");
+//				for (int i = 0; i < Math.min(20, accommodations.size()); i++) {
+//					Accommodation accom = accommodations.get(i);
+//					System.out.printf("%d\t%s\t%2s\t\t%5d\t%,10d원%n", (i + 1), accom.getArea(),
+//							accom.getAccommodationName(), accom.getMaxGuest(), accom.getPrice());
+//				}
+//
+//				int selectedNumber;
+//				while (true) {
+//					System.out.print("\r\n더 자세히 보고 싶은 숙소의 번호를 입력하세요 (1 ~ 20): ");
+//					while (!scanner.hasNextInt()) {
+//						System.out.println("유효한 숫자를 입력해주세요.");
+//						scanner.next();
+//						System.out.print("\r\n더 자세히 보고 싶은 숙소의 번호를 입력하세요 (1 ~ 20): ");
+//					}
+//
+//					selectedNumber = scanner.nextInt();
+//
+//					if (selectedNumber >= 1 && selectedNumber <= 20) {
+//						break; // 유효한 입력 시 루프 탈출
+//					} else {
+//						System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");
+//					}
+//				}
+//
+//				// 선택한 숙소 정보 출력
+//				Accommodation selectedAccommodation = accommodations.get(selectedNumber - 1);
+//				System.out.println("\n[선택한 숙소 정보]");
+//				System.out.println("이름: " + selectedAccommodation.getAccommodationName());
+//				System.out.println("주소: " + selectedAccommodation.getAddress());
+//				System.out.println("최대 인원: " + selectedAccommodation.getMaxGuest() + "명");
+//				System.out.println("가격: " + String.format("%,d원", selectedAccommodation.getPrice()));
+//				System.out.println("공지사항: ");
+//				printFormattedNotice(selectedAccommodation.getNotice(), 30);
+//
+//				// 옵션 제공
+//				int choice;
+//				while (true) {
+//					System.out.println("\n1. 숙소 리스트로 다시 돌아가기");
+//					System.out.println("2. 예약하기");
+//					System.out.print("\n선택: ");
+//					while (!scanner.hasNextInt()) {
+//						System.out.println("유효한 숫자를 입력해주세요.");
+//						scanner.next();
+//						System.out.print("선택: ");
+//					}
+//
+//					choice = scanner.nextInt();
+//					if (choice == 1 || choice == 2) {
+//						break; // 유효한 입력 시 루프 탈출
+//					} else {
+//						System.out.println("잘못된 번호를 입력하셨습니다. 다시 입력해주세요.");
+//					}
+//				}
+//
+//				if (choice == 1) {
+//					System.out.println("\n숙소 리스트로 돌아갑니다.");
+//					continue; // 리스트로 돌아가기
+//				} else if (choice == 2) {
+//					System.out.println("\n예약하기로 이동합니다.");
+//					
+//					while (true) {
+//						String checkInDate;
+//						String checkOutDate;
+//						
+//						System.out.println("\n체크인 날짜를 선택해주세요:");
+//						checkInDate = selectDateFromCalendar();
+//
+//						System.out.println("\n체크아웃 날짜를 선택해주세요:");
+//						checkOutDate = selectDateFromCalendar();
+//
+//						// **[추가됨] 유효성 검사**
+//						if (areValidDates(checkInDate, checkOutDate)) {
+//							break;
+//						} else {
+//							System.out.println("체크아웃 날짜는 체크인 날짜 이후여야 합니다. 다시 선택해주세요.");
+//						}
+//					}
+//					paymentView.showPaymentOptions();
+//					return; // 메서드 종료
+//				}
+//			} else {
+//				System.out.println("데이터가 없습니다.");
+//				return;
+//			}
+//		}
+	}
+
+
