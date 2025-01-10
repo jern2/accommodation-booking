@@ -31,8 +31,10 @@ public class UserView {
     public void start() throws IOException {
     	
             while (true) {
-                System.out.println("              ┏━━━━━━━━━━━━━━━━━━━━┓");
-                System.out.println("┏━━━━━━━━━━━━━┃ 숙소 예약 프로그램 ┃━━━━━━━━━━━━━━┓");
+            	System.out.println();
+            	System.out.print("\033[47m\033[30m");
+                System.out.println("              ┏━━━━━━━━━━━━━━━━━━━━┓               ");
+                System.out.println("┏━━━━━━━━━━━━━┃      저기어때      ┃━━━━━━━━━━━━━━┓");
                 System.out.println("┃             ┗━━━━━━━━━━━━━━━━━━━━┛              ┃");
                 System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━┓  ┃");
                 System.out.println("┃ ┃[1] 회원가입          ┃┃[2] 로그인          ┃  ┃");
@@ -44,14 +46,16 @@ public class UserView {
                 System.out.println("┃ ┃[5] 종료              ┃                        ┃");
                 System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                        ┃");
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                System.out.print("선택: ");
+                System.out.print("\033[0m");
+                System.out.println();
+                System.out.print("✔️선택: ");
 
                 int sel = -1;
                 try {
                     sel = scanner.nextInt();
                     scanner.nextLine(); // 버퍼 비우기
                 } catch (InputMismatchException e) {
-                    System.err.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                    System.err.println("⚠️잘못된 입력입니다. 숫자를 입력해주세요.");
                     scanner.nextLine(); // 버퍼 비우기
                     continue;
                 }
@@ -70,22 +74,27 @@ public class UserView {
                         findPassword();
                         break;
                     case 5:
-                        System.out.println("프로그램을 종료합니다.");
+                        System.out.println("🔚프로그램을 종료합니다.");
                         
                         return;
                     default:
-                        System.err.println("잘못된 입력입니다. 다시 시도하세요.");
+                        System.err.println("⚠️잘못된 입력입니다. 다시 시도하세요.");
                 }
             }
         }
     	
         private void findAccount() {
-            System.out.println("\n=== 계정 찾기 ===");
-            System.out.print("이름: ");
+        	System.out.print("\033[47m\033[30m");
+System.out.println();        	System.out.println("====================================================");
+            System.out.println("                   ID  찾기                         ");      			 			System.out.println("====================================================");
+            System.out.print("\033[0m");
+            System.out.println();
+            
+            System.out.print("📛이름: ");
             String userName = scanner.nextLine();
-            System.out.print("이메일: ");
+            System.out.print("✉️이메일: ");
             String userEmail = scanner.nextLine();
-            System.out.print("전화번호: ");
+            System.out.print("📞전화번호: ");
             String userPhone = scanner.nextLine();
 
 
@@ -99,20 +108,25 @@ public class UserView {
 
             if (user != null) {
                 System.out.println("┏━━━━━━━━━━━━━━━━━━━┓");
-                System.out.println("┃ 계정 찾기 성공 ┃");
-                System.out.println("┃ 아이디: " + user.getUserId() + " ┃");
+                System.out.println(" 계정 찾기 성공    ");
+                System.out.println(" 아이디: " + user.getUserId());
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━┛");
             } else {
-                System.err.println("입력한 정보와 일치하는 계정을 찾을 수 없습니다.");
+                System.err.println("⚠️입력한 정보와 일치하는 계정을 찾을 수 없습니다.");
             }
         }
         private void findPassword() {
-            System.out.println("\n=== 비밀번호 찾기 ===");
-            System.out.print("아이디: ");
+        	System.out.print("\033[47m\033[30m");
+      System.out.println();  	System.out.println("====================================================");
+            System.out.println("                   비밀번호 찾기                    ");      			 			System.out.println("====================================================");
+            System.out.print("\033[0m");
+            System.out.println();
+            
+            System.out.print("🆔아이디: ");
             String userId = scanner.nextLine();
-            System.out.print("이메일: ");
+            System.out.print("✉️이메일: ");
             String userEmail = scanner.nextLine();
-            System.out.print("전화번호: ");
+            System.out.print("📞전화번호: ");
             String userPhone = scanner.nextLine();
 
             List<User> userList = userService.readMemberFile();
@@ -124,19 +138,24 @@ public class UserView {
                                 .orElse(null);
 
             if (user != null) {
+            	System.out.print("\033[47m\033[30m");
                 System.out.println("┏━━━━━━━━━━━━━━━━━━━━━┓");
-                System.out.println("┃ 비밀번호 찾기 성공  ┃");
-                System.out.println("┃ 비밀번호: " + user.getUserPassword() + " ┃");
+                System.out.println(" 🗝️비밀번호 찾기 성공  ");
+                System.out.println(" 🗝️비밀번호: " + user.getUserPassword() + "");
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━━━┛");
             } else {
-                System.err.println("아이디 또는 이메일이 일치하지 않습니다.");
+                System.err.println("⚠️아이디 또는 이메일이 일치하지 않습니다.");
             }
         }
         public void registerUser() {
-            System.out.println("\n=== 회원가입 ===");
-
+        	System.out.print("\033[47m\033[30m");
+        	System.out.println();
+        	System.out.println("====================================================");
+            System.out.println("                   회원가입                         ");      			 			System.out.println("====================================================");
+            System.out.print("\033[0m");
+			 System.out.println();
             // 1. 아이디 입력 후 중복 검사
-            System.out.print("아이디: ");
+            System.out.print("🆔아이디: ");
             String userId = scanner.nextLine();
 
             // 기존 사용자 목록 읽기
@@ -145,34 +164,34 @@ public class UserView {
             // 동일한 ID가 이미 존재하는지 확인
             for (User user : userList) {
                 if (user.getUserId().equals(userId)) {
-                    System.err.println("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
+                    System.err.println("⚠️이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
                     return; // 동일한 ID가 존재하면 메서드 종료
                 }
             }
 
             // 2. 비밀번호 입력
-            System.out.print("비밀번호: ");
+            System.out.print("🗝️비밀번호: ");
             String userPassword = scanner.nextLine();
 
             // 3. 이름 입력
-            System.out.print("이름: ");
+            System.out.print("📛이름: ");
             String userName = scanner.nextLine();
 
             // 4. 이메일 입력 후 형식 검사
-            System.out.print("이메일: ");
+            System.out.print("✉️이메일: ");
             String userEmail = scanner.nextLine();
             
             if (!isValidEmail(userEmail)) {
-                System.out.println("이메일 형식이 잘못되었습니다./n 이메일은 영문자와 숫자 조합으로 'ssangyong@paper.com' 형식이어야 합니다.");
+                System.out.println("⚠️이메일 형식이 잘못되었습니다./n 이메일은 영문자와 숫자 조합으로 'ssangyong@paper.com' 형식이어야 합니다.");
                 return; // 유효하지 않으면 메서드 종료
             }
 
             // 5. 전화번호 입력 후 형식 검사
-            System.out.print("전화번호: ");
+            System.out.print("📞전화번호: ");
             String userPhoneNum = scanner.nextLine();
             
             if (!isValidPhoneNumber(userPhoneNum)) {
-                System.out.println("전화번호 형식이 잘못되었습니다. 전화번호는 '010'으로 시작하며 8자리 숫자로 구성되어야 합니다.('-' 제외");
+                System.out.println("⚠️전화번호 형식이 잘못되었습니다. 전화번호는 '010'으로 시작하며 8자리 숫자로 구성되어야 합니다.('-' 제외");
                 return; // 유효하지 않으면 메서드 종료
             }
 
@@ -191,7 +210,7 @@ public class UserView {
             // 9. 업데이트된 사용자 목록을 파일에 저장
             userService.writeMemberFile(userList);
 
-            System.out.println("회원가입이 완료되었습니다.\n");
+            System.out.println("✔️회원가입이 완료되었습니다.\n");
         }
 
         // 이메일 유효성 검사
@@ -225,17 +244,22 @@ public class UserView {
                 writer.newLine(); // 줄 바꿈
             }
         } catch (IOException e) {
-            System.err.println("파일 저장 중 오류 발생: " + e.getMessage());
+            System.err.println("⚠️파일 저장 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     //로그인
     private void login() throws IOException {
-        System.out.println("\n=== 로그인 ===");
-        System.out.print("아이디: ");
+    	System.out.println();
+    	System.out.print("\033[47m\033[30m");
+    	System.out.println("====================================================");
+        System.out.println("                    로그인                          ");      			 		System.out.println("====================================================");
+        System.out.print("\033[0m");
+        System.out.println();
+        System.out.print("🆔아이디: ");
         String userId = scanner.nextLine();
-        System.out.print("비밀번호: ");
+        System.out.print("🗝️비밀번호: ");
         String userPassword = scanner.nextLine();
 
         // LoginSystem의 login 메서드 호출
@@ -269,8 +293,9 @@ public class UserView {
     public void memberMenu(User user) throws IOException {
     	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
-
-			System.out.println("                     ┏━━━━━━━━━━┓");
+        	System.out.println();
+        	System.out.print("\033[47m\033[30m");
+			System.out.println("                     ┏━━━━━━━━━━┓                    ");
 			System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃ 회원메뉴 ┃━━━━━━━━━━━━━━━━━━━┓");
 			System.out.println("┃                    ┗━━━━━━━━━━┛                   ┃");
 			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃");
@@ -280,7 +305,9 @@ public class UserView {
 			System.out.println("┃ ┃[3] 로그아웃          ┃┃[4] 프로그램 종료     ┃  ┃");
 			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃");
 			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-			System.out.print("선택: ");
+			 System.out.print("\033[0m");
+			 System.out.println();
+			System.out.print("✔️선택: ");
 			
             int sel = -1;
             try {
@@ -301,18 +328,26 @@ public class UserView {
                     break;
                 case 3:
                     LoginSystem.logout();
-    				System.out.println("┏━━━━━━━━━━━━━┓");
-    				System.out.println("┃로그아웃 성공┃");
-    				System.out.println("┗━━━━━━━━━━━━━┛");
+                    System.out.println();
+                    System.out.print("\033[47m\033[30m");
+    				System.out.println("┏━━━━━━━━━━━━━━━┓");
+    				System.out.println("┃✔️로그아웃 성공┃");
+    				System.out.println("┗━━━━━━━━━━━━━━━┛");
+    				System.out.print("\033[0m");
+    				 System.out.println();
                     return;
                 case 4:
                     LoginSystem.logout();
-    				System.out.println("┏━━━━━━━━━━━━━┓");
-    				System.out.println("┃프로그램 종료┃");
-    				System.out.println("┗━━━━━━━━━━━━━┛");
+                    System.out.println();
+                    System.out.print("\033[47m\033[30m");
+    				System.out.println("┏━━━━━━━━━━━━━━━┓");
+    				System.out.println("┃🔚프로그램 종료┃");
+    				System.out.println("┗━━━━━━━━━━━━━━━┛");
+    				System.out.print("\033[0m");
+    				 System.out.println();
                     System.exit(0);
                 default:
-                    System.err.println("잘못된 입력입니다. 다시 시도하세요.");
+                    System.err.println("⚠️잘못된 입력입니다. 다시 시도하세요.");
             }
         }
     }
@@ -320,8 +355,9 @@ public class UserView {
     private void myPage(User user) throws IOException {
     	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
-
-			System.out.println("                     ┏━━━━━━━━━━━━━┓");
+        	System.out.println();
+        	System.out.print("\033[47m\033[30m");
+			System.out.println("                     ┏━━━━━━━━━━━━━┓                   ");
 			System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃  마이페이지 ┃━━━━━━━━━━━━━━━━━━┓");
 			System.out.println("┃                    ┗━━━━━━━━━━━━━┛                  ┃");
 			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃");
@@ -334,14 +370,17 @@ public class UserView {
 			System.out.println("┃ ┃[5] 뒤로가기          ┃                            ┃");
 			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                            ┃");
 			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-			System.out.print("선택: ");
+			System.out.print("\033[0m");
+			 System.out.println();
+			 
+			System.out.print("✔️선택: ");
             
             int sel = -1;
             try {
                 sel = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
             } catch (InputMismatchException e) {
-                System.err.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                System.err.println("⚠️잘못된 입력입니다. 숫자를 입력해주세요.");
                 scanner.nextLine(); // 버퍼 비우기
                 continue;
             }
@@ -358,23 +397,24 @@ public class UserView {
                     break;
                 case 4:
                     if (userAuthService.deleteUser(user.getUserPassword())) {
-                        System.out.println("회원탈퇴가 완료되었습니다.");
-                        System.out.println("안녕히 가세요.");
+                        System.out.println("✔️회원탈퇴가 완료되었습니다.");
+                        System.out.println("🖐️안녕히 가세요.");
                         start();
                     }
                     break;
                 case 5:
                     return;
                 default:
-                    System.err.println("잘못된 입력입니다. 다시 시도하세요.");
+                    System.err.println("⚠️잘못된 입력입니다. 다시 시도하세요.");
             }
         }
     }
 
     private void pointManagement(User user) {
         while (true) {
-
-			System.out.println("                     ┏━━━━━━━━━━━━━━━┓");
+        	System.out.println();
+        	System.out.print("\033[47m\033[30m");
+			System.out.println("                     ┏━━━━━━━━━━━━━━━┓                 ");
 			System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃ 쌍용머니 관리 ┃━━━━━━━━━━━━━━━━┓");
 			System.out.println("┃                    ┗━━━━━━━━━━━━━━━┛                ┃");
 			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓    ┃");
@@ -384,14 +424,16 @@ public class UserView {
 			System.out.println("┃ ┃[3] 뒤로가기          ┃                            ┃");
 			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                            ┃");
 			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-			System.out.print("선택: ");
+			System.out.print("\033[0m");
+			 System.out.println();
+			System.out.print("✔️선택: ");
 
             int sel = -1;
             try {
                 sel = scanner.nextInt();
                 scanner.nextLine(); // 버퍼 비우기
             } catch (InputMismatchException e) {
-                System.err.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                System.err.println("\n⚠️잘못된 입력입니다. 숫자를 입력해주세요.");
                 scanner.nextLine(); // 버퍼 비우기
                 continue;
             }
@@ -399,10 +441,10 @@ public class UserView {
             switch (sel) {
                 case 1:
                     int points = myPageService.getUserPoints(user.getUserId());
-                    System.out.printf("[현재 포인트: %,d원]", points);
+                    System.out.printf("\n[💲현재 포인트: %,d원\n]", points);
                     break;
                 case 2:
-                    System.out.print("충전할 포인트 금액: ");
+                    System.out.print("\n💲충전할 포인트 금액: ");
                     int amount = scanner.nextInt();
                     scanner.nextLine(); // 버퍼 비우기
                     myPageService.chargePoints(user.getUserId(), amount);
@@ -410,47 +452,51 @@ public class UserView {
                 case 3:
                     return;
                 default:
-                    System.err.println("잘못된 입력입니다. 다시 시도하세요.");
+                    System.err.println("\n⚠️잘못된 입력입니다. 다시 시도하세요.");
             }
         }
     }
 
     private void updateUserInfo(User user) {
-    	
-        System.out.println("\n=== 회원정보 수정 ===");
+    	System.out.println();
+    	System.out.print("\033[47m\033[30m");
+    	System.out.println("====================================================");
+        System.out.println("                    회원정보 수정                   ");      			 		System.out.println("====================================================");
+        System.out.print("\033[0m");
+		 System.out.println();
         
-        System.out.print("현재 비밀번호를 입력하세요: ");
+        System.out.print("🗝️현재 비밀번호를 입력하세요: ");
         String currentPassword = scanner.nextLine();
         
         if (!user.getUserPassword().equals(currentPassword)) {
-            System.out.println("현재 비밀번호가 일치하지 않습니다. 다시 시도해 주세요.");
+            System.out.println("⚠️현재 비밀번호가 일치하지 않습니다. 다시 시도해 주세요.");
             return;  // 비밀번호가 일치하지 않으면 메서드 종료
         }
         
-        System.out.print("새 비밀번호: ");
+        System.out.print("🗝️새 비밀번호: ");
         String newPassword = scanner.nextLine();
         
         // 비밀번호 확인
-        System.out.print("비밀번호를 한번 더 입력해주세요: ");
+        System.out.print("🗝️비밀번호 확인: ");
         String confirmPassword = scanner.nextLine();
 
 
         if (!newPassword.equals(confirmPassword)) {
-            System.out.println("비밀번호가 일치하지 않습니다. 다시 시도해 주세요.");
+            System.out.println("⚠️비밀번호가 일치하지 않습니다. 다시 시도해 주세요.");
             return;  // 비밀번호가 일치하지 않으면 메서드 종료
         }
         
-        System.out.print("새 이름: ");
+        System.out.print("📛새 이름: ");
         String newName = scanner.nextLine();
-        System.out.print("새 이메일: ");
+        System.out.print("✉️새 이메일: ");
         String newEmail = scanner.nextLine();
-        System.out.print("새 전화번호: ");
+        System.out.print("📞새 전화번호: ");
         String newPhoneNum = scanner.nextLine();
         
 
 
         if (userInfoService.updateUserInfo(user.getUserId(), newPassword, newName, newEmail, newPhoneNum)) {
-            System.out.println("회원정보가 성공적으로 수정되었습니다.");
+            System.out.println("✔️회원정보가 성공적으로 수정되었습니다.");
             
             // 수정 후 최신 데이터를 읽어와서 새로운 User 객체로 업데이트
             List<User> updatedUserList = userService.readMemberFile();
@@ -465,7 +511,7 @@ public class UserView {
             user.setUserEmail(updatedUser.getUserEmail());
             user.setUserPhone(updatedUser.getUserPhone());
         } else {
-            System.err.println("회원정보 수정에 실패했습니다.");
+            System.err.println("✖️회원정보 수정에 실패했습니다.");
         }
     }
 

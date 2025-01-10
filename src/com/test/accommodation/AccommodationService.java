@@ -70,7 +70,7 @@ public class AccommodationService {
     public void addAccommodation(Accommodation accommodation) {
         accommodations.add(accommodation);
         saveAccommodations(); // 파일에 저장
-        System.out.println("새로운 숙소가 추가되었습니다.");
+        System.out.println("\n새로운 숙소가 추가되었습니다.");
     }
 
     // 숙소 삭제
@@ -107,7 +107,7 @@ public class AccommodationService {
         }
 
         for (Accommodation accommodation : accommodations) {
-            System.out.printf("ID: %d, 이름: %s, 지역: %s, 1박 요금: %d원\n",
+            System.out.printf("ID: %d, 이름: %s, 지역: %s, 1박 요금: %,d원\n",
                     accommodation.getId(),
                     accommodation.getAccommodationName(),
                     accommodation.getArea(),
@@ -180,18 +180,18 @@ public class AccommodationService {
 	    // 지역 입력받기
 	    String searchRegion;
 	    while (true) {
-	        System.out.print("검색할 지역을 입력하세요\n(서울, 대구, 대전, 부산, 제주, 강릉, 경주, 속초 중 선택): ");
+	        System.out.print("\n검색할 지역을 입력하세요\n(서울, 대구, 대전, 부산, 제주, 강릉, 경주, 속초 중 선택): ");
 	        searchRegion = scanner.nextLine().trim();
 
 	        if (validRegions.contains(searchRegion)) {
 	            break; // 유효한 지역 입력 시 루프 종료
 	        } else {
-	            System.out.println("검색 가능한 지역이 아닙니다. 다시 입력해주세요.\n");
+	            System.out.println("\n검색 가능한 지역이 아닙니다. 다시 입력해주세요.\n");
 	        }
 	    }
 	    String checkInDate;
 	    while (true) {
-	        System.out.print("체크인 날짜를 입력하세요 (예: 2025-01-01): ");
+	        System.out.print("\n체크인 날짜를 입력하세요 (예: 2025-01-01): ");
 	        checkInDate = scanner.nextLine().trim();
 	        if (isValidDate(checkInDate)) {
 	            break; // 유효한 날짜라면 루프 종료
@@ -200,7 +200,7 @@ public class AccommodationService {
 
 	    String checkOutDate;
 	    while (true) {
-	        System.out.print("체크아웃 날짜를 입력하세요 (예: 2025-01-03): ");
+	        System.out.print("\n체크아웃 날짜를 입력하세요 (예: 2025-01-03): ");
 	        checkOutDate = scanner.nextLine().trim();
 	        if (isValidDate(checkOutDate) && areValidDates(checkInDate, checkOutDate)) {
 	            break; // 유효한 체크아웃 날짜라면 루프 종료

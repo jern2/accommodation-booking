@@ -34,22 +34,22 @@ public class AccommodationBooking {
 	        int guestNum = -1;
 
 	        System.out.println("\n[선택한 예약 정보]");
-	        System.out.println("체크인 날짜: " + checkInDate);
-	        System.out.println("체크아웃 날짜: " + checkOutDate);
+	        System.out.println("🛌체크인 날짜: " + checkInDate);
+	        System.out.println("🛏️체크아웃 날짜: " + checkOutDate);
 
 	        // 상세 입력 여부 확인
 	        Scanner scanner = new Scanner(System.in);
 	        while (true) {
-	            System.out.println("\n이대로 예약을 진행하시겠습니까? \n1. 네\n2. 아니요\n입력: ");
+	            System.out.println("\n이대로 예약을 진행하시겠습니까? \n1. 네\n2. 아니요\n선택: ");
 	            String input = scanner.nextLine().trim().toUpperCase();
 	            if (input.equals("1")) {
-	                System.out.println("상세 입력 페이지로 이동합니다.");
+	                System.out.println("🔜상세 입력 페이지로 이동합니다.");
 	                break;
 	            } else if (input.equals("2")) {
-	                System.out.println("예약을 종료합니다.");
+	                System.out.println("🔚예약을 종료합니다.");
 	                break;
 	            } else {
-	                System.out.println("유효하지 않은 입력입니다. 1 또는 2을 입력해주세요.");
+	                System.out.println("⚠️유효하지 않은 입력입니다. 1 또는 2을 입력해주세요.");
 	            }
 	        }
 	    }
@@ -90,13 +90,13 @@ public class AccommodationBooking {
 	        LocalDate selectedDate;
 
 	        while (true) {
-	            System.out.println("체크인 날짜를 선택하세요:");
+	            System.out.println("🛌체크인 날짜를 선택하세요:");
 	            selectedDate = selectDateFromCalendar(reservedDates);
 
 	            if (selectedDate.isBefore(today)) {
-	                System.out.println("※ 체크인 날짜는 오늘 이후로만 선택할 수 있습니다. 다시 선택해주세요.");
+	                System.out.println("※ ⚠️체크인 날짜는 오늘 이후로만 선택할 수 있습니다. 다시 선택해주세요.");
 	            } else if (reservedDates.contains(selectedDate)) {
-	                System.out.println("※ 선택한 날짜는 이미 예약되어 있습니다. 다시 선택해주세요.");
+	                System.out.println("※ ⚠️선택한 날짜는 이미 예약되어 있습니다. 다시 선택해주세요.");
 	            } else {
 	                break;
 	            }
@@ -109,16 +109,16 @@ public class AccommodationBooking {
 
 	        while (true) {
 	        	System.out.println("\n현재 선택된 체크인 날짜: " + checkInDate);
-	            System.out.println("체크아웃 날짜를 선택하세요:");
+	            System.out.println("🛏️체크아웃 날짜를 선택하세요:");
 	            selectedDate = selectDateFromCalendar(reservedDates);
 
 	            final LocalDate finalSelectedDate = selectedDate; // effectively final로 만들기 위해 새로운 변수에 저장
 
 	            if (finalSelectedDate.isBefore(checkInDate.plusDays(1))) {
-	                System.out.println("※ 체크아웃 날짜는 체크인 날짜 이후여야 합니다. 다시 선택해주세요.");
+	                System.out.println("※ ⚠️체크아웃 날짜는 체크인 날짜 이후여야 합니다. 다시 선택해주세요.");
 	            } else if (reservedDates.stream()
 	                    .anyMatch(date -> !date.isBefore(checkInDate) && !date.isAfter(finalSelectedDate))) {
-	                System.out.println("※ 체크아웃 날짜 사이에 예약된 날짜가 있습니다. 다시 선택해주세요.");
+	                System.out.println("※ ⚠️체크아웃 날짜 사이에 예약된 날짜가 있습니다. 다시 선택해주세요.");
 	            } else {
 	                break;
 	            }
@@ -132,85 +132,91 @@ public class AccommodationBooking {
 	        int guestNum = -1;
 
 	        while (true) {
-	            System.out.print("숙박할 게스트 수를 입력하세요: ");
+	            System.out.print("\n👨‍👩‍👧‍👦숙박할 게스트 수를 입력하세요: ");
 	            if (scanner.hasNextInt()) {
 	                guestNum = scanner.nextInt();
 	                if (guestNum > 0) {
 	                    break; // 유효한 값 입력 시 종료
 	                } else {
-	                    System.out.println("게스트 수는 1명 이상이어야 합니다. 다시 입력해주세요.");
+	                    System.out.println("\n⚠️게스트 수는 1명 이상이어야 합니다. 다시 입력해주세요.");
 	                }
 	            } else {
-	                System.out.println("유효한 숫자를 입력해주세요.");
+	                System.out.println("\n⚠️유효한 숫자를 입력해주세요.");
 	                scanner.next(); // 잘못된 입력 제거
 	            }
 	        }
 	        return guestNum;
 	    }
 
+	    
 	    private static LocalDate selectDateFromCalendar(Set<LocalDate> reservedDates) {
-	        LocalDate today = LocalDate.now();
-	        LocalDate calendarMonth = today.withDayOfMonth(1); // 달력의 첫날 설정
-	        Scanner scanner = new Scanner(System.in);
+	           LocalDate today = LocalDate.now();
+	           LocalDate calendarMonth = today.withDayOfMonth(1); // 달력의 첫날 설정
+	           Scanner scanner = new Scanner(System.in);
 
-	        LocalDate selectedDate;
+	           LocalDate selectedDate;
 
-	        while (true) {
-	            System.out.println("\n====================================================================");
-	            System.out.printf("                     %d년 %02d월\n", calendarMonth.getYear(), calendarMonth.getMonthValue());
-	            System.out.println("====================================================================\n");
-	            displayCalendar(calendarMonth, reservedDates);
-	            System.out.println("\n====================================================================\n");
+	           while (true) {
+	              System.out.print("\033[47m\033[30m"); // 흰색 배경(47) + 검정 텍스트(30)
+	               System.out.println("\n╔══════════════════════════════════════════════════════╗");
+	               System.out.printf("║                     %d년 %02d월                      ║\n", 
+	                                 calendarMonth.getYear(), calendarMonth.getMonthValue());
+	               System.out.println("╠══════════════════════════════════════════════════════╣");
+	               displayCalendar(calendarMonth, reservedDates); // 사용자 정의 달력 출력 함수
+	               System.out.println("╚══════════════════════════════════════════════════════╝\n");
+	              System.out.print("\033[0m");
+	                  
 
-	            System.out.print("[다음 달 : + / 지난 달 : - / 날짜 선택 : 숫자] \n\n입력 : ");
-	            String input = scanner.nextLine().trim();
+	               System.out.print("[다음 달 : + / 지난 달 : - / 날짜 선택 : 숫자] \n\n선택 : ");
+	               String input = scanner.nextLine().trim();
 
-	            if (input.equals("+")) {
-	                calendarMonth = calendarMonth.plusMonths(1); // 다음 달로 이동
-	            } else if (input.equals("-")) {
-	                calendarMonth = calendarMonth.minusMonths(1); // 저번 달로 이동
-	            } else if (input.matches("\\d{1,2}")) {
-	                int day = Integer.parseInt(input);
-	                try {
-	                    selectedDate = calendarMonth.withDayOfMonth(day);
-	                    return selectedDate;
-	                } catch (DateTimeException e) {
-	                    System.out.println("유효하지 않은 날짜입니다. 다시 선택해주세요.");
-	                }
-	            } else {
-	                System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
-	            }
-	        }
-	    }
+	               if (input.equals("+")) {
+	                   calendarMonth = calendarMonth.plusMonths(1); // 다음 달로 이동
+	               } else if (input.equals("-")) {
+	                   calendarMonth = calendarMonth.minusMonths(1); // 저번 달로 이동
+	               } else if (input.matches("\\d{1,2}")) {
+	                   int day = Integer.parseInt(input);
+	                   try {
+	                       selectedDate = calendarMonth.withDayOfMonth(day);
+	                       return selectedDate;
+	                   } catch (DateTimeException e) {
+	                       System.out.println("유효하지 않은 날짜입니다. 다시 선택해주세요.");
+	                   }
+	               } else {
+	                   System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+	               }
+	           }
+	       }
 
-	    private static void displayCalendar(LocalDate calendarMonth, Set<LocalDate> reservedDates) {
-	        LocalDate firstDay = calendarMonth.withDayOfMonth(1);
-	        int firstDayOfWeek = firstDay.getDayOfWeek().getValue() % 7; // 첫날의 요일 (0=일, 6=토)
-	        int daysInMonth = calendarMonth.lengthOfMonth();
+	       private static void displayCalendar(LocalDate calendarMonth, Set<LocalDate> reservedDates) {
+	           LocalDate firstDay = calendarMonth.withDayOfMonth(1);
+	           int firstDayOfWeek = firstDay.getDayOfWeek().getValue() % 7; // 첫날의 요일 (0=일, 6=토)
+	           int daysInMonth = calendarMonth.lengthOfMonth();
 
-	        System.out.println("[일]\t[월]\t[화]\t[수]\t[목]\t[금]\t[토]");
+	           System.out.println("[일]\t[월]\t[화]\t[수]\t[목]\t[금]\t[토]");
 
-	        for (int i = 0; i < firstDayOfWeek; i++) {
-	            System.out.print("\t");
-	        }
+	           for (int i = 0; i < firstDayOfWeek; i++) {
+	               System.out.print("\t");
+	           }
 
-	        for (int day = 1; day <= daysInMonth; day++) {
-	            LocalDate currentDate = calendarMonth.withDayOfMonth(day);
+	           for (int day = 1; day <= daysInMonth; day++) {
+	               LocalDate currentDate = calendarMonth.withDayOfMonth(day);
 
-	            if (reservedDates.contains(currentDate)) {
-	                System.out.printf("%2d■\t", day); // 예약된 날짜
-	            } else {
-	                System.out.printf("%2d□\t", day); // 예약 가능 날짜
-	            }
+	               if (reservedDates.contains(currentDate)) {
+	                   System.out.printf("%2d■\t", day); // 예약된 날짜
+	               } else {
+	                   System.out.printf("%2d□\t", day); // 예약 가능 날짜
+	               }
 
-	            if ((day + firstDayOfWeek) % 7 == 0) {
-	                System.out.println();
-	            }
-	        }
-	        System.out.println();
-	    }
-	
-	
+	               if ((day + firstDayOfWeek) % 7 == 0) {
+	                   System.out.println();
+	               }
+	           }
+	           System.out.println();
+	       }
+	   
+	   
+
 	
 	    public static void runBooking(Accommodation selectedAccommodation) {
 	        String bookingFilePath = "./data/booking_list.txt";
@@ -226,10 +232,10 @@ public class AccommodationBooking {
 	        //게스트 수 입력
 	        int guestNum = inputGuestNum();
 
-	        System.out.println("\n[선택한 예약 정보]");
+	        System.out.println("\n[선택한 예약 정보]\n");
 	        System.out.println("숙소 이름: " + selectedAccommodation.getAccommodationName());
-	        System.out.println("체크인 날짜: " + checkInDate);
-	        System.out.println("체크아웃 날짜: " + checkOutDate);
+	        System.out.println("🛌체크인 날짜: " + checkInDate);
+	        System.out.println("🛏️체크아웃 날짜: " + checkOutDate);
 
 	        // 결제 창으로 이동
 	        PaymentView paymentView = new PaymentView();

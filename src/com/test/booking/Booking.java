@@ -69,16 +69,6 @@ public class Booking {
 
 	// Convert to file format
 	public String toFileFormat() {
-		// 디버깅 로그 추가
-		System.out.println("toFileFormat 호출됨:");
-		System.out.println("BookingId: " + bookingId);
-		System.out.println("UserId: " + userId);
-		System.out.println("AccommodationId: " + accommodationId);
-		System.out.println("CheckInDate: " + checkInDate);
-		System.out.println("CheckOutDate: " + checkOutDate);
-		System.out.println("NumGuests: " + numGuests);
-		System.out.println("TotalPrice: " + totalPrice);
-
 		return bookingId + "■" + userId + "■" + accommodationId + "■" +
 				(checkInDate != null ? checkInDate : "N/A") + "■" +
 				(checkOutDate != null ? checkOutDate : "N/A") + "■" +

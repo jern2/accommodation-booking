@@ -22,7 +22,7 @@ public class AdminService {
     public void addAccommodation() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("숙소 이름: ");
+        System.out.print("\n숙소 이름: ");
         String name = scanner.nextLine();
         System.out.print("숙소 지역: ");
         String area = scanner.nextLine();
@@ -84,7 +84,7 @@ public class AdminService {
         if (!newNotice.isEmpty()) accommodation.setNotice(newNotice);
 
         accommodationService.saveAccommodations(); // 변경된 정보 저장
-        System.out.println("숙소 정보가 성공적으로 수정되었습니다.");
+        System.out.println("\n숙소 정보가 성공적으로 수정되었습니다.");
     }
 
     // 숙소 삭제
@@ -96,9 +96,9 @@ public class AdminService {
 
         boolean isDeleted = accommodationService.deleteAccommodation(accommodationId);
         if (isDeleted) {
-            System.out.println("숙소가 성공적으로 삭제되었습니다.");
+            System.out.println("\n숙소가 성공적으로 삭제되었습니다.");
         } else {
-            System.out.println("숙소를 찾을 수 없습니다.");
+            System.out.println("\n숙소를 찾을 수 없습니다.");
         }
     }
 }

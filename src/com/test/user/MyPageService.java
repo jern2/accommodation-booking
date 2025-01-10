@@ -17,20 +17,20 @@ public class MyPageService extends UserService {
 	    // 1. ID 중복 검사
 	    for (User user : userList) {
 	        if (user.getUserId().equals(userId)) {
-	            System.out.println("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
+	            System.out.println("⚠️이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
 	            return false;
 	        }
 	    }
 
 	    // 2. 이메일 형식 유효성 검사
 	    if (!isValidEmail(userEmail)) {
-	        System.out.println("유효하지 않은 이메일 형식입니다. 이메일은 '문자열@문자열.com' 형식이어야 합니다.");
+	        System.out.println("⚠️유효하지 않은 이메일 형식입니다. 이메일은 '문자열@문자열.com' 형식이어야 합니다.");
 	        return false;
 	    }
 
 	    // 3. 전화번호 형식 유효성 검사
 	    if (!isValidPhoneNumber(userPhone)) {
-	        System.out.println("유효하지 않은 전화번호 형식입니다. 전화번호는 '010'으로 시작하며 8자리 숫자로 구성되어야 합니다.");
+	        System.out.println("⚠️유효하지 않은 전화번호 형식입니다. 전화번호는 '010'으로 시작하며 8자리 숫자로 구성되어야 합니다.");
 	        return false;
 	    }
 	    
@@ -48,7 +48,7 @@ public class MyPageService extends UserService {
 	    // 사용자 목록을 파일에 저장
 	    writeMemberFile(userList);
 
-	    System.out.println("회원가입이 완료되었습니다.");
+	    System.out.println("✔️회원가입이 완료되었습니다.");
 	    return true;
 	}
 
@@ -72,7 +72,7 @@ public class MyPageService extends UserService {
             }
         }
 
-        System.out.println("사용자를 찾을 수 없습니다.");
+        System.out.println("⚠️사용자를 찾을 수 없습니다.");
         return 0;
     }
 
@@ -95,7 +95,7 @@ public class MyPageService extends UserService {
         if (isUpdated) {
             writeMemberFile(userList);
         } else {
-            System.out.println("사용자를 찾을 수 없습니다.");
+            System.out.println("⚠️사용자를 찾을 수 없습니다.");
         }
     }
 
@@ -116,9 +116,9 @@ public class MyPageService extends UserService {
 
         if (isUpdated) {
             writeMemberFile(userList);
-            System.out.println("사용자 정보가 성공적으로 수정되었습니다.");
+            System.out.println("✔️사용자 정보가 성공적으로 수정되었습니다.");
         } else {
-            System.out.println("해당 ID를 가진 사용자를 찾을 수 없습니다.");
+            System.out.println("⚠️해당 ID를 가진 사용자를 찾을 수 없습니다.");
         }
 
         return isUpdated;
@@ -131,9 +131,9 @@ public class MyPageService extends UserService {
 
         if (isDeleted) {
             writeMemberFile(userList);
-            System.out.println("사용자가 성공적으로 삭제되었습니다.");
+            System.out.println("✔️사용자가 성공적으로 삭제되었습니다.");
         } else {
-            System.out.println("비밀번호가 올바르지 않습니다.");
+            System.out.println("⚠️비밀번호가 올바르지 않습니다.");
         }
 
         return isDeleted;

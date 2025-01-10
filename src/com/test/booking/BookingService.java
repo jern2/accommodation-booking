@@ -38,7 +38,7 @@ public class BookingService {
 
 	    // 디버깅 로그
 	    System.out.println("숙박 기간: " + stayDuration + "박");
-	    System.out.println("총 금액: " + totalPrice + "원");
+	    System.out.printf("총 금액: %,d원", totalPrice);
 
 	    // Booking 객체 생성
 	    Booking booking = new Booking(generateBookingId(), userId, accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);

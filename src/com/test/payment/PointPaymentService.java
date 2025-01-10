@@ -33,7 +33,7 @@ public class PointPaymentService {
                 // 포인트 충전
                 member.setBalance(member.getBalance() + chargeAmount);
                 saveMembers(members);
-                System.out.println("포인트가 성공적으로 충전되었습니다. 현재 포인트: " + member.getBalance() + "P");
+                System.out.println("\n포인트가 성공적으로 충전되었습니다. 현재 포인트: " + member.getBalance() + "P");
                 return;
             }
         }
