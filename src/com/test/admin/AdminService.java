@@ -24,6 +24,8 @@ public class AdminService {
 
         System.out.print("\n숙소 이름: ");
         String name = scanner.nextLine();
+        System.out.print("호스트 이름: ");
+        String host = scanner.nextLine();
         System.out.print("숙소 지역: ");
         String area = scanner.nextLine();
         System.out.print("숙소 주소: ");
@@ -39,7 +41,7 @@ public class AdminService {
         // 숙소 ID는 자동 생성
         int newAccommodationId = accommodationService.getAccommodations().size() + 1;
 
-        Accommodation accommodation = new Accommodation(newAccommodationId, "관리자", area, address, name, maxGuests, price, notice);
+        Accommodation accommodation = new Accommodation(newAccommodationId, host, area, address, name, maxGuests, price, notice);
         accommodationService.addAccommodation(accommodation);
 
         System.out.println("숙소가 성공적으로 추가되었습니다.");

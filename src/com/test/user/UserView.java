@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import com.test.accommodation.AccommodationView;
 import com.test.booking.BookingView;
-import com.test.payment.Member;
+//import com.test.payment.Member;
 import com.test.payment.PaymentProcessor;
 import com.test.util.LoginSystem;
 
@@ -23,9 +23,8 @@ public class UserView {
     private AccommodationView accommodationView = new AccommodationView();
     private PaymentProcessor paymentProcessor = new PaymentProcessor();
     private LoginSystem loginSystem = new LoginSystem();
-    
-    List<Member> members = new ArrayList<>();
-    
+
+
     Scanner scanner = new Scanner(System.in);
 
     public void start() throws IOException {
@@ -147,6 +146,8 @@ System.out.println();        	System.out.println("==============================
                 System.err.println("⚠️아이디 또는 이메일이 일치하지 않습니다.");
             }
         }
+
+        
         public void registerUser() {
         	System.out.print("\033[47m\033[30m");
         	System.out.println();
@@ -264,29 +265,8 @@ System.out.println();        	System.out.println("==============================
 
         // LoginSystem의 login 메서드 호출
         LoginSystem.login(userId, userPassword);
-        
 
-//        // 로그인 성공 여부 확인
-//        String loggedInUserIndex = LoginSystem.getUserIndex();
-//        if (loggedInUserIndex != null) {
-//            System.out.println("┏━━━━━━━━━━━━━┓");
-//            System.out.println("┃ 로그인 성공 ┃");
-//            System.out.println("┗━━━━━━━━━━━━━┛");
-//
-//            // memberMenu로 이동
-//            User user = new User(
-//                Integer.parseInt(loggedInUserIndex),
-//                userId,
-//                userPassword,
-//                LoginSystem.getUserName(),
-//                null,
-//                null,
-//                0
-//            );
-//            memberMenu(user);
-//        } else {
-//            System.err.println("로그인 실패: 다시 시도해주세요.");
-//        }
+        
     }
 
 

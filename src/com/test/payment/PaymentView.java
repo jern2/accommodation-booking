@@ -29,8 +29,8 @@ public class PaymentView {
         System.out.println("┃ ┃ [1] 카드결제         ┃┃ [2] 포인트결제      ┃  ┃");
         System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━┛  ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        System.out.println("\n선택: ");
         System.out.print("\033[0m");
+        System.out.println("\n선택: ");
 
         int choice = scanner.nextInt();
         try {
@@ -124,25 +124,7 @@ public class PaymentView {
         }
         return input;
     }
-    
-    
-//    private void processCardPayment() throws IOException {
-//        Scanner scanner = new Scanner(System.in);
-//
-//        System.out.print("카드 번호를 입력하세요 (예: 1234-5678-9012-3456): ");
-//        String cardNumber = scanner.nextLine();
-//
-//        System.out.print("카드 유효기간 (MM/YY): ");
-//        String cardExpiry = scanner.nextLine();
-//
-//        System.out.print("카드 비밀번호 앞 2자리: ");
-//        String cardPassword = scanner.nextLine();
-//
-//        System.out.println("카드 결제가 완료되었습니다.");
-//
-//        // 예약 정보 저장
-//        saveBooking();
-//    }
+
     
     
     private void processPointPayment() throws IOException {

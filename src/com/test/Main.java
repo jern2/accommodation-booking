@@ -11,16 +11,10 @@ import com.test.util.LoginSystem;
 
 public class Main {
 	
-	Scanner scanner = new Scanner(System.in);
-	
     public static void main(String[] args) throws IOException {
     	
     	 Scanner scanner = new Scanner(System.in);
          UserView userView = new UserView();
-         AdminView adminView = new AdminView();
-         BookingView bookingView = new BookingView();
-         PaymentView paymentView = new PaymentView();
-         LoginSystem loginSystem = new LoginSystem();
 
          while (true) {
         	 
@@ -91,7 +85,7 @@ public class Main {
                      userView.start(); // UserView 진입
                      break;
                  case 2:
-                     adminView.main(args); // AdminView 진입
+                     AdminView.main(args); // AdminView 진입
                      break;
                  case 3:
                      System.out.println("🔚프로그램을 종료합니다.");
@@ -102,16 +96,6 @@ public class Main {
              }
          }
      }
- 
-    	
-    	
-    	
-    	
-    	
-//    	UserView userview = new UserView();
-//    	BookingView bookingView = new BookingView();
-//        int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
-
 
     }
 

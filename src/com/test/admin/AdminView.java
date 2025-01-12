@@ -1,6 +1,7 @@
 package com.test.admin;
 
 import java.util.Scanner;
+//import com.test.accommodation.AccommodationService2;
 import com.test.accommodation.AccommodationService;
 
 public class AdminView {

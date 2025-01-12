@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.test.accommodation.Accommodation;
+//import com.test.accommodation.AccommodationService;
 import com.test.accommodation.AccommodationService;
 import com.test.review.Review;
 import com.test.review.ReviewService;

@@ -7,54 +7,6 @@ import java.time.temporal.ChronoUnit;
 
 public class ValidationUtil {
 
-
-    // 날짜 형식 검증 메서드
-    public static boolean isValidDate(String date) {
-        String dateRegex = "^\\d{4}-\\d{2}-\\d{2}$";
-        return date.matches(dateRegex);
-    }
-
-    // 체크인 날짜와 체크아웃 날짜 비교
-    public static boolean isCheckOutDateAfterCheckIn(String checkInDate, String checkOutDate) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate checkIn = LocalDate.parse(checkInDate, formatter);
-            LocalDate checkOut = LocalDate.parse(checkOutDate, formatter);
-
-            // 체크아웃 날짜가 체크인 날짜보다 이후인지 확인
-            return checkOut.isAfter(checkIn);
-        } catch (DateTimeParseException e) {
-            return false; // 날짜 파싱 오류 시 false 반환
-        }
-    }
-
-    // 과거 날짜인지 확인
-    public static boolean isDateInPast(String date) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate inputDate = LocalDate.parse(date, formatter);
-            LocalDate today = LocalDate.now();
-
-            return inputDate.isBefore(today);
-        } catch (DateTimeParseException e) {
-            return true; // 잘못된 형식은 과거로 간주
-        }
-    }
-    
-    //미래 날짜인지 확인 
-    public static boolean isDateInFuture(String date) {
-    	try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate inputDate = LocalDate.parse(date, formatter);
-            LocalDate today = LocalDate.now();
-
-            return inputDate.isAfter(today);
-        } catch (DateTimeParseException e) {
-            return true; // 잘못된 형식은 미래로 간주
-        }
-    }
-    
-
     // 두 날짜 사이의 일수 계산
     public static int calculateDaysBetween(String startDate, String endDate) {
         try {

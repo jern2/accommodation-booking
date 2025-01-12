@@ -3,19 +3,20 @@ package com.test.payment;
 import java.io.*;
 import java.util.*;
 import com.test.booking.Booking;
+import com.test.user.User;
 
 public class PointPaymentService {
 
     private static final String MEMBERS_FILE = "./data/members.txt";
     private static final String BOOKING_LIST_FILE = "./data/booking_list.txt";
 
-    public boolean processPointPayment(int userId, int totalPrice, Booking booking) throws IOException {
-        List<Member> members = loadMembers();
-        for (Member member : members) {
-            if (member.getId() == userId) {
-                if (member.getBalance() >= totalPrice) {
-                    member.setBalance(member.getBalance() - totalPrice);
-                    saveMembers(members);
+    public boolean processPointPayment(int userIndex, int totalPrice, Booking booking) throws IOException {
+        List<User> users = loadMembers();
+        for (User user : users) {
+            if (user.getUserIndex() == userIndex) {
+                if (user.getUserPoints() >= totalPrice) {
+                    user.setUserPoints(user.getUserPoints() - totalPrice);
+                    saveMembers(users);
                     addBooking(booking);
                     return true;
                 }
@@ -25,15 +26,15 @@ public class PointPaymentService {
     }
 
     // 포인트 충전 메서드
-    public void chargeUserPoints(int userId, int chargeAmount) throws IOException {
-        List<Member> members = loadMembers();
+    public void chargeUserPoints(int userIndex, int chargeAmount) throws IOException {
+        List<User> users = loadMembers();
 
-        for (Member member : members) {
-            if (member.getId() == userId) {
+        for (User user : users) {
+            if (user.getUserIndex() == userIndex) {
                 // 포인트 충전
-                member.setBalance(member.getBalance() + chargeAmount);
-                saveMembers(members);
-                System.out.println("\n포인트가 성공적으로 충전되었습니다. 현재 포인트: " + member.getBalance() + "P");
+                user.setUserPoints(user.getUserPoints() + chargeAmount);
+                saveMembers(users);
+                System.out.println("\n포인트가 성공적으로 충전되었습니다. 현재 포인트: " + user.getUserPoints() + "P");
                 return;
             }
         }
@@ -41,25 +42,25 @@ public class PointPaymentService {
         System.out.println("사용자를 찾을 수 없습니다.");
     }
 
-    public List<Member> loadMembers() throws IOException {
-        List<Member> members = new ArrayList<>();
+    public List<User> loadMembers() throws IOException {
+        List<User> users = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(MEMBERS_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("■");
-                members.add(new Member(
+                users.add(new User(
                         Integer.parseInt(parts[0]), parts[1], parts[2], parts[3],
                         parts[4], parts[5], Integer.parseInt(parts[6])
                 ));
             }
         }
-        return members;
+        return users;
     }
 
-    public void saveMembers(List<Member> members) throws IOException {
+    public void saveMembers(List<User> members) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(MEMBERS_FILE))) {
-            for (Member member : members) {
-                writer.write(member.toFileFormat());
+            for (User user : members) {
+                writer.write(user.toFileFormat());
                 writer.newLine();
             }
         }
