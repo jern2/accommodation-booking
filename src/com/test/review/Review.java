@@ -2,6 +2,8 @@ package com.test.review;
 
 import java.io.IOException;
 
+import com.test.util.LoginSystem;
+
 public class Review {
     private int reviewId;
     private int userId;
@@ -11,6 +13,14 @@ public class Review {
     private int rating;
 
     // Constructor
+    public Review(int reviewId, int userId, int accommodationId, String content, int rating) {
+        this.reviewId = reviewId;
+        this.userId = userId;
+        this.accommodationId = accommodationId;
+        this.content = content;
+        this.rating = rating;
+    }
+
     public Review(int reviewId, int userId, String userName, int accommodationId, String content, int rating) {
         this.reviewId = reviewId;
         this.userId = userId;

@@ -13,24 +13,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.test.util.SysoutUtil.banner;
+import static com.test.util.SysoutUtil.nextpage;
+
 public class PaymentView {
 
     private PointPaymentService pointPaymentService = new PointPaymentService();
     private BookingService bookingService = new BookingService();
     
-    public void showPaymentOptions() {
+    public void showPaymentOptions() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.print("\033[47m\033[30m");
-        System.out.println("                     ┏━━━━━━━━━━┓                   ");
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃ 결제 옵션┃━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃                    ┗━━━━━━━━━━┛                  ┃");
-        System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━┓  ┃");
-        System.out.println("┃ ┃ [1] 카드결제         ┃┃ [2] 포인트결제      ┃  ┃");
-        System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━┛  ┃");
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        System.out.print("\033[0m");
-        System.out.println("\n선택: ");
+//        System.out.print("\033[47m\033[30m");
+        nextpage();
+        banner();
+        System.out.println("┃\t\t                       ┏━━━━━━━━━━━┓                      \t\t┃");
+        System.out.println("┃\t\t  ┏━━━━━━━━━━━━━━━━━━━━┃  결제 옵션  ┃━━━━━━━━━━━━━━━━━━┓  \t\t┃ ");
+        System.out.println("┃\t\t  ┃                    ┗━━━━━━━━━━━┛                  ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┃ ┃[1] 카드 결제\t\t   ┃┃ [2] 포인트 결제\t\t   ┃  ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓                          ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┃ ┃[3] 뒤로가기\t\t\t   ┃                          ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                          ┃  \t\t┃ ");
+        System.out.println("┃\t\t  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t\t┃ ");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+        System.out.print("\n선택: ");
+//        System.out.print("\033[0m");
 
         int choice = scanner.nextInt();
         try {
@@ -38,7 +48,10 @@ public class PaymentView {
                 processCardPayment();
             } else if (choice == 2) {
                 processPointPayment();
-            } else {
+            } else if(choice == 3){
+                return;
+            }
+            else {
                 System.out.println("잘못된 입력입니다.");
             }
         } catch (IOException e) {

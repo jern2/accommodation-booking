@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewService {
-    private List<Review> reviews = new ArrayList<>();
+    private static List<Review> reviews = new ArrayList<>();
     private static final String FILE_PATH = "./data/reviews.txt";
 
     public ReviewService() {
@@ -98,7 +98,7 @@ public class ReviewService {
     }
     
  // 특정 숙소의 평균 평점 계산
-    public double calculateAverageRating(int accommodationId) {
+    public static double calculateAverageRating(int accommodationId) {
         int totalRating = 0;
         int reviewCount = 0;
 

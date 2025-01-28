@@ -10,9 +10,11 @@ import java.util.Scanner;
 
 import com.test.accommodation.AccommodationView;
 import com.test.booking.BookingView;
-//import com.test.payment.Member;
 import com.test.payment.PaymentProcessor;
 import com.test.util.LoginSystem;
+
+import static com.test.util.SysoutUtil.banner;
+import static com.test.util.SysoutUtil.nextpage;
 
 public class UserView {
 	BookingView bookingView = new BookingView();
@@ -23,29 +25,32 @@ public class UserView {
     private AccommodationView accommodationView = new AccommodationView();
     private PaymentProcessor paymentProcessor = new PaymentProcessor();
     private LoginSystem loginSystem = new LoginSystem();
-
-
+    
     Scanner scanner = new Scanner(System.in);
 
-    public void start() throws IOException {
+    public void start() throws IOException, InterruptedException {
     	
             while (true) {
+                nextpage();
             	System.out.println();
-            	System.out.print("\033[47m\033[30m");
-                System.out.println("              ┏━━━━━━━━━━━━━━━━━━━━┓               ");
-                System.out.println("┏━━━━━━━━━━━━━┃      저기어때      ┃━━━━━━━━━━━━━━┓");
-                System.out.println("┃             ┗━━━━━━━━━━━━━━━━━━━━┛              ┃");
-                System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━┓  ┃");
-                System.out.println("┃ ┃[1] 회원가입          ┃┃[2] 로그인          ┃  ┃");
-                System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━┛  ┃");
-                System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━┓  ┃");
-                System.out.println("┃ ┃[3] 아이디 찾기       ┃┃[4] 비밀번호 찾기   ┃  ┃");
-                System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━┛  ┃");
-                System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓                        ┃");
-                System.out.println("┃ ┃[5] 종료              ┃                        ┃");
-                System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                        ┃");
-                System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-                System.out.print("\033[0m");
+                banner();
+//            	System.out.print("\033[47m\033[30m");
+                System.out.println("┃\t\t                ┏━━━━━━━━━━━━━━━━━━━━━━━┓                 \t\t┃");
+                System.out.println("┃\t\t  ┏━━━━━━━━━━━━━┃\t\t 사용자 메뉴 \t\t┃━━━━━━━━━━━━┓  \t\t┃");
+                System.out.println("┃\t\t  ┃             ┗━━━━━━━━━━━━━━━━━━━━━━━┛            ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━┓  ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┃[1] 회원가입\t\t    ┃┃[2] 로그인\t\t\t  ┃  ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━┛  ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━┓  ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┃[3] 아이디 찾기\t\t\t┃┃[4] 비밀번호 찾기\t  ┃  ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━┛  ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━┓                        ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┃[5] 종료\t\t\t\t┃                        ┃  \t\t┃");
+                System.out.println("┃\t\t  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━┛                        ┃  \t\t┃");
+                System.out.println("┃\t\t  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t\t┃");
+                System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+//                System.out.print("\033[0m");
                 System.out.println();
                 System.out.print("✔️선택: ");
 
@@ -84,8 +89,10 @@ public class UserView {
     	
         private void findAccount() {
         	System.out.print("\033[47m\033[30m");
-System.out.println();        	System.out.println("====================================================");
-            System.out.println("                   ID  찾기                         ");      			 			System.out.println("====================================================");
+            System.out.println();
+            System.out.println("====================================================");
+            System.out.println("                   ID  찾기                         ");
+            System.out.println("====================================================");
             System.out.print("\033[0m");
             System.out.println();
             
@@ -116,16 +123,18 @@ System.out.println();        	System.out.println("==============================
         }
         private void findPassword() {
         	System.out.print("\033[47m\033[30m");
-      System.out.println();  	System.out.println("====================================================");
-            System.out.println("                   비밀번호 찾기                    ");      			 			System.out.println("====================================================");
+            System.out.println();
+            System.out.println("====================================================");
+            System.out.println("                   비밀번호 찾기                       ");
+            System.out.println("====================================================");
             System.out.print("\033[0m");
             System.out.println();
             
-            System.out.print("🆔아이디: ");
+            System.out.print(" 아이디: ");
             String userId = scanner.nextLine();
-            System.out.print("✉️이메일: ");
+            System.out.print(" 이메일: ");
             String userEmail = scanner.nextLine();
-            System.out.print("📞전화번호: ");
+            System.out.print(" 전화번호: ");
             String userPhone = scanner.nextLine();
 
             List<User> userList = userService.readMemberFile();
@@ -146,17 +155,16 @@ System.out.println();        	System.out.println("==============================
                 System.err.println("⚠️아이디 또는 이메일이 일치하지 않습니다.");
             }
         }
-
-        
         public void registerUser() {
         	System.out.print("\033[47m\033[30m");
         	System.out.println();
         	System.out.println("====================================================");
-            System.out.println("                   회원가입                         ");      			 			System.out.println("====================================================");
+            System.out.println("                   회원가입                         ");
+            System.out.println("====================================================");
             System.out.print("\033[0m");
 			 System.out.println();
             // 1. 아이디 입력 후 중복 검사
-            System.out.print("🆔아이디: ");
+            System.out.print(" 아이디: ");
             String userId = scanner.nextLine();
 
             // 기존 사용자 목록 읽기
@@ -171,15 +179,15 @@ System.out.println();        	System.out.println("==============================
             }
 
             // 2. 비밀번호 입력
-            System.out.print("🗝️비밀번호: ");
+            System.out.print(" ️비밀번호: ");
             String userPassword = scanner.nextLine();
 
             // 3. 이름 입력
-            System.out.print("📛이름: ");
+            System.out.print(" 이름: ");
             String userName = scanner.nextLine();
 
             // 4. 이메일 입력 후 형식 검사
-            System.out.print("✉️이메일: ");
+            System.out.print(" ️이메일: ");
             String userEmail = scanner.nextLine();
             
             if (!isValidEmail(userEmail)) {
@@ -188,7 +196,7 @@ System.out.println();        	System.out.println("==============================
             }
 
             // 5. 전화번호 입력 후 형식 검사
-            System.out.print("📞전화번호: ");
+            System.out.print(" 전화번호: ");
             String userPhoneNum = scanner.nextLine();
             
             if (!isValidPhoneNumber(userPhoneNum)) {
@@ -251,11 +259,12 @@ System.out.println();        	System.out.println("==============================
     }
 
     //로그인
-    private void login() throws IOException {
+    private void login() throws IOException, InterruptedException {
     	System.out.println();
     	System.out.print("\033[47m\033[30m");
     	System.out.println("====================================================");
-        System.out.println("                    로그인                          ");      			 		System.out.println("====================================================");
+        System.out.println("                    로그인                          ");
+        System.out.println("====================================================");
         System.out.print("\033[0m");
         System.out.println();
         System.out.print("🆔아이디: ");
@@ -266,26 +275,28 @@ System.out.println();        	System.out.println("==============================
         // LoginSystem의 login 메서드 호출
         LoginSystem.login(userId, userPassword);
 
-        
     }
 
 
-    public void memberMenu(User user) throws IOException {
+    public void memberMenu(User user) throws IOException, InterruptedException {
     	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
+            nextpage();
         	System.out.println();
-        	System.out.print("\033[47m\033[30m");
-			System.out.println("                     ┏━━━━━━━━━━┓                    ");
-			System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃ 회원메뉴 ┃━━━━━━━━━━━━━━━━━━━┓");
-			System.out.println("┃                    ┗━━━━━━━━━━┛                   ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃");
-			System.out.println("┃ ┃[1] 마이페이지        ┃┃[2] 숙소예약          ┃  ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃");
-			System.out.println("┃ ┃[3] 로그아웃          ┃┃[4] 프로그램 종료     ┃  ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃");
-			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-			 System.out.print("\033[0m");
+//        	System.out.print("\033[47m\033[30m");
+            banner();
+			System.out.println("┃\t\t                       ┏━━━━━━━━━━━┓                      \t\t┃");
+			System.out.println("┃\t\t  ┏━━━━━━━━━━━━━━━━━━━━┃  회원 메뉴  ┃━━━━━━━━━━━━━━━━━━━┓  \t\t┃");
+			System.out.println("┃\t\t  ┃                    ┗━━━━━━━━━━━┛                   ┃  \t\t┃");
+			System.out.println("┃\t\t  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃  \t\t┃");
+			System.out.println("┃\t\t  ┃  ┃[1] 마이페이지\t\t    ┃┃[2] 숙소예약\t\t\t┃  ┃\t\t┃");
+			System.out.println("┃\t\t  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃ \t\t┃");
+			System.out.println("┃\t\t  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃  \t\t┃");
+			System.out.println("┃\t\t  ┃  ┃[3] 로그아웃\t\t\t┃┃[4] 프로그램 종료\t\t┃  ┃\t\t┃");
+			System.out.println("┃\t\t  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃  \t\t┃");
+			System.out.println("┃\t\t  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t\t┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+//			 System.out.print("\033[0m");
 			 System.out.println();
 			System.out.print("✔️선택: ");
 			
@@ -308,23 +319,14 @@ System.out.println();        	System.out.println("==============================
                     break;
                 case 3:
                     LoginSystem.logout();
-                    System.out.println();
-                    System.out.print("\033[47m\033[30m");
-    				System.out.println("┏━━━━━━━━━━━━━━━┓");
-    				System.out.println("┃✔️로그아웃 성공┃");
-    				System.out.println("┗━━━━━━━━━━━━━━━┛");
-    				System.out.print("\033[0m");
-    				 System.out.println();
                     return;
                 case 4:
                     LoginSystem.logout();
                     System.out.println();
-                    System.out.print("\033[47m\033[30m");
     				System.out.println("┏━━━━━━━━━━━━━━━┓");
-    				System.out.println("┃🔚프로그램 종료┃");
+    				System.out.println("┃\t프로그램 종료\t┃");
     				System.out.println("┗━━━━━━━━━━━━━━━┛");
-    				System.out.print("\033[0m");
-    				 System.out.println();
+                    System.out.println();
                     System.exit(0);
                 default:
                     System.err.println("⚠️잘못된 입력입니다. 다시 시도하세요.");
@@ -332,25 +334,27 @@ System.out.println();        	System.out.println("==============================
         }
     }
 
-    private void myPage(User user) throws IOException {
+    private void myPage(User user) throws IOException, InterruptedException {
     	int loggedInUserId = Integer.parseInt(LoginSystem.getUserIndex());
         while (true) {
-        	System.out.println();
-        	System.out.print("\033[47m\033[30m");
-			System.out.println("                     ┏━━━━━━━━━━━━━┓                   ");
-			System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃  마이페이지 ┃━━━━━━━━━━━━━━━━━━┓");
-			System.out.println("┃                    ┗━━━━━━━━━━━━━┛                  ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃");
-			System.out.println("┃ ┃[1] 예약한 숙소 확인  ┃┃[2] 쌍용 머니 조회/충전 ┃  ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━━━┛  ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃");
-			System.out.println("┃ ┃[3] 회원정보 수정     ┃┃[4] 회원탈퇴            ┃  ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━━━┛  ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓                            ┃");
-			System.out.println("┃ ┃[5] 뒤로가기          ┃                            ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                            ┃");
-			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-			System.out.print("\033[0m");
+            nextpage();
+            banner();
+//        	System.out.print("\033[47m\033[30m");
+			System.out.println("┃\t\t                      ┏━━━━━━━━━━━━━┓                    \t\t┃");
+			System.out.println("┃\t\t ┏━━━━━━━━━━━━━━━━━━━━┃\t마이 페이지\t┃━━━━━━━━━━━━━━━━━━┓ \t\t┃");
+			System.out.println("┃\t\t ┃                    ┗━━━━━━━━━━━━━┛                  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┃[1] 예약한 숙소 확인\t  ┃┃[2] 포인트 조회/충전 \t\t┃  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━━━┛  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┃[3] 회원정보 수정\t\t  ┃┃[4] 회원탈퇴\t\t\t\t┃  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━━━┛  ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓                            ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┃[5] 뒤로가기\t\t\t  ┃                            ┃ \t\t┃");
+			System.out.println("┃\t\t ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                            ┃ \t\t┃");
+			System.out.println("┃\t\t ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ \t\t┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+//			System.out.print("\033[0m");
 			 System.out.println();
 			 
 			System.out.print("✔️선택: ");
@@ -376,10 +380,14 @@ System.out.println();        	System.out.println("==============================
                     updateUserInfo(user);
                     break;
                 case 4:
-                    if (userAuthService.deleteUser(user.getUserPassword())) {
+                    System.out.print("비밀번호를 입력하세요 :");
+                    String password = scanner.nextLine();
+                    if (userAuthService.deleteUser(password)){
                         System.out.println("✔️회원탈퇴가 완료되었습니다.");
                         System.out.println("🖐️안녕히 가세요.");
                         start();
+                    } else{
+                        System.out.println("비밀번호가 일치하지 않습니다.");
                     }
                     break;
                 case 5:
@@ -390,21 +398,25 @@ System.out.println();        	System.out.println("==============================
         }
     }
 
-    private void pointManagement(User user) {
+    private void pointManagement(User user) throws InterruptedException {
         while (true) {
-        	System.out.println();
-        	System.out.print("\033[47m\033[30m");
-			System.out.println("                     ┏━━━━━━━━━━━━━━━┓                 ");
-			System.out.println("┏━━━━━━━━━━━━━━━━━━━━┃ 쌍용머니 관리 ┃━━━━━━━━━━━━━━━━┓");
-			System.out.println("┃                    ┗━━━━━━━━━━━━━━━┛                ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓    ┃");
-			System.out.println("┃ ┃[1] 쌍용머니 조회     ┃┃[2] 쌍용머니 충전     ┃    ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛    ┃");
-			System.out.println("┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓                            ┃");
-			System.out.println("┃ ┃[3] 뒤로가기          ┃                            ┃");
-			System.out.println("┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                            ┃");
-			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-			System.out.print("\033[0m");
+
+            nextpage();
+            banner();
+
+//			System.out.print("\033[47m\033[30m");
+            System.out.println("┃\t\t                       ┏━━━━━━━━━━━┓                      \t\t┃");
+            System.out.println("┃\t\t  ┏━━━━━━━━━━━━━━━━━━━━┃ 포인트 관리  ┃━━━━━━━━━━━━━━━━━━┓  \t\t┃ ");
+            System.out.println("┃\t\t  ┃                    ┗━━━━━━━━━━━┛                  ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓┏━━━━━━━━━━━━━━━━━━━━━━┓  ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┃ ┃[1] 포인트 조회\t\t   ┃┃ [2] 포인트 충전\t\t   ┃  ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛┗━━━━━━━━━━━━━━━━━━━━━━┛  ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┃ ┏━━━━━━━━━━━━━━━━━━━━━━┓                          ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┃ ┃[3] 뒤로가기\t\t\t   ┃                          ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┃ ┗━━━━━━━━━━━━━━━━━━━━━━┛                          ┃  \t\t┃ ");
+            System.out.println("┃\t\t  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t\t┃ ");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+//			System.out.print("\033[0m");
 			 System.out.println();
 			System.out.print("✔️선택: ");
 
@@ -421,10 +433,10 @@ System.out.println();        	System.out.println("==============================
             switch (sel) {
                 case 1:
                     int points = myPageService.getUserPoints(user.getUserId());
-                    System.out.printf("\n[💲현재 포인트: %,d원\n]", points);
+                    System.out.printf("\n[💲현재 포인트: %,d원]", points);
                     break;
                 case 2:
-                    System.out.print("\n💲충전할 포인트 금액: ");
+                    System.out.print("\n💲충전할 포인트 입력: ");
                     int amount = scanner.nextInt();
                     scanner.nextLine(); // 버퍼 비우기
                     myPageService.chargePoints(user.getUserId(), amount);
@@ -495,7 +507,7 @@ System.out.println();        	System.out.println("==============================
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         UserView userView = new UserView();
         userView.start();
     }

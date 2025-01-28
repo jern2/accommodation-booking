@@ -19,8 +19,14 @@ import java.util.Set;
 
 import com.test.booking.Booking;
 import com.test.booking.BookingService;
+import com.test.booking.BookingView;
 import com.test.booking.ReservationHandler;
 import com.test.payment.PaymentView;
+import com.test.review.ReviewService;
+
+import static com.test.booking.BookingView.showAccommodationReviews;
+import static com.test.util.SysoutUtil.banner;
+import static com.test.util.SysoutUtil.nextpage;
 
 public class AccommodationService {
 	private List<Accommodation> accommodations;
@@ -103,25 +109,33 @@ public class AccommodationService {
 	   }
 
 	// 모든 숙소 출력
-	public void showAllAccommodations() {
-		System.out.println("+" + "-".repeat(50) + "+");
-		System.out.println("|" + " ".repeat(18) + "숙소 리스트" + " ".repeat(19) + "|");
-		System.out.println("+" + "-".repeat(50) + "+");
+	public void showAllAccommodations() throws InterruptedException {
+		nextpage();
+		banner();
+
+		System.out.println("┃=======================================================================┃");
+		System.out.println("┃\t\t\t\t\t\t\t\t숙소 리스트\t\t\t\t\t\t\t\t┃");
+		System.out.println("┃=======================================================================┃");
+		System.out.println("┃[번호]\t[지역]\t[숙소이름]    \t[최대 인원]\t\t[가격]\t\t\t\t\t┃");
 
 		if (accommodations.isEmpty()) {
-			System.out.println("🈚등록된 숙소가 없습니다.");
+			System.out.println("등록된 숙소가 없습니다.");
 			return;
 		}
 
 		for (Accommodation accommodation : accommodations) {
-			System.out.printf("ID: %d, 이름: %s, 지역: %s, 1박 요금: %,d원\n", accommodation.getId(),
-					accommodation.getAccommodationName(), accommodation.getArea(), accommodation.getPrice());
+//			System.out.printf("ID: %d, 이름: %s, 지역: %s, 1박 요금: %,d원\n", accommodation.getId(),
+//					accommodation.getAccommodationName(), accommodation.getArea(), accommodation.getPrice());
+			System.out.printf("┃ %-5d\t %-5s\t%-14s\t%-5d\t%,10d원\t\t\t\t\t┃%n", accommodation.getId(), accommodation.getArea(), accommodation.getAccommodationName(),
+					accommodation.getMaxGuest(), accommodation.getPrice());
 		}
+		System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+		System.out.println();
 	}
 //
 
 	
-	public static void groupRandomlist2() throws IOException {
+	public static void groupRandomlist2() throws IOException, InterruptedException {
 	    String accomfilePath = "./data/accommodation_list.txt"; // 맥 환경
 	    String bookingList = "./data/booking_list.txt"; // 맥 환경
 
@@ -265,20 +279,32 @@ public class AccommodationService {
 
 	            if (selectedNumber >= 1 && selectedNumber <= filteredAccommodations.size()) {
 	                Accommodation selectedAccommodation = filteredAccommodations.get(selectedNumber - 1);
-	                System.out.print("\033[47m\033[30m");
-	                System.out.println("+" + "-".repeat(50) + "+");
-	                System.out.println(centerText("[선택한 숙소 정보]", 45));
-	                System.out.println("+" + "-".repeat(50) + "+");
-	                System.out.print("\033[0m");
-	                System.out.println();
-	                System.out.printf("%-10s: %-35s \n", "📛이름", selectedAccommodation.getAccommodationName());
-	                System.out.printf("%-10s: %-35s \n", "🚩주소", selectedAccommodation.getAddress());
-	                System.out.printf("%-10s: %-35s \n", "👨‍👩최대 인원 ", selectedAccommodation.getMaxGuest() + "명");
-	                System.out.printf("%-10s: %-35s \n", "💲가격", String.format("%,d원", selectedAccommodation.getPrice()));
-	                System.out.println("\nℹ️공지사항                                      ");
-	                System.out.println("+" + "-".repeat(50) + "+");
-	                printFormattedNotice(selectedAccommodation.getNotice(), 48); // 공지사항 출력
-	                System.out.println("+" + "-".repeat(50) + "+"); 
+					nextpage();
+
+					banner();
+//        System.out.print("\033[47m\033[30m");
+					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+					System.out.println("┃\t\t\t\t\t\t\t\t숙소 상세정보    \t\t\t\t\t\t\t┃");
+					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+//        System.out.print("\033[0m");
+					System.out.printf("┃ 숙소명  : %-40s \t\t\t\t\t┃\n", selectedAccommodation.getAccommodationName());
+					System.out.printf("┃ 지역   : %-42s \t\t\t\t\t┃\n", selectedAccommodation.getArea());
+					System.out.printf("┃ 주소   : %-52s\t┃\n", selectedAccommodation.getAddress());
+					System.out.printf("┃‍ 최대 인원 : %-36d \t\t\t\t\t\t┃\n", selectedAccommodation.getMaxGuest());
+					System.out.printf("┃ 가격 : %-40d \t\t\t\t\t\t┃\n", selectedAccommodation.getPrice());
+
+					// 평균 평점
+					double averageRating = ReviewService.calculateAverageRating(selectedAccommodation.getId());
+					System.out.printf("┃🌟평균 평점 : %-36.1f \t\t\t\t\t\t┃\n", averageRating);
+					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+
+					System.out.println("┃ℹ️공지사항\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+					printFormattedNotice(selectedAccommodation.getNotice(), 50);
+					System.out.println("\n┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+
+					// 숙소 리뷰
+					showAccommodationReviews(selectedAccommodation.getId());
 	                
 	                
 	                
@@ -321,16 +347,23 @@ public class AccommodationService {
 	}
 	
 
-	private static void displayAccommodationList(List<Accommodation> filteredAccommodations) {
+	private static void displayAccommodationList(List<Accommodation> filteredAccommodations) throws InterruptedException {
+		nextpage();
+		banner();
 
-		System.out.println("예약 가능한 추천 숙소 리스트:");
-		System.out.println("[번호]\t[이름]\t\t [최대 인원]\t  [가격]\t[주소]\t");
+		System.out.println("┃=======================================================================┃");
+		System.out.println("┃\t\t\t\t\t\t\t예약 가능한 숙소 리스트 \t\t\t\t\t\t\t┃");
+		System.out.println("┃=======================================================================┃");
 
+		System.out.println("┃[번호]\t[지역]\t[숙소이름]    \t[최대 인원]\t\t[가격]\t\t\t\t\t┃");
 		for (int i = 0; i < Math.min(20, filteredAccommodations.size()); i++) {
 			Accommodation accom = filteredAccommodations.get(i);
-			System.out.printf("%d\t%-5s\t\t%2d명\t%,9d원\t%5s\t%n", (i + 1), accom.getAccommodationName(),
-					accom.getMaxGuest(), accom.getPrice(), accom.getAddress());
+			System.out.printf("┃ %-5d\t %-5s\t%-14s\t%-5d\t%,10d원\t\t\t\t\t┃%n", (i + 1), accom.getArea(), accom.getAccommodationName(),
+					accom.getMaxGuest(), accom.getPrice());
 		}
+		System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+
 	}
 
 	 private static String selectDateFromCalendar() {
@@ -342,7 +375,7 @@ public class AccommodationService {
 
 	      while (true) {
 	         
-	         System.out.print("\033[47m\033[30m"); // 흰색 배경(47) + 검정 텍스트(30)
+//	         System.out.print("\033[47m\033[30m"); // 흰색 배경(47) + 검정 텍스트(30)
 
 	           // 기존 코드
 	           System.out.println("\n╔══════════════════════════════════════════════════════╗");
@@ -352,7 +385,7 @@ public class AccommodationService {
 	           System.out.println("╚══════════════════════════════════════════════════════╝\n");
 
 	           // 스타일 초기화 (배경/텍스트 색상 원래대로)
-	           System.out.print("\033[0m");
+//	           System.out.print("\033[0m");
 	         
 
 	         System.out.print("[다음 달 : + / 지난 달 : - / 날짜 선택 : 숫자] \n\n입력 : ");
@@ -407,7 +440,7 @@ public class AccommodationService {
 			// 현재 출력할 부분 계산
 			int end = Math.min(start + maxLength, notice.length());
 			String line = notice.substring(start, end);
-			System.out.printf(" %-35s \n", line); // 좌측 정렬 및 너비 조정
+			System.out.printf("┃ %-40s\t\t\t\t┃\n", line); // 좌측 정렬 및 너비 조정
 			start = end; // 다음 부분으로 이동
 		}
 	}
@@ -447,7 +480,7 @@ public class AccommodationService {
 		}
 	}
 	
-	public static void randomList() throws IOException {
+	public static void randomList() throws IOException, InterruptedException {
 	    String filePath = "./data/accommodation_list.txt"; // 맥 환경
 
 	    ArrayList<Accommodation> accommodations = new ArrayList<>();
@@ -476,42 +509,53 @@ public class AccommodationService {
 
 	    if (!accommodations.isEmpty()) {
 	        Collections.shuffle(accommodations);
-	        System.out.print("\033[47m\033[30m");
-	        System.out.println();
-        	System.out.println("====================================================");
-            System.out.println("              인기 급 상승 숙소 리스트              ");      			 			System.out.println("====================================================");
-            System.out.print("\033[0m");
-            System.out.println();
-	        System.out.println("[번호]\t[지역]\t[숙소이름]\t[최대 인원]   [가격]");
+			nextpage();
+			banner();
+        	System.out.println("┃=======================================================================┃");
+            System.out.println("┃\t\t\t\t\t\t\t인기 급 상승 숙소 리스트 \t\t\t\t\t\t\t┃");
+			System.out.println("┃=======================================================================┃");
+
+			System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+	        System.out.println("┃[번호]\t[지역]\t[숙소이름]    \t[최대 인원]\t\t[가격]\t\t\t\t\t┃");
 	        for (int i = 0; i < Math.min(20, accommodations.size()); i++) {
 	            Accommodation accom = accommodations.get(i);
-	            System.out.printf("%d\t%s\t%2s\t  %5d\t%,10d원%n", (i + 1), accom.getArea(), accom.getAccommodationName(),
+	            System.out.printf("┃ %-5d\t %-5s\t%-14s\t%-5d\t%,10d원\t\t\t\t\t┃%n", (i + 1), accom.getArea(), accom.getAccommodationName(),
 	                    accom.getMaxGuest(), accom.getPrice());
 	        }
-
+			System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 	        Scanner scanner = new Scanner(System.in);
-			System.out.println("====================================================");
 	        System.out.print("\n🔍더 자세히 보고 싶은 숙소의 번호를 입력하세요 (1 ~ 20): ");
 	        int selectedNumber = scanner.nextInt();
 	        if (selectedNumber >= 1 && selectedNumber <= accommodations.size()) {
 	            Accommodation selectedAccommodation = accommodations.get(selectedNumber - 1);
-	            
-	            System.out.println();
-	            System.out.print("\033[47m\033[30m");
-	            System.out.println();
-	        	System.out.println("====================================================");
-	            System.out.println("              선택한 숙소 정보                      ");      			 				System.out.println("====================================================");
-	            System.out.print("\033[0m");
-	            System.out.println();
-	           
-	            System.out.println("📛이름: " + selectedAccommodation.getAccommodationName());
-	            System.out.println("🚩‍주소: " + selectedAccommodation.getAddress());
-	            System.out.println("👩‍👧‍👦최대 인원: " + selectedAccommodation.getMaxGuest() + "명");
-	            System.out.printf("💲가격: %,d원\n" , selectedAccommodation.getPrice() );
-	            System.out.println("+--------------------------------------------------+");
-				System.out.println("ℹ️공지사항: ");
-				printFormattedNotice(selectedAccommodation.getNotice(), 40);
-	            System.out.println("+--------------------------------------------------+");
+
+				nextpage();
+
+				banner();
+//        System.out.print("\033[47m\033[30m");
+				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+				System.out.println("┃\t\t\t\t\t\t\t\t숙소 상세정보    \t\t\t\t\t\t\t┃");
+				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+//        System.out.print("\033[0m");
+				System.out.printf("┃ 숙소명  : %-40s \t\t\t\t\t┃\n", selectedAccommodation.getAccommodationName());
+				System.out.printf("┃ 지역   : %-42s \t\t\t\t\t┃\n", selectedAccommodation.getArea());
+				System.out.printf("┃ 주소   : %-52s\t┃\n", selectedAccommodation.getAddress());
+				System.out.printf("┃‍ 최대 인원 : %-36d \t\t\t\t\t\t┃\n", selectedAccommodation.getMaxGuest());
+				System.out.printf("┃ 가격 : %-40d \t\t\t\t\t\t┃\n", selectedAccommodation.getPrice());
+
+				// 평균 평점
+				double averageRating = ReviewService.calculateAverageRating(selectedAccommodation.getId());
+				System.out.printf("┃🌟평균 평점 : %-36.1f \t\t\t\t\t\t┃\n", averageRating);
+				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+
+				System.out.println("┃ℹ️공지사항\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+				printFormattedNotice(selectedAccommodation.getNotice(), 50);
+				System.out.println("\n┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+
+				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+
+				// 숙소 리뷰
+				showAccommodationReviews(selectedAccommodation.getId());
 
 	            System.out.print("\n1.예약하기\n2.돌아가기\n\n✔️선택: ");
 	            int choice = scanner.nextInt();
@@ -523,7 +567,7 @@ public class AccommodationService {
 	            System.out.println("⚠️잘못된 입력입니다.");
 	        }
 	    } else {
-	        System.out.println("🈚추천할 숙소가 없습니다.");
+	        System.out.println("추천할 숙소가 없습니다.");
 	    }
 	}
 }

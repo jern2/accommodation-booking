@@ -6,22 +6,24 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.test.accommodation.Accommodation;
-//import com.test.accommodation.AccommodationService;
 import com.test.accommodation.AccommodationService;
 import com.test.review.Review;
 import com.test.review.ReviewService;
 import com.test.util.LoginSystem;
 import com.test.util.ValidationUtil;
 
+import static com.test.util.SysoutUtil.banner;
+import static com.test.util.SysoutUtil.nextpage;
+
 public class BookingView {
     private BookingService bookingService = new BookingService();
-    private ReviewService reviewService = new ReviewService();
+    private static ReviewService reviewService = new ReviewService();
     private AccommodationService accommodationService = new AccommodationService();
     private CalendarService calendarService = new CalendarService();
     private Scanner scanner = new Scanner(System.in);
 
     // 사용자 예약 목록 보여주기
-    public void showUserBookings(int loggedInUserId) throws IOException {
+    public void showUserBookings(int loggedInUserId) throws IOException, InterruptedException {
         List<Booking> userBookings = bookingService.getUserBookings(loggedInUserId);
 
         if (userBookings.isEmpty()) {
@@ -29,30 +31,31 @@ public class BookingView {
             return;
         }
         System.out.println();
-        System.out.print("\033[47m\033[30m");
-        System.out.println("+" + "-".repeat(60) + "+");
-        System.out.println("|" + " ".repeat(21) + "예약한 숙소 리스트" +" ".repeat(21)+ "|");
-        System.out.println("+" + "-".repeat(60) + "+");
-        System.out.print("\033[0m");
-        System.out.println();
-        System.out.printf("[번호]\t [지역]\t [숙소명]\t [최대 인원]\t[가격]\n");
+        banner();
+//        System.out.print("\033[47m\033[30m");
+        System.out.println("┃" + "-".repeat(71) + "┃");
+        System.out.println("┃\t\t\t\t\t\t\t  예약한 숙소 리스트 \t\t\t\t\t\t\t┃");
+        System.out.println("┃" + "-".repeat(71) + "┃");
+//        System.out.print("\033[0m");
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+//        System.out.printf("[번호]\t [지역]\t [숙소명]\t [최대 인원]\t[가격]\n");
+        System.out.println("┃[번호]\t[지역]\t[숙소이름]    \t[최대 인원]\t\t[가격]\t\t\t\t\t┃");
 
         int index = 1;
         for (Booking booking : userBookings) {
             Accommodation accommodation = accommodationService.getAccommodationById(booking.getAccommodationId());
             if (accommodation != null) {
-                System.out.printf("| %d\t %s\t %s\t %d\t%d\n", index, accommodation.getArea(),
+                System.out.printf("┃ %-5d\t %-5s\t%-14s\t%-5d\t%,10d원\t\t\t\t\t┃%n", index, accommodation.getArea(),
                         accommodation.getAccommodationName(), accommodation.getMaxGuest(), accommodation.getPrice());
-                System.out.println("|" + " ".repeat(60));
                 index++;
             } else {
-                System.out.println("|   숙소 정보를 찾을 수 없습니다.                  |");
+                System.out.println("┃   숙소 정보를 찾을 수 없습니다.                  ┃");
             }
         }
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
-        System.out.println("+" + "-".repeat(60) + "+");
         System.out.println();
-        System.out.println("🔙이전 화면으로 이동 = 0");
+        System.out.println("이전 화면으로 이동 = 0");
         System.out.print("✔️숙소 번호 선택: ");
         int selectedIndex = scanner.nextInt();
 
@@ -71,46 +74,43 @@ public class BookingView {
     }
 
     // 숙소 상세 정보 보여주기
-    private void showAccommodationDetails(Booking booking, Accommodation accommodation, int loggedInUserId)
-            throws IOException {
+    public void showAccommodationDetails(Booking booking, Accommodation accommodation, int loggedInUserId)
+            throws IOException, InterruptedException {
         if (accommodation == null) {
             System.out.println("⚠️숙소 정보를 찾을 수 없습니다.");
             return;
         }
-        System.out.println();
-        System.out.print("\033[47m\033[30m");
-        System.out.println("+" + "-".repeat(60) + "+");
-        System.out.println("|" + " ".repeat(25) + "숙소 상세정보" + " ".repeat(25) + "|");
-        System.out.println("+" + "-".repeat(60) + "+");
-        System.out.print("\033[0m");
-        System.out.printf(" 📛숙소명  : %-40s \n", accommodation.getAccommodationName());
-        System.out.printf(" 🗾지역   : %-42s \n", accommodation.getArea());
-        System.out.printf(" ‍🚩주소   : %-42s \n", accommodation.getAddress());
-        System.out.printf(" 👨‍👩‍👧‍👦최대 인원: %-36d \n", accommodation.getMaxGuest());
-        System.out.printf(" 💲가격: %-40d \n", accommodation.getPrice());
+        nextpage();
+
+        banner();
+//        System.out.print("\033[47m\033[30m");
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+        System.out.println("┃\t\t\t\t\t\t\t\t숙소 상세정보    \t\t\t\t\t\t\t┃");
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+//        System.out.print("\033[0m");
+        System.out.printf("┃ 숙소명  : %-40s \t\t\t\t\t┃\n", accommodation.getAccommodationName());
+        System.out.printf("┃ 지역   : %-42s \t\t\t\t\t┃\n", accommodation.getArea());
+        System.out.printf("┃ 주소   : %-52s\t┃\n", accommodation.getAddress());
+        System.out.printf("┃‍ 최대 인원 : %-36d \t\t\t\t\t\t┃\n", accommodation.getMaxGuest());
+        System.out.printf("┃ 가격 : %-40d \t\t\t\t\t\t┃\n", accommodation.getPrice());
 
         // 평균 평점
         double averageRating = reviewService.calculateAverageRating(accommodation.getId());
-        System.out.printf(" 🌟평균 평점: %-36.1f \n\n", averageRating);
+        System.out.printf("┃🌟평균 평점 : %-36.1f \t\t\t\t\t\t┃\n", averageRating);
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
-        System.out.println(" ℹ️공지사항");
+        System.out.println("┃ℹ️공지사항\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
         printFormattedNotice(accommodation.getNotice(), 40);
+        System.out.println("\n┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
         // 캘린더
-        System.out.println("\n 예약 현황");
+        System.out.println("\n┃\t\t\t\t\t\t\t📅나의 예약 현황\t\t\t\t\t\t\t\t┃");
         
         LocalDate today = LocalDate.now();
 //        calendarService.showCalendar(accommodation.getId(), today.getYear(), today.getMonthValue(), bookingService);
         calendarService.showCalendarWithCheckInDate(loggedInUserId, booking.getCheckInDate(), booking.getCheckOutDate(), bookingService);
         
-        System.out.println("\n📅캘린더");
-       
-        System.out.printf("[🛌숙박일] %s\n", booking.getCheckInDate());
-        System.out.printf("[🛏️퇴실일] %s\n", booking.getCheckOutDate());
-        		
-
-        
-        System.out.println("+" + "-".repeat(60) + "+");
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
         // 숙소 리뷰
         showAccommodationReviews(accommodation.getId());
@@ -118,23 +118,23 @@ public class BookingView {
     }
 
     // 숙소 리뷰 보여주기
-    private void showAccommodationReviews(int accommodationId) {
-    	System.out.print("\033[47m\033[30m");
-        System.out.println("+" + "-".repeat(60) + "+");
-        System.out.println("|                         숙소 리뷰                          |");
-        System.out.println("+" + "-".repeat(60) + "+");
-        System.out.print("\033[0m");
+    public static void showAccommodationReviews(int accommodationId) {
+//    	System.out.print("\033[47m\033[30m");
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+        System.out.println("┃\t\t\t\t\t\t\t\t숙소 리뷰\t\t\t\t\t\t\t\t\t┃");
+        System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+//        System.out.print("\033[0m");
         
         List<Review> reviews = reviewService.getReviewsByAccommodationId(accommodationId);
         if (reviews.isEmpty()) {
-            System.out.println("🈚리뷰가 없습니다.");
+            System.out.println("┃\t\t\t\t\t\t\t  리뷰가 없습니다.  \t\t\t\t\t\t\t┃");
         } else {
             for (Review review : reviews) {
-                System.out.printf("- [작성자: %s] [평점: %d] %s\n", review.getUserName(), review.getRating(),
+                System.out.printf("┃ [작성자: %s] [평점: %d] %-40s\t┃\n", review.getUserName(), review.getRating(),
                         review.getContent());
             }
         }
-        System.out.println("+" + "-".repeat(60) + "+");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
 
     // 예약 관련 작업 (취소, 변경, 리뷰 작성)
@@ -213,7 +213,7 @@ public class BookingView {
         int start = 0;
         while (start < notice.length()) {
             int end = Math.min(start + maxLength, notice.length());
-            System.out.printf(" %-35s \n", notice.substring(start, end));
+            System.out.printf("┃ %-35s \t\t\t\t\t\t┃", notice.substring(start, end));
             start = end;
         }
     }

@@ -11,7 +11,7 @@ import com.test.util.LoginSystem;
 
 public class PaymentProcessor {
     private final DecimalFormat decimalFormat = new DecimalFormat("#,###");
-    private final String MEMBERS_FILE_PATH = "./data/members.txt"; // 파일 경로
+    private final String MEMBERS_FILE_PATH = "./data/users.txt"; // 파일 경로
 
     public void processPointsPayment(Scanner scan, List<User> users, List<Booking> bookings) throws NumberFormatException, IOException {
         // 로그인한 사용자의 ID 가져오기
@@ -43,7 +43,7 @@ public class PaymentProcessor {
         System.out.println("결제하실 금액은 " + decimalFormat.format(amount) + "원 입니다.");
 
         // 잔액 확인 및 충전/취소 옵션 제공
-        while (user.getUserPoints()< amount) {
+        while (user.getUserPoints() < amount) {
             System.out.println("계좌 잔액이 부족합니다.");
             System.out.println("현재 잔액: " + decimalFormat.format(user.getUserPoints()) + "원");
             System.out.println("필요 금액: " + decimalFormat.format(amount) + "원");
@@ -54,7 +54,7 @@ public class PaymentProcessor {
 
             switch (choice) {
                 case "1":
-                    chargeAccount(scan, users, user); // members를 전달
+                    chargeAccount(scan, users, user); // users를 전달
                     break;
                 case "2":
                     System.out.println("결제를 취소합니다.");
@@ -80,7 +80,7 @@ public class PaymentProcessor {
         System.out.println("남은 잔액: " + decimalFormat.format(user.getUserPoints()) + "원");
 
         // 회원 정보 파일에 잔액 업데이트
-        updateMemberBalanceInFile(users);
+        updateUserBalanceInFile(users);
 
         // 프로그램 종료
         System.out.println("\n즐거운 숙박되세요. 감사합니다.");
@@ -111,14 +111,14 @@ public class PaymentProcessor {
 
         // 충전 후 회원 정보 파일에 잔액 업데이트
         try {
-            updateMemberBalanceInFile(users);
+            updateUserBalanceInFile(users);
         } catch (IOException e) {
             System.out.println("파일 업데이트 중 오류가 발생했습니다.");
         }
     }
 
     // 파일 내의 회원 잔액을 업데이트하는 메소드
-    private void updateMemberBalanceInFile(List<User> users) throws IOException {
+    private void updateUserBalanceInFile(List<User> users) throws IOException {
         // 파일에 모든 회원 정보를 덮어쓰도록 BufferedWriter 사용
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(MEMBERS_FILE_PATH))) {
             for (User user : users) {

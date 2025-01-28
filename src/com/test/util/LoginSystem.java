@@ -22,7 +22,7 @@ public class LoginSystem {
 
 
     // 로그인
-    public static void login(String userId, String password) throws IOException {
+    public static void login(String userId, String password) throws IOException, InterruptedException {
     	UserView userview = new UserView();
         File file = new File(USER_FILE);
 
@@ -80,7 +80,11 @@ public class LoginSystem {
 
         if (file.exists()) {
             if (file.delete()) {
-                System.out.println("✔️로그아웃 성공.");
+                System.out.println();
+                System.out.println("┏━━━━━━━━━━━━━━━┓");
+                System.out.println("┃\t로그아웃 성공\t┃");
+                System.out.println("┗━━━━━━━━━━━━━━━┛");
+                System.out.println();
             } else {
                 System.out.println("✖️로그아웃 실패");
             }
@@ -148,17 +152,7 @@ public class LoginSystem {
         }
         return null; // 파일이 비어있거나 데이터가 없을 경우 null 반환
     }
-    
-    
 
-
-    
-    public static void main(String[] args) throws IOException {
-        // 테스트
-        login("t5mht0p3", "jahu07xapnpz");  // 로그인
-        //logout();          // 로그아웃
-
-    }
 }
 
 

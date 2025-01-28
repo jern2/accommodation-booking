@@ -10,10 +10,10 @@ public class PointPaymentService {
     private static final String MEMBERS_FILE = "./data/members.txt";
     private static final String BOOKING_LIST_FILE = "./data/booking_list.txt";
 
-    public boolean processPointPayment(int userIndex, int totalPrice, Booking booking) throws IOException {
+    public boolean processPointPayment(int userId, int totalPrice, Booking booking) throws IOException {
         List<User> users = loadMembers();
         for (User user : users) {
-            if (user.getUserIndex() == userIndex) {
+            if (user.getUserIndex() == userId) {
                 if (user.getUserPoints() >= totalPrice) {
                     user.setUserPoints(user.getUserPoints() - totalPrice);
                     saveMembers(users);
@@ -26,11 +26,11 @@ public class PointPaymentService {
     }
 
     // 포인트 충전 메서드
-    public void chargeUserPoints(int userIndex, int chargeAmount) throws IOException {
+    public void chargeUserPoints(int userId, int chargeAmount) throws IOException {
         List<User> users = loadMembers();
 
         for (User user : users) {
-            if (user.getUserIndex() == userIndex) {
+            if (user.getUserIndex() == userId) {
                 // 포인트 충전
                 user.setUserPoints(user.getUserPoints() + chargeAmount);
                 saveMembers(users);
@@ -42,24 +42,30 @@ public class PointPaymentService {
         System.out.println("사용자를 찾을 수 없습니다.");
     }
 
+
     public List<User> loadMembers() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(MEMBERS_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("■");
-                users.add(new User(
-                        Integer.parseInt(parts[0]), parts[1], parts[2], parts[3],
-                        parts[4], parts[5], Integer.parseInt(parts[6])
-                ));
+                if (parts.length == 7) { // 필드 개수 확인
+                    users.add(new User(
+                            Integer.parseInt(parts[0]), parts[1], parts[2], parts[3],
+                            parts[4], parts[5], Integer.parseInt(parts[6])
+                    ));
+                } else {
+                    System.err.println("Invalid line format: " + line);
+                }
             }
         }
         return users;
     }
 
-    public void saveMembers(List<User> members) throws IOException {
+
+    public void saveMembers(List<User> users) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(MEMBERS_FILE))) {
-            for (User user : members) {
+            for (User user : users) {
                 writer.write(user.toFileFormat());
                 writer.newLine();
             }

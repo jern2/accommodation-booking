@@ -157,14 +157,14 @@ public class AccommodationBooking {
 	           LocalDate selectedDate;
 
 	           while (true) {
-	              System.out.print("\033[47m\033[30m"); // 흰색 배경(47) + 검정 텍스트(30)
+//	              System.out.print("\033[47m\033[30m"); // 흰색 배경(47) + 검정 텍스트(30)
 	               System.out.println("\n╔══════════════════════════════════════════════════════╗");
 	               System.out.printf("║                     %d년 %02d월                      ║\n", 
 	                                 calendarMonth.getYear(), calendarMonth.getMonthValue());
 	               System.out.println("╠══════════════════════════════════════════════════════╣");
 	               displayCalendar(calendarMonth, reservedDates); // 사용자 정의 달력 출력 함수
 	               System.out.println("╚══════════════════════════════════════════════════════╝\n");
-	              System.out.print("\033[0m");
+//	              System.out.print("\033[0m");
 	                  
 
 	               System.out.print("[다음 달 : + / 지난 달 : - / 날짜 선택 : 숫자] \n\n선택 : ");
@@ -199,26 +199,29 @@ public class AccommodationBooking {
 	               System.out.print("\t");
 	           }
 
-	           for (int day = 1; day <= daysInMonth; day++) {
-	               LocalDate currentDate = calendarMonth.withDayOfMonth(day);
+			   for (int day = 1; day <= daysInMonth; day++) {
+				   LocalDate currentDate = calendarMonth.withDayOfMonth(day);
 
-	               if (reservedDates.contains(currentDate)) {
-	                   System.out.printf("%2d■\t", day); // 예약된 날짜
-	               } else {
-	                   System.out.printf("%2d□\t", day); // 예약 가능 날짜
-	               }
+				   if (reservedDates.contains(currentDate)) {
+					   // 빨간색: \u001B[31m, 초기화: \u001B[0m
+					   System.out.printf("\u001B[31m%2d\u001B[0m\t", day); // 예약된 날짜 (자주색)
+				   } else {
+					   // 초록색: \u001B[32m, 초기화: \u001B[0m
+					   System.out.printf("\u001B[32m%2d\u001B[0m\t", day); // 예약 가능 날짜 (초록색)
+				   }
 
-	               if ((day + firstDayOfWeek) % 7 == 0) {
-	                   System.out.println();
-	               }
-	           }
-	           System.out.println();
+				   if ((day + firstDayOfWeek) % 7 == 0) {
+					   System.out.println();
+				   }
+			   }
+
+			   System.out.println();
 	       }
-	   
-	   
 
-	
-	    public static void runBooking(Accommodation selectedAccommodation) {
+
+
+
+	    public static void runBooking(Accommodation selectedAccommodation) throws InterruptedException {
 	        String bookingFilePath = "./data/booking_list.txt";
 	        Set<LocalDate> reservedDates = new HashSet<>();
 

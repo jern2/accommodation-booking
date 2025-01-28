@@ -24,8 +24,6 @@ public class AdminService {
 
         System.out.print("\n숙소 이름: ");
         String name = scanner.nextLine();
-        System.out.print("호스트 이름: ");
-        String host = scanner.nextLine();
         System.out.print("숙소 지역: ");
         String area = scanner.nextLine();
         System.out.print("숙소 주소: ");
@@ -41,19 +39,31 @@ public class AdminService {
         // 숙소 ID는 자동 생성
         int newAccommodationId = accommodationService.getAccommodations().size() + 1;
 
-        Accommodation accommodation = new Accommodation(newAccommodationId, host, area, address, name, maxGuests, price, notice);
+        Accommodation accommodation = new Accommodation(newAccommodationId, "관리자", area, address, name, maxGuests, price, notice);
         accommodationService.addAccommodation(accommodation);
 
         System.out.println("숙소가 성공적으로 추가되었습니다.");
     }
 
     // 숙소 수정
-    public void modifyAccommodation() {
+    public void modifyAccommodation() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         accommodationService.showAllAccommodations(); // 모든 숙소 출력
-        System.out.print("수정할 숙소 ID를 입력하세요: ");
-        int accommodationId = scanner.nextInt();
-        scanner.nextLine(); // 버퍼 비우기
+
+        int accommodationId;
+        try {
+            System.out.println("뒤로가기 = 0");
+            System.out.print("수정할 숙소 ID를 입력하세요: ");
+            String input = scanner.nextLine(); // 문자열로 입력 받기
+            accommodationId = Integer.parseInt(input); // 숫자로 변환 시도
+
+            if(accommodationId == 0){
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("유효한 숫자를 입력해주세요."); // 예외 처리
+            return; // 잘못된 입력 시 메서드 종료
+        }
 
         Accommodation accommodation = accommodationService.getAccommodationById(accommodationId);
         if (accommodation == null) {
@@ -70,7 +80,7 @@ public class AdminService {
         if (!newArea.isEmpty()) accommodation.setArea(newArea);
 
         System.out.print("새로운 숙소 주소 (Enter 입력 시 기존 유지): ");
-        String newAddress = scanner.nextLine();
+        String newAddress = scanner.nextLine( );
         if (!newAddress.isEmpty()) accommodation.setAddress(newAddress);
 
         System.out.print("새로운 최대 인원 (Enter 입력 시 기존 유지): ");
@@ -90,7 +100,7 @@ public class AdminService {
     }
 
     // 숙소 삭제
-    public void deleteAccommodation() {
+    public void deleteAccommodation() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         accommodationService.showAllAccommodations(); // 모든 숙소 출력
         System.out.print("삭제할 숙소 ID를 입력하세요: ");
