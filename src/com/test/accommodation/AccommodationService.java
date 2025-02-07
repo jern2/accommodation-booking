@@ -289,7 +289,7 @@ public class AccommodationService {
 //        System.out.print("\033[0m");
 					System.out.printf("┃ 숙소명  : %-40s \t\t\t\t\t┃\n", selectedAccommodation.getAccommodationName());
 					System.out.printf("┃ 지역   : %-42s \t\t\t\t\t┃\n", selectedAccommodation.getArea());
-					System.out.printf("┃ 주소   : %-52s\t┃\n", selectedAccommodation.getAddress());
+					System.out.printf("┃ 주소   : %-52s\t\t┃\n", selectedAccommodation.getAddress());
 					System.out.printf("┃‍ 최대 인원 : %-36d \t\t\t\t\t\t┃\n", selectedAccommodation.getMaxGuest());
 					System.out.printf("┃ 가격 : %-40d \t\t\t\t\t\t┃\n", selectedAccommodation.getPrice());
 
@@ -299,8 +299,8 @@ public class AccommodationService {
 					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
 					System.out.println("┃ℹ️공지사항\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
-					printFormattedNotice(selectedAccommodation.getNotice(), 50);
-					System.out.println("\n┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+					printFormattedNotice(selectedAccommodation.getNotice(), 42);
+					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 					System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
 					// 숙소 리뷰
@@ -378,11 +378,11 @@ public class AccommodationService {
 //	         System.out.print("\033[47m\033[30m"); // 흰색 배경(47) + 검정 텍스트(30)
 
 	           // 기존 코드
-	           System.out.println("\n╔══════════════════════════════════════════════════════╗");
-	           System.out.printf("║                     %d년 %02d월                      ║\n", calendarMonth.getYear(), calendarMonth.getMonthValue());
-	           System.out.println("╠══════════════════════════════════════════════════════╣");
+	           System.out.println("\n╔════════════════════════════════════════════════════════╗");
+	           System.out.printf("║\t\t\t\t\t%d년 %02d월\t\t\t\t\t\t\t ║\n", calendarMonth.getYear(), calendarMonth.getMonthValue());
+	           System.out.println("╠════════════════════════════════════════════════════════╣");
 	           displayCalendar(calendarMonth); // 사용자 정의 달력 출력 함수
-	           System.out.println("╚══════════════════════════════════════════════════════╝\n");
+	           System.out.println("╚════════════════════════════════════════════════════════╝\n");
 
 	           // 스타일 초기화 (배경/텍스트 색상 원래대로)
 //	           System.out.print("\033[0m");
@@ -411,39 +411,79 @@ public class AccommodationService {
 	   }
 
 	   //달력 출력 함수
+		//완료
 	   private static void displayCalendar(LocalDate calendarMonth) {
 	      LocalDate firstDay = calendarMonth.withDayOfMonth(1); // 해당 월의 첫날
 	      int firstDayOfWeek = firstDay.getDayOfWeek().getValue(); // 첫날의 요일 (1=월, 7=일)
 	      int daysInMonth = calendarMonth.lengthOfMonth(); // 해당 월의 총 일수
-	      
-	      System.out.println("[일]\t[월]\t[화]\t[수]\t[목]\t[금]\t[토]");
 
-	      // 첫 주 공백 처리
-	      for (int i = 0; i < (firstDayOfWeek % 7); i++) {
-	         System.out.print("\t");
-	      }
+		   System.out.println("║\t\t\t[일]\t[월]\t[화]\t[수]\t[목]\t[금]\t[토]\t\t\t\t\t ║");
 
-	      // 날짜 출력
-	      for (int day = 1; day <= daysInMonth; day++) {
-	         System.out.printf("%2d\t", day);
-	         if ((day + (firstDayOfWeek % 7) - 1) % 7 == 6) { // 토요일 후 줄 바꿈
-	            System.out.println();
-	         }
-	      }
-	      System.out.println();
+		   // 첫 주 공백 처리
+		   System.out.print("║\t\t\t"); // 줄 시작
+		   for (int i = 0; i < (firstDayOfWeek % 7); i++) {
+			   System.out.print("\t");
+		   }
+
+		   // 날짜 출력
+		   for (int day = 1; day <= daysInMonth; day++) {
+			   System.out.printf("%2d\t", day);
+			   if ((day + (firstDayOfWeek % 7) - 1) % 7 == 6) { // 토요일 후 줄 바꿈
+				   System.out.println("\t\t\t\t ║"); // 줄 끝
+				   if (day < daysInMonth) { // 다음 줄이 있으면 새로운 줄 시작
+					   System.out.print("║\t\t\t");
+				   }
+			   }
+		   }
+
+		   // 마지막 줄 공백 처리
+		   int remainingCells = (firstDayOfWeek + daysInMonth - 1) % 7;
+		   if (remainingCells != 6) { // 마지막 줄이 비어 있다면
+			   for (int i = remainingCells + 1; i <= 6; i++) {
+				   System.out.print("\t");
+			   }
+			   System.out.println("\t\t\t\t ║"); // 마지막 줄 끝
+		   }
 	   }
 
-	
+
 	public static void printFormattedNotice(String notice, int maxLength) {
 		int start = 0;
 		while (start < notice.length()) {
 			// 현재 출력할 부분 계산
 			int end = Math.min(start + maxLength, notice.length());
 			String line = notice.substring(start, end);
-			System.out.printf("┃ %-40s\t\t\t\t┃\n", line); // 좌측 정렬 및 너비 조정
+
+			// 출력 길이 계산 (한글과 영어 포함)
+			int displayLength = calculateDisplayLength(line);
+			int paddingLength = maxLength - displayLength;
+
+			// 공백으로 부족한 부분 채우기
+			String paddedLine = line + " ".repeat(Math.max(0, paddingLength));
+
+			// 출력
+			System.out.printf("┃ %s \t\t\t\t┃\n", paddedLine);
 			start = end; // 다음 부분으로 이동
 		}
 	}
+
+	// 출력에서 한글과 영어의 길이를 계산하는 함수
+	private static int calculateDisplayLength(String text) {
+		int length = 0;
+		for (char c : text.toCharArray()) {
+			if (c >= '\uAC00' && c <= '\uD7A3') {
+				// 한글은 보통 2칸 차지
+				length += 2;
+			} else {
+				// 영어, 숫자, 특수문자는 1칸 차지
+				length += 1;
+			}
+		}
+		return length;
+	}
+
+
+
 
 	private static boolean areValidDates(String checkInDate, String checkOutDate) {
 
@@ -539,7 +579,7 @@ public class AccommodationService {
 //        System.out.print("\033[0m");
 				System.out.printf("┃ 숙소명  : %-40s \t\t\t\t\t┃\n", selectedAccommodation.getAccommodationName());
 				System.out.printf("┃ 지역   : %-42s \t\t\t\t\t┃\n", selectedAccommodation.getArea());
-				System.out.printf("┃ 주소   : %-52s\t┃\n", selectedAccommodation.getAddress());
+				System.out.printf("┃ 주소   : %-52s\t\t┃\n", selectedAccommodation.getAddress());
 				System.out.printf("┃‍ 최대 인원 : %-36d \t\t\t\t\t\t┃\n", selectedAccommodation.getMaxGuest());
 				System.out.printf("┃ 가격 : %-40d \t\t\t\t\t\t┃\n", selectedAccommodation.getPrice());
 
@@ -549,8 +589,8 @@ public class AccommodationService {
 				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
 				System.out.println("┃ℹ️공지사항\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
-				printFormattedNotice(selectedAccommodation.getNotice(), 50);
-				System.out.println("\n┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
+				printFormattedNotice(selectedAccommodation.getNotice(), 42);
+				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
 				System.out.println("┃\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t┃");
 
