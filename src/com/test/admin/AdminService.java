@@ -19,7 +19,7 @@ public class AdminService {
     }
 
     // 숙소 추가
-    public void addAccommodation() {
+    public void addAccommodation() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("\n 숙소 이름: ");
@@ -45,6 +45,7 @@ public class AdminService {
         accommodationService.addAccommodation(accommodation);
 
         System.out.println("숙소가 성공적으로 추가되었습니다.");
+        Thread.sleep(2000);
     }
 
     // 숙소 수정
@@ -103,6 +104,7 @@ public class AdminService {
 
         accommodationService.saveAccommodations(); // 변경된 정보 저장
         System.out.println("\n숙소 정보가 성공적으로 수정되었습니다.");
+        Thread.sleep(2000);
     }
 
     // 숙소 삭제
@@ -115,6 +117,7 @@ public class AdminService {
         boolean isDeleted = accommodationService.deleteAccommodation(accommodationId);
         if (isDeleted) {
             System.out.println("\n숙소가 성공적으로 삭제되었습니다.");
+            Thread.sleep(2000);
         } else {
             System.out.println("\n숙소를 찾을 수 없습니다.");
         }

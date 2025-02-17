@@ -87,7 +87,7 @@ public class UserView {
             }
         }
     	
-        private void findAccount() {
+        private void findAccount() throws InterruptedException {
 
             System.out.println();
             System.out.println("=========================================================================");
@@ -117,11 +117,12 @@ public class UserView {
                 System.out.println(" 계정 찾기 성공    ");
                 System.out.println(" 아이디: " + user.getUserId());
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━┛");
+                Thread.sleep(3000);
             } else {
                 System.err.println("⚠️입력한 정보와 일치하는 계정을 찾을 수 없습니다.");
             }
         }
-        private void findPassword() {
+        private void findPassword() throws InterruptedException {
 
             System.out.println();
             System.out.println("=========================================================================");
@@ -150,11 +151,12 @@ public class UserView {
                 System.out.println(" 🗝️비밀번호 찾기 성공  ");
                 System.out.println(" 🗝️비밀번호: " + user.getUserPassword() + "");
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━━━┛");
+                Thread.sleep(2000);
             } else {
                 System.err.println("⚠️아이디 또는 이메일이 일치하지 않습니다.");
             }
         }
-        public void registerUser() {
+        public void registerUser() throws InterruptedException {
 
         	System.out.println();
             System.out.println("=======================================================================");
@@ -219,6 +221,7 @@ public class UserView {
             userService.writeMemberFile(userList);
 
             System.out.println("✔️회원가입이 완료되었습니다.\n");
+            Thread.sleep(2000);
         }
 
         // 이메일 유효성 검사
@@ -383,6 +386,7 @@ public class UserView {
                     if (userAuthService.deleteUser(password)){
                         System.out.println("✔️회원탈퇴가 완료되었습니다.");
                         System.out.println("🖐️안녕히 가세요.");
+                        Thread.sleep(2000);
                         start();
                     } else{
                         System.out.println("비밀번호가 일치하지 않습니다.");
@@ -432,12 +436,14 @@ public class UserView {
                 case 1:
                     int points = myPageService.getUserPoints(user.getUserId());
                     System.out.printf("\n[💲현재 포인트: %,d원]", points);
+                    Thread.sleep(2000);
                     break;
                 case 2:
                     System.out.print("\n💲충전할 포인트 입력: ");
                     int amount = scanner.nextInt();
                     scanner.nextLine(); // 버퍼 비우기
                     myPageService.chargePoints(user.getUserId(), amount);
+
                     break;
                 case 3:
                     return;
@@ -447,7 +453,7 @@ public class UserView {
         }
     }
 
-    private void updateUserInfo(User user) {
+    private void updateUserInfo(User user) throws InterruptedException {
     	System.out.println();
     	System.out.println("====================================================");
         System.out.println("                    회원정보 수정                   ");
@@ -486,6 +492,7 @@ public class UserView {
 
         if (userInfoService.updateUserInfo(user.getUserId(), newPassword, newName, newEmail, newPhoneNum)) {
             System.out.println("✔️회원정보가 성공적으로 수정되었습니다.");
+            Thread.sleep(3000);
             
             // 수정 후 최신 데이터를 읽어와서 새로운 User 객체로 업데이트
             List<User> updatedUserList = userService.readMemberFile();

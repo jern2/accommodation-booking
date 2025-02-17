@@ -7,6 +7,7 @@ import com.test.admin.AdminView;
 import com.test.user.UserView;
 
 import static com.test.util.SysoutUtil.banner;
+import static com.test.util.SysoutUtil.nextpage;
 
 
 public class Main {
@@ -54,8 +55,9 @@ public class Main {
                     "                                                                 ";
 
              // 흰색 배경에 빨간 글씨 출력
-             System.out.println(whiteBackground + redText + message + reset);
-//             Thread.sleep(5000);
+             System.out.println(message);
+             Thread.sleep(3000);
+             nextpage();
             banner();
 //             System.out.print("\033[47m\033[30m");
             System.out.println("┃=======================================================================┃");

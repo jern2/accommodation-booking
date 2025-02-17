@@ -90,6 +90,7 @@ public class PaymentView {
             System.out.println("예약이 완료되었습니다.");
             System.out.println("예약 ID: " + newBooking.getBookingId());
             System.out.println("즐거운 숙박되세요. 감사합니다.");
+            Thread.sleep(2000);
 
         } catch (Exception e) {
             System.out.println("결제 실패: " + e.getMessage());
@@ -114,12 +115,15 @@ public class PaymentView {
                 // 현재 날짜와 비교
                 if (inputYearMonth.isBefore(currentYearMonth)) {
                     System.out.println("카드가 만료되었습니다. 다른 카드를 사용해주세요.");
+                    Thread.sleep(3000);
                     continue;
                 }
                 
                 return input;
             } catch (DateTimeException e) {
                 System.out.println("유효하지 않은 날짜입니다. 다시 입력해주세요.");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -140,7 +144,7 @@ public class PaymentView {
 
     
     
-    private void processPointPayment() throws IOException {
+    private void processPointPayment() throws IOException, InterruptedException {
         int userId = Integer.parseInt(LoginSystem.getUserIndex());
         int totalPrice = ReservationHandler.getTotalPrice();
 
@@ -149,13 +153,8 @@ public class PaymentView {
 
         if (success) {
              System.out.println("포인트 결제가 완료되었습니다.");
-             System.out.println("프로그램이 종료됩니다. ");
+             Thread.sleep(2000);
              System.out.println();
-             System.out.print("\033[47m\033[30m");
-              System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-             System.out.println("┃         프로그램 종료         ┃");
-              System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            System.out.print("\033[0m");
             System.out.println();
             System.exit(0);
         } else {
@@ -165,7 +164,7 @@ public class PaymentView {
     }
 
     // 포인트 부족 처리 메서드
-    private void handleInsufficientPoints(int userId, int totalPrice) throws IOException {
+    private void handleInsufficientPoints(int userId, int totalPrice) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -191,12 +190,10 @@ public class PaymentView {
                 boolean success = pointPaymentService.processPointPayment(userId, totalPrice, createBooking());
                 if (success) {
                  System.out.println("포인트 결제가 완료되었습니다. ");
-                 System.out.println("프로그램이 종료됩니다. ");
+                 Thread.sleep(2000);
                  System.out.println();
 
-                   System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-                  System.out.println("┃         프로그램 종료         ┃");
-                   System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
 
                System.out.println();
                     return;
@@ -213,7 +210,7 @@ public class PaymentView {
     }
 
     // 포인트 충전 메서드
-    private void chargePoints(int userId) throws IOException {
+    private void chargePoints(int userId) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("\n충전할 포인트 금액을 입력하세요: ");

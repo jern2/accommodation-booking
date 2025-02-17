@@ -44,7 +44,7 @@ public class LoginSystem {
                 if (user.get(1).equals(userId) && user.get(2).equals(password)) {
                     isValid = true;
                     loginUsername = user.get(3);
-                    userIndex = i+1; // 인덱스를 저장
+                    userIndex = i+2; // 인덱스를 저장
                     break;
                 }
             }
@@ -57,6 +57,7 @@ public class LoginSystem {
             	writer.write(userIndex + "■" + userId + "■" + password + "■" + loginUsername + "■" + isValid);
             }
             System.out.println("✔️로그인 성공: " + loginUsername + "님 반갑습니다.");
+            Thread.sleep(2000);
             
             User user = new User(
                     userIndex,
@@ -75,7 +76,7 @@ public class LoginSystem {
     }
 
     // 로그아웃
-    public static void logout() {
+    public static void logout() throws InterruptedException {
         File file = new File(LOGIN_FILE);
 
         if (file.exists()) {
@@ -85,6 +86,7 @@ public class LoginSystem {
                 System.out.println("┃\t로그아웃 성공\t┃");
                 System.out.println("┗━━━━━━━━━━━━━━━┛");
                 System.out.println();
+                Thread.sleep(2000);
             } else {
                 System.out.println("✖️로그아웃 실패");
             }

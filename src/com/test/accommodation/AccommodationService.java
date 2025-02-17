@@ -289,7 +289,7 @@ public class AccommodationService {
 //        System.out.print("\033[0m");
 					System.out.printf("┃ 숙소명  : %-40s \t\t\t\t\t┃\n", selectedAccommodation.getAccommodationName());
 					System.out.printf("┃ 지역   : %-42s \t\t\t\t\t┃\n", selectedAccommodation.getArea());
-					System.out.printf("┃ 주소   : %-52s\t\t┃\n", selectedAccommodation.getAddress());
+					System.out.printf("┃ 주소   : %-52s\t┃\n", selectedAccommodation.getAddress());
 					System.out.printf("┃‍ 최대 인원 : %-36d \t\t\t\t\t\t┃\n", selectedAccommodation.getMaxGuest());
 					System.out.printf("┃ 가격 : %-40d \t\t\t\t\t\t┃\n", selectedAccommodation.getPrice());
 

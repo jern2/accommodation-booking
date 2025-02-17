@@ -140,7 +140,7 @@ public class BookingView {
 
     // 예약 관련 작업 (취소, 변경, 리뷰 작성)
     private void showBookingActions(Booking booking, Accommodation accommodation, int loggedInUserId)
-            throws IOException {
+            throws IOException, InterruptedException {
         while (true) {
             System.out.println("1. 예약 취소");
             System.out.println("2. 예약 변경");
@@ -168,18 +168,19 @@ public class BookingView {
     }
 
     // 예약 취소
-    private void cancelBooking(Booking booking, int loggedInUserId) throws IOException {
+    private void cancelBooking(Booking booking, int loggedInUserId) throws IOException, InterruptedException {
         System.out.print("🗝️예약 취소를 위해 비밀번호를 입력하세요: ");
         String password = scanner.next();
         if (bookingService.cancelBooking(booking.getBookingId(), loggedInUserId, password)) {
             System.out.println("✔️예약이 취소되었습니다.");
+            Thread.sleep(2000);
         } else {
             System.out.println("⚠️비밀번호가 올바르지 않습니다.");
         }
     }
 
     // 예약 변경
-    private void modifyBooking(Booking booking, Accommodation accommodation) throws IOException {
+    private void modifyBooking(Booking booking, Accommodation accommodation) throws IOException, InterruptedException {
         System.out.print("변경할 체크인 날짜(YYYY-MM-DD): ");
         String newCheckInDate = scanner.next();
         System.out.print("변경할 체크아웃 날짜(YYYY-MM-DD): ");
@@ -192,7 +193,7 @@ public class BookingView {
         bookingService.modifyBooking(booking.getBookingId(), newCheckInDate, newCheckOutDate, booking.getNumGuests());
     }
 
-    private void addReview(Booking booking, Accommodation accommodation, int loggedInUserId) throws IOException {
+    private void addReview(Booking booking, Accommodation accommodation, int loggedInUserId) throws IOException, InterruptedException {
         System.out.print("리뷰를 입력하세요: ");
         scanner.nextLine(); // 버퍼 비우기
         String reviewContent = scanner.nextLine();
@@ -204,6 +205,7 @@ public class BookingView {
 
         if (reviewService.addReview(loggedInUserId, LoginSystem.getUserName(), accommodation.getId(), reviewContent, rating, checkOutDate)) {
             System.out.println("✔️리뷰가 성공적으로 등록되었습니다.");
+            Thread.sleep(2000);
         } else {
             System.out.println("⚠️리뷰 작성에 실패하였습니다.");
         }

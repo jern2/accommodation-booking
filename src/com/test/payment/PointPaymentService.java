@@ -26,7 +26,7 @@ public class PointPaymentService {
     }
 
     // 포인트 충전 메서드
-    public void chargeUserPoints(int userId, int chargeAmount) throws IOException {
+    public void chargeUserPoints(int userId, int chargeAmount) throws IOException, InterruptedException {
         List<User> users = loadMembers();
 
         for (User user : users) {
@@ -35,6 +35,7 @@ public class PointPaymentService {
                 user.setUserPoints(user.getUserPoints() + chargeAmount);
                 saveMembers(users);
                 System.out.println("\n포인트가 성공적으로 충전되었습니다. 현재 포인트: " + user.getUserPoints() + "P");
+                Thread.sleep(3000);
                 return;
             }
         }

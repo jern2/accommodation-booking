@@ -58,7 +58,7 @@ public class ReviewService {
     }
     
  // 리뷰 추가
-    public boolean addReview(int userId, String userName, int accommodationId, String content, int rating, String checkOutDate) throws IOException {
+    public boolean addReview(int userId, String userName, int accommodationId, String content, int rating, String checkOutDate) throws IOException, InterruptedException {
         // 중복 리뷰 방지
         if (isDuplicateReview(userId, accommodationId)) {
             System.out.println("이미 이 숙소에 리뷰를 작성하셨습니다.");
@@ -82,7 +82,6 @@ public class ReviewService {
         Review newReview = new Review(newReviewId, userId, userName, accommodationId, content, rating);
         reviews.add(newReview);
         saveReviews();
-        System.out.println("리뷰가 성공적으로 등록되었습니다.");
         return true;
     }
 

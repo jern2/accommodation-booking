@@ -24,7 +24,7 @@ public class BookingService {
 		loadBookings();
 	}
 
-	public Booking addBooking(int userId, int accommodationId, String checkInDate, String checkOutDate, int numGuests, int pricePerNight) {
+	public Booking addBooking(int userId, int accommodationId, String checkInDate, String checkOutDate, int numGuests, int pricePerNight) throws InterruptedException {
 	    // 숙박 기간 계산
 	    long stayDuration = ValidationUtil.calculateDaysBetween(checkInDate, checkOutDate);
 
@@ -39,6 +39,7 @@ public class BookingService {
 	    // 디버깅 로그
 	    System.out.println("숙박 기간: " + stayDuration + "박");
 	    System.out.printf("총 금액: %,d원", totalPrice);
+		Thread.sleep(2000);
 
 	    // Booking 객체 생성
 	    Booking booking = new Booking(generateBookingId(), userId, accommodationId, checkInDate, checkOutDate, numGuests, totalPrice);
@@ -49,7 +50,7 @@ public class BookingService {
 
 
 	// 예약 변경
-	public boolean modifyBooking(int bookingId, String newCheckInDate, String newCheckOutDate, int newNumGuests) {
+	public boolean modifyBooking(int bookingId, String newCheckInDate, String newCheckOutDate, int newNumGuests) throws InterruptedException {
 		for (Booking booking : bookings) {
 			if (booking.getBookingId() == bookingId) {
 				// 숙박 기간 계산
@@ -80,6 +81,7 @@ public class BookingService {
 				saveBookings();
 				System.out.println("예약이 성공적으로 변경되었습니다.");
 				System.out.printf("새로운 총 금액: %d원\n", totalPrice);
+				Thread.sleep(2000);
 				return true;
 			}
 		}

@@ -20,10 +20,12 @@ public class AdminView {
 
         if (!adminService.login(id, password)) {
             System.out.println("\n⚠️로그인에 실패하였습니다.");
+            Thread.sleep(2000);
             return;
         }
 
         System.out.println("\n✔️관리자 모드에 접속하였습니다.");
+        Thread.sleep(2000);
         while (true) {
 
             nextpage();

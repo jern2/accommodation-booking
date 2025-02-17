@@ -35,7 +35,7 @@
 35■1q1q283d■sfrn7p010xgf■임도훈■1q1q283d@gmail.com■01070762483■210000
 36■1nnp32r5■2544d3vbv9et■임도훈■1nnp32r5@gmail.com■01099748169■210000
 37■j7s5b38a■4ccc0o3q1mlv■이서준■j7s5b38a@daum.net■01035900109■210000
-38■06evaiqs■84dn908rc5yk■이서준■06evaiqs@daum.net■01008243907■210000
+38■06evaiqs■84dn908rc5yk■이서준■06evaiqs@daum.net■01008243907■810000
 39■dn5nph4x■toz8fri0ehcp■최유진■dn5nph4x@daum.net■01080959919■210000
 40■4l2z3d6h■fkk0no4r6qbi■황유나■4l2z3d6h@gmail.com■01079362181■210000
 41■wiv69t4o■9pm6h97vz5ci■오현우■wiv69t4o@gmail.com■01058714985■210000
@@ -44,9 +44,6 @@
 44■j4yev510■0d52a0iuke91■안민호■j4yev510@naver.com■01065992964■210000
 45■6379mi7p■nvsrq0o7imr8■John Smith■6379mi7p@yahoo.com■01054135097■210000
 46■s1gm1mrj■zy7fzbzti46b■최유진■s1gm1mrj@daum.net■01039413088■210000
-47■j2i0n2s0■g9359xvckgq5■강다은■j2i0n2s0@gmail.com■01052918701■210000
+47■j2i0n2s0■g9359xvckgq5■강다은■j2i0n2s0@gmail.com■01052918701■810000
 48■ftvf4y9i■283i1ifk4gnj■오현우■ftvf4y9i@yahoo.com■01073067621■210000
-50■smqcluw5■plnxel7fimq6■배도현■smqcluw5@gmail.com■01016069858■506400
-51■park■juse■박주승■qioloip1@naver.com■01011111111■200000
-52■tester■1234■아무개■tester@naver.com■01012345678■0
-53■beta■1234■테스터■tester@naver.com■01011112222■0
+50■smqcluw5■plnxel7fimq6■배도현■smqcluw5@gmail.com■01016069858■786400

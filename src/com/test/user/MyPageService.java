@@ -77,7 +77,7 @@ public class MyPageService extends UserService {
     }
 
     // 포인트 충전
-    public void chargePoints(String userId, int userPoints) {
+    public void chargePoints(String userId, int userPoints) throws InterruptedException {
         List<User> userList = readMemberFile();
         boolean isUpdated = false;
 
@@ -88,6 +88,7 @@ public class MyPageService extends UserService {
 
                 isUpdated = true;
                 System.out.println(userPoints + " 포인트가 충전되었습니다. 현재 포인트: " + updatedPoints);
+                Thread.sleep(2000);
                 break;
             }
         }
@@ -100,7 +101,7 @@ public class MyPageService extends UserService {
     }
 
     // 사용자 정보 수정
-    public boolean updateUserInfo(String userId, String newUserName, String newUserEmail, String newUserPhoneNum) {
+    public boolean updateUserInfo(String userId, String newUserName, String newUserEmail, String newUserPhoneNum) throws InterruptedException {
         List<User> userList = userService.readMemberFile();
         boolean isUpdated = false;
 
@@ -117,6 +118,7 @@ public class MyPageService extends UserService {
         if (isUpdated) {
             writeMemberFile(userList);
             System.out.println("✔️사용자 정보가 성공적으로 수정되었습니다.");
+            Thread.sleep(2000);
         } else {
             System.out.println("⚠️해당 ID를 가진 사용자를 찾을 수 없습니다.");
         }
@@ -125,13 +127,14 @@ public class MyPageService extends UserService {
     }
 
     // 회원 탈퇴 
-    public boolean deleteUser(String userPassword) {
+    public boolean deleteUser(String userPassword) throws InterruptedException {
         List<User> userList = userService.readMemberFile();
         boolean isDeleted = userList.removeIf(user -> user.getUserPassword().equals(userPassword)); // 비밀번호 확인
 
         if (isDeleted) {
             writeMemberFile(userList);
             System.out.println("✔️사용자가 성공적으로 삭제되었습니다.");
+            Thread.sleep(2000);
         } else {
             System.out.println("⚠️비밀번호가 올바르지 않습니다.");
         }

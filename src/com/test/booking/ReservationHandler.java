@@ -10,7 +10,7 @@ public class ReservationHandler {
     private static int pricePerNight; // 1박 요금
     private static int totalPrice;
 
-    public static void setReservationDetails(int id, String checkIn, String checkOut, int guests, int pricePerNight) {
+    public static void setReservationDetails(int id, String checkIn, String checkOut, int guests, int pricePerNight) throws InterruptedException {
         accommodationId = id;
         checkInDate = checkIn;
         checkOutDate = checkOut;
@@ -25,6 +25,7 @@ public class ReservationHandler {
         System.out.println("숙박 기간: " + stayDuration + "박");
         System.out.println("1박 요금: " + pricePerNight + "원");
         System.out.println("총 금액: " + totalPrice + "원");
+        Thread.sleep(2000);
     }
 
     public static int getAccommodationId() {
